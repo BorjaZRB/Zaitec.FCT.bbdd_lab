@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+// Importa las dependencias necesarias de Supabase y RxJS
 import { createClient, SupabaseClient, Session, User } from '@supabase/supabase-js';
+// BehaviorSubject permite manejar el estado de la sesión de usuario de forma reactiva.
 import { BehaviorSubject } from 'rxjs';
+// Importa la configuración del entorno para obtener la URL y clave de Supabase.
 import { environment } from '../../../environments/environments/environments';
 
 
