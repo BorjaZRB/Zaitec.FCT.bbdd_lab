@@ -12,9 +12,10 @@ import { environment } from '../../../environments/environments/environments';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  //crea la instancia de Supabase con URL y clave pública.
 
+//crea la instancia de Supabase con URL y clave pública.
 private supabase: SupabaseClient;
+
 //almacena la sesión actual y permite que componentes se suscriban para reaccionar a cambios de sesión.
 private session$ = new BehaviorSubject<Session | null>(null);
 
