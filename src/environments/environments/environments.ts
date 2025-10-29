@@ -1,9 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+export const environment = {
+production: false,
 
-@Component({
-  selector: 'app-environments',
-  imports: [],
-  templateUrl: './environments.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class Environments { }
+supabaseUrl: 'https://TU-PROJECT-URL.supabase.co',
+supabaseAnonKey: 'TU-ANON-PUBLIC-KEY',
+};
