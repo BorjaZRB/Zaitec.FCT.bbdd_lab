@@ -1,1 +1,60 @@
+
+/// [CÓDIGO ORIGINAL DE ANGULAR MATERIAL - NO TOCAR]
+// ...
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+}
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// [FIN DEL CÓDIGO ORIGINAL DE ANGULAR MATERIAL]
+
+/* ------------------------------------------------------------------ */
+/* --- INICIO DE ESTILOS PERSONALIZADOS --- */
+/* ------------------------------------------------------------------ */
+
+// 1. DEFINICIÓN DE VARIABLES SCSS
+// (Esto nos permite usar los nombres $color-primary, etc., en nuestros componentes)
+$color-primary: #009CA6;
+$color-secondary: #007780;
+$color-neutral-light: #F5F8FA;
+$color-text-main: #1E1E1E;
+$color-success: #3CB371;
+$color-error: #E63946;
+
+// 2. ESTILOS GLOBALES (Sugerencia)
+body {
+  // Sobrescribe el fondo por defecto de Material por el nuestro.
+  background-color: $color-neutral-light;
+  // Sobrescribe el color de texto por defecto.
+  color: $color-text-main;
+}
+
+// 3. REGLAS DE MATERIAL (Si queremos configurar Material para usar nuestros colores)
+// La forma más avanzada sería crear un tema custom para Material,
+// pero por ahora, usamos el color-primary definido ya:
+.mat-toolbar.mat-primary {
+  background-color: $color-primary !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* --- FIN DE ESTILOS PERSONALIZADOS --- */
+/* ------------------------------------------------------------------ */
