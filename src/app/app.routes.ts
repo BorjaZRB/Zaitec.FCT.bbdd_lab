@@ -19,5 +19,15 @@ export const routes: Routes = [
      pathMatch: 'full',
   },
 
+  // RUTA A IMPLEMENTAR: GESTIÓN DE CITAS
+  {
+    path: 'citas',
+    // canActivate: [AuthGuard, RolesGuard], // (En el futuro, solo para admins/coords)
+    loadComponent: () =>
+      import('./features/citas/pages/citas/citas.component').then(
+        (m) => m.CitasComponent
+      ),
+  },
+
   // ... (Continuar con otras rutas)
 ];
