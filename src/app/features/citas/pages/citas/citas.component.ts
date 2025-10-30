@@ -6,8 +6,8 @@ import { MatTableModule } from '@angular/material/table';   // <-- Añadido de f
 import { MatCardModule } from '@angular/material/card';     // <-- Añadido de feature/EP-03-Agenda-Citas
 
 // 1. IMPORTACIÓN DE LOS DATOS Y SERVICIOS DE feature/EP-03-Agenda-Citas
-import { CitasService } from '../data/citas.service'; // Ruta al servicio
-import { Appointment } from '../data/types';  // Tipo de datos (Ajusta la ruta si 'types' está en otra carpeta)
+import { CitasService } from '../../data/citas.service'; // Ruta al servicio
+import { Appointment } from '../../types';  // Tipo de datos (Ajusta la ruta si 'types' está en otra carpeta)
 
 @Component({
   selector: 'app-citas',

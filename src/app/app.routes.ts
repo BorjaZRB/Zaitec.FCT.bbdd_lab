@@ -1,6 +1,14 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login/login';
+import { CitasService } from './features/citas/data/citas.service';
 
+export const appConfig: ApplicationConfig = {
+  providers: [
+    // ... otros providers (router, animations, http, etc.)
+    
+    CitasService, // <<-- REGISTRO DEL SERVICIO AQUÍ
+  ]
+};
 export const routes: Routes = [
 {
   // Ruta para el componente de login
@@ -17,12 +25,6 @@ export const routes: Routes = [
   loadComponent: () =>
     import('./features/home/pages/home/home.component').then(
       (m) => m.HomeComponent
-    ),
-}, {
-  path: 'citas',
-  loadComponent: () =>
-    import('./features/citas/pages/citas/citas.component').then(
-      (m) => m.CitasComponent
     ),
 },
   // ...
