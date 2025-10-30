@@ -1,0 +1,14 @@
+<h2>Detalles de la cita</h2>
+
+@if (cita) {
+  <p><strong>Paciente:</strong> {{paciente?.name}} {{ cita.patientId }}</p>
+  <p><strong>Profesional:</strong> {{ cita.professionalId }}</p>
+  <p><strong>Fecha:</strong> {{ cita.date }}</p>
+  <p><strong>Hora:</strong> {{ cita.startTime }} - {{ cita.endTime }}</p>
+  <p><strong>Estado:</strong> {{ cita.status }}</p>
+  @if (cita.notes) {
+    <p><strong>Notas:</strong> {{ cita.notes }}</p>
+  }
+} @else {
+  <p>No se encontró la cita.</p>
+}
