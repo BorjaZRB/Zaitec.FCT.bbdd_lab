@@ -1,31 +1,5 @@
 
-/// [CÓDIGO ORIGINAL DE ANGULAR MATERIAL - NO TOCAR]
-// ...
-@use '@angular/material' as mat;
-
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
-}
-
-body {
-  color-scheme: light;
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-  margin: 0;
-}
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-// [FIN DEL CÓDIGO ORIGINAL DE ANGULAR MATERIAL]
+// [CÓDIGO ORIGINAL DE ANGULAR MATERIAL - NO TOCAR... ]
 
 /* ------------------------------------------------------------------ */
 /* --- INICIO DE ESTILOS PERSONALIZADOS --- */
@@ -40,7 +14,21 @@ $color-text-main: #1E1E1E;
 $color-success: #3CB371;
 $color-error: #E63946;
 
-// 2. ESTILOS GLOBALES (Sugerencia)
+// 2. DEFINICIÓN DE VARIABLES CSS NATIVAS (CSS Custom Properties)
+// ESTO ES PARA EL LAYOUT DEL LOG-IN (app-layout, main)
+:root {
+  /* Fondo principal de la aplicación */
+  --background-color: #{$color-neutral-light}; 
+  /* Fondo del contenedor principal */
+  --main-bg: #{$color-neutral-light}; 
+  /* Fondo para la barra lateral (la hacemos oscura) */
+  --sidebar-bg: #1E1E1E; 
+
+  /* Variables para la tipografía */
+  --main-text-color: #{$color-text-main};
+}
+
+// 3. ESTILOS GLOBALES BASE
 body {
   // Sobrescribe el fondo por defecto de Material por el nuestro.
   background-color: $color-neutral-light;
@@ -48,9 +36,17 @@ body {
   color: $color-text-main;
 }
 
-// 3. REGLAS DE MATERIAL (Si queremos configurar Material para usar nuestros colores)
-// La forma más avanzada sería crear un tema custom para Material,
-// pero por ahora, usamos el color-primary definido ya:
+// 4. REGLA ESPECÍFICA DE LOGIN (Para que el login sea azul como en Figma)
+// Esta regla sobrescribe el --background-color por defecto cuando el login está activo.
+:host-context(app-login) {
+    .app-layout, main {
+        /* Usamos el color primario (#009CA6) como fondo para el login, 
+           anulando el valor neutro definido arriba. */
+        background-color: $color-primary !important;
+    }
+}
+
+// 5. REGLAS DE MATERIAL (Si queremos configurar Material para usar nuestros colores)
 .mat-toolbar.mat-primary {
   background-color: $color-primary !important;
 }
