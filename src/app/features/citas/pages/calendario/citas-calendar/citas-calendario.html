@@ -1,0 +1,25 @@
+<h1>Calendario de Citas</h1>
+    <div style="text-align:center;">
+      <button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">Anterior</button>
+      <button mwlCalendarToday [(viewDate)]="viewDate">Hoy</button>
+      <button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">Siguiente</button>
+
+      <h3>{{ viewDate | calendarDate: view + 'ViewTitle' : locale }}</h3>
+
+      <button (click)="setView(CalendarView.Month)">Mes</button>
+      <button (click)="setView(CalendarView.Week)">Semana</button>
+      <button (click)="setView(CalendarView.Day)">Día</button>
+    </div>
+
+    @switch (view) {
+      @case (CalendarView.Month) {
+        <mwl-calendar-month-view [locale]="locale" [viewDate]="viewDate" [events]="events" />
+      }
+      @case (CalendarView.Week) {
+        <mwl-calendar-week-view [locale]="locale" [viewDate]="viewDate" [events]="events" />
+      }
+      @case (CalendarView.Day) {
+        <mwl-calendar-day-view [locale]="locale" [viewDate]="viewDate" [events]="events" />
+      }
+    }
+
