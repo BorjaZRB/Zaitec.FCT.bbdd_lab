@@ -8,8 +8,15 @@ export const routes: Routes = [
   // Ruta para el componente de login
   path: '',
   component:LoginComponent,
+},
+{
+
+  path: 'Login',
+  component:LoginComponent,
   title:'Inicio'
 },
+
+
 {
   path: 'citas',
   component:CitasComponent,
@@ -19,6 +26,7 @@ export const routes: Routes = [
   component: CitasCalendarioComponent,
   title: 'Calendario de Citas'
 },
+
 
 
 

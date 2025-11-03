@@ -4,7 +4,7 @@ import { createClient, SupabaseClient, Session, User } from '@supabase/supabase-
 // BehaviorSubject permite manejar el estado de la sesión de usuario de forma reactiva.
 import { BehaviorSubject } from 'rxjs';
 // Importa la configuración del entorno para obtener la URL y clave de Supabase.
-import { environment } from '../../../environments/environments/environments';
+import { environment } from '../../../enviroments/environment';
 
 
 
@@ -23,7 +23,7 @@ private session$ = new BehaviorSubject<Session | null>(null);
 
 constructor() {
 this.supabase = createClient(environment.supabaseUrl,
-environment.supabaseAnonKey);
+environment.supabaseKey);
 
 // Recuperar sesión ya existente al iniciar la app
 //  al inicio: recupera sesión guardada (por ejemplo, en localStorage o en el cliente

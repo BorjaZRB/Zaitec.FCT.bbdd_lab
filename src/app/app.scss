@@ -1,0 +1,31 @@
+.app-layout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+/* Barra lateral */
+app-navbar {
+  width: 80px; /* ajusta según tu diseño */
+  flex-shrink: 0;
+  background-color: var(--sidebar-bg, #2c2c2c);
+}
+/* Contenedor principal */
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;     /* centra verticalmente */
+  justify-content: center; /* centra horizontalmente */
+  padding: 1rem;
+  background-color: var(--main-bg, #f9f9f9);
+}
+
+/* Para el login (si quieres que no aparezca navbar y ocupe todo) */
+:host-context(app-login) .app-layout {
+  flex-direction: column;
+}
+
+:host-context(app-login) main {
+  width: 100%;
+  padding: 0;
+}
