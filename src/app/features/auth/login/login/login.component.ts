@@ -9,8 +9,8 @@ import { AuthService } from '../../../../core/services/AuthService';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.html',
-  styleUrls: ['./login.scss'],
+  templateUrl: './login.component.html', 
+  styleUrls: ['./login.component.scss'],
   standalone: true,
   imports: [
     CommonModule, 
