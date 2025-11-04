@@ -1,25 +1,66 @@
-<h1>Calendario de Citas</h1>
-    <div style="text-align:center;">
-      <button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">Anterior</button>
-      <button mwlCalendarToday [(viewDate)]="viewDate">Hoy</button>
-      <button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">Siguiente</button>
+<div class="calendar-container">
+  <h1>Calendario de Citas</h1>
 
-      <h3>{{ viewDate | calendarDate: view + 'ViewTitle' : locale }}</h3>
-
-      <button (click)="setView(CalendarView.Month)">Mes</button>
-      <button (click)="setView(CalendarView.Week)">Semana</button>
-      <button (click)="setView(CalendarView.Day)">Día</button>
+  <div class="calendar-header">
+    <div class="calendar-navigation">
+      <button mat-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+        Anterior
+      </button>
+      <button mat-button mwlCalendarToday [(viewDate)]="viewDate">
+        Hoy
+      </button>
+      <button mat-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+        Siguiente
+      </button>
     </div>
 
-    @switch (view) {
-      @case (CalendarView.Month) {
-        <mwl-calendar-month-view [locale]="locale" [viewDate]="viewDate" [events]="events" />
-      }
-      @case (CalendarView.Week) {
-        <mwl-calendar-week-view [locale]="locale" [viewDate]="viewDate" [events]="events" />
-      }
-      @case (CalendarView.Day) {
-        <mwl-calendar-day-view [locale]="locale" [viewDate]="viewDate" [events]="events" />
-      }
-    }
+    <h3>{{ viewDate | calendarDate: view + 'ViewTitle' : locale }}</h3>
+
+    <div class="view-options">
+      <button mat-button [class.active]="view === CalendarView.Month" (click)="setView(CalendarView.Month)">
+        Mes
+      </button>
+      <button mat-button [class.active]="view === CalendarView.Week" (click)="setView(CalendarView.Week)">
+        Semana
+      </button>
+      <button mat-button [class.active]="view === CalendarView.Day" (click)="setView(CalendarView.Day)">
+        Día
+      </button>
+    </div>
+  </div>
+
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="CalendarView.Month"
+      [viewDate]="viewDate"
+      [events]="events"
+      [locale]="locale"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event)"
+      (eventClicked)="editEvent($event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-month-view>
+
+    <mwl-calendar-week-view
+      *ngSwitchCase="CalendarView.Week"
+      [viewDate]="viewDate"
+      [events]="events"
+      [locale]="locale"
+      (eventClicked)="editEvent($event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-week-view>
+
+    <mwl-calendar-day-view
+      *ngSwitchCase="CalendarView.Day"
+      [viewDate]="viewDate"
+      [events]="events"
+      [locale]="locale"
+      (eventClicked)="editEvent($event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-day-view>
+  </div>
+</div>
 

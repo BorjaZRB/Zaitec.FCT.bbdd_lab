@@ -43,20 +43,51 @@ this.session$.next(session);
 
 // Método para login de clientes con email y password.
 async loginCliente(email: string, password: string) {
-  const { data, error } = await this.supabase.auth.signInWithPassword({ email, password });
+  try {
+    // Validar login con Supabase Auth
+    const { data, error } = await this.supabase.auth.signInWithPassword({
+      email,
+      password
+    });
 
+    if (error || !data.user) {
+      return { success: false, message: 'Correo o contraseña incorrectos' };
+    }
 
-  //Mensaje que indica si el login fue correcto o si hubo un error.
-  if (error) {
-    return { success: false, message: error.message };
+    const userAuth = data.user;
+
+    // Buscar datos extras del usuario en tu tabla
+    const { data: userExtra, error: errorExtra } = await this.supabase
+      .from('usuario_prueba')
+      .select('*')
+      .eq('email', email)
+      .single();
+
+    if (errorExtra || !userExtra) {
+      console.warn('Usuario autenticado pero no encontrado en usuario_prueba');
+      return {
+        success: true,
+        message: 'Login correcto pero faltan datos adicionales',
+        user: userAuth
+      };
+    }
+
+    // Guardar datos completos en localStorage
+    localStorage.setItem('usuario', JSON.stringify(userExtra));
+
+    return {
+      success: true,
+      message: 'Inicio de sesión exitoso',
+      user: userExtra,
+      session: data.session
+    };
+
+  } catch (err: any) {
+    return {
+      success: false,
+      message: 'Error inesperado al iniciar sesión'
+    };
   }
-
-  return {
-    success: true,
-    message: 'Inicio de sesión exitoso',
-    user: data.user,
-    session: data.session,
-  };
 }
 
 

@@ -21,12 +21,6 @@ export const routes: Routes = [
     import('./features/citas/routes').then(m => m.CITAS_ROUTES)
 },
 
-
-{
-  path: 'citas',
-  component:CitasComponent,
-  title: 'Citas'
-},
 { path: 'calendario',
   component: CitasCalendarioComponent,
   title: 'Calendario de Citas'
