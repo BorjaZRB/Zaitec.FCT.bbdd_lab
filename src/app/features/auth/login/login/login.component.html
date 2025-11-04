@@ -20,12 +20,14 @@
             formControlName="email"
             placeholder="Introduzca su usuario"
           />
+          @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
           <div
-            *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+
             class="error"
           >
             Correo obligatorio y válido.
           </div>
+        }
         </div>
 
         <div class="form-group">
@@ -61,16 +63,19 @@
           {{ loading ? 'Iniciando sesión...' : 'Log in' }}
         </button>
 
-        <div
-          *ngIf="message"
-          class="message"
-          [ngClass]="{
-            success: message.includes('correcta'),
-            error: message.includes('incorrectos')
-          }"
-        >
-          {{ message }}
-        </div>
+
+        @if (message) {
+  <div
+    class="message"
+    [ngClass]="{
+      success: message.includes('correcta'),
+      error: message.includes('incorrectos')
+    }"
+  >
+    {{ message }}
+  </div>
+}
+
       </form>
     </div>
   </div>

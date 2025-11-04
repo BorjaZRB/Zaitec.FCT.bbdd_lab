@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { Navbar } from "./shared/components/Navbar/Navbar/Navbar";
+import { Navbar } from "./shared/components/Navbar/Navbar/Navbar.component";
 import { CommonModule } from '@angular/common';
-import { C } from '@angular/cdk/keycodes';
+
 
 @Component({
   selector: 'app-root',

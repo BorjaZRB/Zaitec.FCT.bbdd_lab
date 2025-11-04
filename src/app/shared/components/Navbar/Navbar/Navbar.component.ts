@@ -5,8 +5,8 @@ import { RouterLink,RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   imports: [RouterLink],
-  templateUrl: './Navbar.html',
-  styleUrls: ['./Navbar.css'],
+  templateUrl: './Navbar.component.html',
+  styleUrls: ['./Navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Navbar { }

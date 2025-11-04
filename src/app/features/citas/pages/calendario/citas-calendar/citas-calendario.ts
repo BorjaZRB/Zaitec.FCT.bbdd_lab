@@ -1,20 +1,12 @@
 import { Component } from '@angular/core';
 import {
-  DateAdapter,
-  provideCalendar,
-  CalendarPreviousViewDirective,
-  CalendarTodayDirective,
-  CalendarNextViewDirective,
-  CalendarMonthViewComponent,
-  CalendarWeekViewComponent,
-  CalendarDayViewComponent,
+  CalendarModule,
   CalendarEvent,
   CalendarView,
-  CalendarDatePipe,
+  DateAdapter,
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
-import { registerLocaleData, TitleCasePipe} from '@angular/common';
+import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
 registerLocaleData(localeEs);
@@ -23,29 +15,24 @@ registerLocaleData(localeEs);
   selector: 'app-citas-calendario',
   standalone: true,
   imports: [
-    CalendarPreviousViewDirective,
-    CalendarTodayDirective,
-    CalendarNextViewDirective,
-    CalendarMonthViewComponent,
-    CalendarWeekViewComponent,
-    CalendarDayViewComponent,
-    CalendarDatePipe,
+    CalendarModule
   ],
   providers: [
-    provideCalendar({
+    {
       provide: DateAdapter,
       useFactory: adapterFactory,
-    }),
+    },
   ],
   templateUrl: './citas-calendario.html',
   styleUrl: './citas-calendario.scss',
 })
 export class CitasCalendarioComponent {
-  readonly CalendarView = CalendarView;
-  viewDate = new Date();
-  view: CalendarView = CalendarView.Month;
 
-  locale: string = "es"
+  readonly CalendarView = CalendarView;
+  view: CalendarView = CalendarView.Month;
+  viewDate = new Date();
+  locale: string = 'es';
+
   events: CalendarEvent[] = [
     {
       start: new Date(),
