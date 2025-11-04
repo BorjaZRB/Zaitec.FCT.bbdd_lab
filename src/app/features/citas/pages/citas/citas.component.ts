@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // <-- Añadido de feature/EP-03-Agenda-Citas
-import { MatButtonModule } from '@angular/material/button'; // <-- Añadido de feature/EP-03-Agenda-Citas
-import { MatIconModule } from '@angular/material/icon';     // <-- Añadido de feature/EP-03-Agenda-Citas
-import { MatTableModule } from '@angular/material/table';   // <-- Añadido de feature/EP-03-Agenda-Citas
-import { MatCardModule } from '@angular/material/card';     // <-- Añadido de feature/EP-03-Agenda-Citas
+import { CommonModule } from '@angular/common'; 
+import { MatButtonModule } from '@angular/material/button'; 
+import { MatIconModule } from '@angular/material/icon';     
+import { MatTableModule } from '@angular/material/table';   
+import { MatCardModule } from '@angular/material/card';     
 
-// 1. IMPORTACIÓN DE LOS DATOS Y SERVICIOS DE feature/EP-03-Agenda-Citas
-import { CitasService } from '../../data/citas.service'; // Ruta al servicio
-import { Appointment } from '../../types';  // Tipo de datos (Ajusta la ruta si 'types' está en otra carpeta)
+// 1. IMPORTACIÓN DE LOS DATOS Y SERVICIOS
+import { CitasService } from '../../data/citas.service'; 
+import { Appointment } from '../../types';  
 
 @Component({
   selector: 'app-citas',
   standalone: true,
-  // 2. FUSIÓN DE IMPORTS
+  // 2. IMPORTS NECESARIOS PARA EL TEMPLATE
   imports: [
     CommonModule,
     MatButtonModule,
@@ -24,7 +24,7 @@ import { Appointment } from '../../types';  // Tipo de datos (Ajusta la ruta si 
   styleUrl: './citas.component.scss'
 })
 
-// 3. FUSIÓN DE LA CLASE: Inyección y Lógica de Datos
+// 3. CLASE
 export class CitasComponent {
 
   displayedColumns: string[] = ['fecha', 'paciente', 'tipoAnalisis', 'centro', 'estado', 'acciones'];
@@ -32,7 +32,7 @@ export class CitasComponent {
   // La fuente de datos es ahora el tipo Appointment
   dataSource: Appointment[] = []; 
 
-  // 4. INYECCIÓN DEL SERVICIO DE feature/EP-03-Agenda-Citas
+  // 4. INYECCIÓN DEL SERVICIO
   constructor(private citasService: CitasService) {
       // Obtener las citas reales del servicio al inicializar el componente
       this.dataSource = this.citasService.listAppointments();

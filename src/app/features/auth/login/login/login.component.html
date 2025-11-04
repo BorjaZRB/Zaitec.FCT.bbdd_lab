@@ -1,0 +1,53 @@
+<div class="login-container">
+  
+  <div class="login-card"> 
+    
+    <div class="login-left">
+      <div class="overlay">
+        <h2 style="color: white; font-size: 2rem; text-align: center;">Posible texto o imagen de la empresa</h2>
+      </div>
+    </div>
+
+    <div class="login-right">
+      <div class="login-box">
+        
+        <h1>Inicio de sesión</h1>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          
+          <mat-form-field appearance="outline" class="full-width-input">
+            <mat-label>Usuario</mat-label>
+            <input matInput type="email" id="email" formControlName="email" placeholder="Introduzca su usuario" />
+            <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+              Correo obligatorio y válido.
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="full-width-input">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Introduzca su contraseña" />
+            
+            <button mat-icon-button matSuffix (click)="togglePassword()" type="button" aria-label="Mostrar u ocultar contraseña">
+              <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            
+            <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+              Contraseña obligatoria.
+            </mat-error>
+          </mat-form-field>
+
+          <button type="submit" mat-flat-button color="primary" [disabled]="loading || loginForm.invalid">
+            {{ loading ? 'Iniciando sesión...' : 'Log in' }}
+          </button>
+
+          <div *ngIf="message" class="message" [ngClass]="{
+              success: message.includes('correcta'),
+              error: message.includes('incorrectos')
+            }">
+            {{ message }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> 
+</div>
