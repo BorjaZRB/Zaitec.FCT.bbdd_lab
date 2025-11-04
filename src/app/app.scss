@@ -4,20 +4,28 @@
   min-height: 100vh;
   background-color: var(--background-color);
 }
+
 /* Barra lateral */
 app-navbar {
-  width: 80px; /* ajusta según tu diseño */
+  width: 90px;
   flex-shrink: 0;
-  background-color: var(--sidebar-bg, #2c2c2c);
+  background-color: var(--sidebar-bg, #009CA6);
+  transition: transform 0.3s ease-in-out;
 }
+
 /* Contenedor principal */
 main {
   flex: 1;
   display: flex;
-  align-items: center;     /* centra verticalmente */
-  justify-content: center; /* centra horizontalmente */
+  align-items: center;
+  justify-content: center;
   padding: 1rem;
   background-color: var(--main-bg, #f9f9f9);
+  transition: margin-left 0.3s ease-in-out;
+
+  &.with-navbar {
+    margin-left: 90px;
+  }
 }
 
 /* Para el login (si quieres que no aparezca navbar y ocupe todo) */

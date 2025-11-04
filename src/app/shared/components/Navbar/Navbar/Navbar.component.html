@@ -3,12 +3,23 @@
     <div class="user-icon">
       <i class="fa fa-user-circle"></i>
     </div>
+    @if (userName) {
+      <div class="user-welcome">
+        <p class="welcome-text">Bienvenido:</p>
+        <p class="user-name">{{ userName }}</p>
+      </div>
+    }
   </div>
   <nav>
     <ul>
+      @if (!userName) {
+        <li><a routerLink="/Login" routerLinkActive="active"><i class="fa fa-sign-in-alt"></i> <span>Login</span></a></li>
+      }
       <li><a routerLink="/calendario" routerLinkActive="active"><i class="fa fa-calendar-alt"></i> <span>Calendario</span></a></li>
       <li><a routerLink="/citas" routerLinkActive="active"><i class="fa fa-calendar"></i> <span>Citas</span></a></li>
-      <li><a routerLink="/Login" routerLinkActive="active"><i class="fa fa-sign-in-alt"></i> <span>Login</span></a></li>
+      @if (userName) {
+        <li><a href="#" (click)="onLogout($event)" class="logout-link"><i class="fa fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
+      }
     </ul>
   </nav>
 </div>

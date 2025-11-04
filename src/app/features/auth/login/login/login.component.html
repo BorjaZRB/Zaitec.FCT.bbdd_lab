@@ -1,9 +1,7 @@
 <div class="login-container">
   <!-- Lado Izquierdo -->
   <div class="login-left">
-    <div class="overlay">
-      <h2>Posible imagen de la empresa</h2>
-    </div>
+    <img src="/login-bg.png" alt="Imagen de inicio de sesión" />
   </div>
 
   <!-- Lado Derecho -->
@@ -51,12 +49,15 @@
                 >{{ showPassword ? 'visibility_off' : 'visibility' }}</i>
             </button>
           </div>
-          <div
-            *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-            class="error"
-          >
-            Contraseña obligatoria.
+
+         <div class="error">
+              @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+                    Contraseña obligatoria.
+                        }
           </div>
+
+
+
         </div>
 
         <button type="submit" [disabled]="loading || loginForm.invalid">
