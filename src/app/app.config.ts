@@ -1,25 +1,28 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations'; // <--Proveedor de animaciones
-import { provideHttpClient } from '@angular/common/http'; // <--Recomendado para peticiones HTTP
+import { provideAnimations } from '@angular/platform-browser/animations'; // NECESARIO
+import { provideHttpClient } from '@angular/common/http'; // NECESARIO
 
-// 1. IMPORTAR EL SERVICIO (RUTA DESDE app.config.ts)
-import { CitasService } from './features/citas/data/citas.service'; 
 import { routes } from './app.routes'; 
+
+// Importación única del servicio de citas (Se elimina el duplicado)
+import { CitasService } from './features/citas/data/citas.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    // --- PROVEEDORES DE feature/EP-03-Agenda-Citas ---
+    // --- PROVEEDORES BASE (Mantenemos la optimización de AUTH-003) ---
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
     
-    // --- PROVEEDORES AUTH-004 ---
-    provideAnimations(), // Necesario para Angular Material
-    provideHttpClient(), // Para peticiones HTTP
+    // --- PROVEEDORES ESENCIALES AÑADIDOS EN AUTH-004 ---
+    // (provideAnimations resuelve problemas de rendering y provideHttpClient es para API)
+    provideAnimations(), 
+    provideHttpClient(), 
 
-    // REGISTRo DEL SERVICIO
+    // --- REGISTRO DEL SERVICIO DE CITAS ---
     CitasService, 
 
-    // Opcional para más adelante: provideBrowserGlobalErrorListeners()
+    // Si tu compañero tenía este, puedes añadirlo de vuelta:
+    // provideBrowserGlobalErrorListeners(), 
   ]
 };

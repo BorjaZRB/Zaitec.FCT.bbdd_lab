@@ -1,33 +1,43 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './features/auth/login/login/login';
-import { CitasService } from './features/citas/data/citas.service';
+// Importación de los componentes
+import { LoginComponent } from './features/auth/login/login/login.component'; 
 
-export const appConfig: ApplicationConfig = {
-  providers: [
-    // ... otros providers (router, animations, http, etc.)
-    
-    CitasService, // <<-- REGISTRO DEL SERVICIO AQUÍ
-  ]
-};
 export const routes: Routes = [
-{
-  // Ruta para el componente de login
-  path: '',
-  component:LoginComponent,
-}, {
-  path: 'citas',
-  loadChildren: () =>
-    import('./features/citas/routes').then(m => m.CITAS_ROUTES)
-},
-// RUTAS AUTH-004 
-{
-  path: 'home',
-  loadComponent: () =>
-    import('./features/home/pages/home/home.component').then(
-      (m) => m.HomeComponent
-    ),
-},
-  // ...
+  
+  // 1. RUTA DE INICIO (Login)
+  {
+    path: '',
+    component: LoginComponent,
+    pathMatch: 'full'
+  },
+  
+  // 2. RUTA HOME (Dashboard)
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./features/home/pages/home/home.component').then(
+        (m) => m.HomeComponent
+      ),
+  }, 
+  
+  // 3. RUTA DE CITAS
+  {
+    path: 'citas',
+    loadComponent: () =>
+      import('./features/citas/pages/citas/citas.component').then(
+        (m) => m.CitasComponent
+      ),
+  },
+
+  // 4. RUTA GESTIÓN DE PACIENTES 
+  {
+    path: 'pacientes',
+    loadComponent: () =>
+      import('./features/patients/pages/list/list.component').then(
+        (m) => m.ListComponent
+      ),
+  },
+
+  // 5. RUTA DE FALLBACK
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
-
-

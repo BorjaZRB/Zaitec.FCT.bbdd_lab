@@ -1,0 +1,105 @@
+.sidebar {
+  background-color: #009CA6;
+  color: white;
+  width: 90px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  position: fixed;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.user-section {
+  margin-bottom: 40px;
+}
+
+.user-icon i {
+  font-size: 3rem;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+nav li {
+  width: 100%;
+}
+
+nav a {
+  color:white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+nav a i {
+  font-size: 1.2rem;
+}
+
+/* Expand sidebar on hover (desktop only) */
+@media (min-width: 769px) {
+  .sidebar:hover {
+    width: 220px;
+  }
+
+  .sidebar:hover span {
+    display: inline;
+  }
+
+  nav a span {
+    display: none;
+  }
+}
+
+/* 🔹 Mobile version (fixed bottom bar) */
+@media (max-width: 768px) {
+  .sidebar {
+    flex-direction: row;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    justify-content: space-around;
+    position: fixed;
+    padding-top: 0;
+  }
+
+  .user-section {
+    display: none;
+  }
+
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  nav a {
+    flex-direction: column;
+    font-size: 0.8rem;
+    padding: 5px 0;
+  }
+
+  nav a i {
+    font-size: 1.3rem;
+  }
+
+  nav a span {
+    display: block;
+  }
+}

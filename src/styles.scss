@@ -1,39 +1,47 @@
+/* ------------------------------------------------------------------ */
+/* --- INICIO DE ESTILOS PERSONALIZADOS --- */
+/* ------------------------------------------------------------------ */
 
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
+// 1. DEFINICIÓN DE VARIABLES SCSS
+$color-primary: #009CA6;
+$color-secondary: #007780;
+$color-neutral-light: #F5F8FA;
+$color-text-main: #1E1E1E;
+$color-success: #3CB371;
+$color-error: #E63946;
 
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+// 2. DEFINICIÓN DE VARIABLES CSS NATIVAS (CSS Custom Properties)
+:root {
+  /* Fondo principal de la aplicación */
+  --background-color: #{$color-neutral-light}; 
+  /* Fondo del contenedor principal */
+  --main-bg: #{$color-neutral-light}; 
+  /* Fondo para la barra lateral (la hacemos oscura) */
+  --sidebar-bg: #1E1E1E; 
+  /* Variables para la tipografía */
+  --main-text-color: #{$color-text-main};
 }
 
+// 3. ESTILOS GLOBALES BASE
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
+  // Sobrescribe el fondo por defecto de Material por el nuestro.
+  background-color: $color-neutral-light;
+  // Sobrescribe el color de texto por defecto.
+  color: $color-text-main;
 }
-/* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// 4. REGLA ESPECÍFICA DE LOGIN
+:host-context(app-login) {
+  .app-layout, main {
+    background-color: $color-primary !important;
+  }
+}
+
+// 5. REGLAS DE MATERIAL
+.mat-toolbar.mat-primary {
+  background-color: $color-primary !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* --- FIN DE ESTILOS PERSONALIZADOS --- */
+/* ------------------------------------------------------------------ */
