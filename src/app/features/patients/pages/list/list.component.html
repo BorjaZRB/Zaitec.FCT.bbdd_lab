@@ -1,4 +1,21 @@
-<table mat-table [dataSource]="dataSource" class="full-width-table">
+<mat-card class="patients-card">
+  <mat-card-header>
+    <mat-card-title>Gestión de Pacientes</mat-card-title>
+    <mat-card-subtitle>Listado de pacientes (Humanos y Veterinarios)</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    
+    <button 
+      mat-flat-button 
+      color="primary" 
+      class="mb-4"
+      (click)="openNewPatientDialog()">
+      <mat-icon>add</mat-icon>
+      Nuevo Paciente
+    </button>
+
+    <table mat-table [dataSource]="dataSource" class="full-width-table">
       
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -44,6 +61,5 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    
-  </mat-card-content>
+    </mat-card-content>
 </mat-card>

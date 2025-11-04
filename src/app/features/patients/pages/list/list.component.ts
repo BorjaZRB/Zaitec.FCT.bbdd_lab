@@ -1,18 +1,37 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+// --- MÓDULOS DE MATERIAL NECESARIOS ---
+import { MatTableModule } from '@angular/material/table'; 
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'; 
+
+// Importación del servicio y los tipos
 import { PatientsService } from '../../data/patients.service'; 
 import { Patient } from '../../data/patients.types';
+import { FormDialog } from '../../components/form-dialog.component';
 
 @Component({
   selector: 'app-list',
   standalone: true, 
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatDialogModule, // Ya lo tenías
+    // --- ¡MÓDULOS REQUERIDOS POR EL TEMPLATE! ---
+    MatTableModule, 
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
+    // ---------------------------------------------
+  ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'], 
 })
 export class ListComponent {
+  
   // Definimos las columnas que se mostrarán en la tabla
-  // Añadimos 'type' (Humano/Animal) y combinamos la identificación.
   displayedColumns: string[] = [
     'id', 
     'identificationCode', 
@@ -24,7 +43,28 @@ export class ListComponent {
 
   dataSource: Patient[] = [];
 
-  constructor(private patientsService: PatientsService) {
-      this.dataSource = this.patientsService.listPatients();
+  // Inyección de dependencias
+  constructor(
+    private patientsService: PatientsService, 
+    public dialog: MatDialog
+  ) {
+    this.dataSource = this.patientsService.listPatients();
   }
+
+  // Método para abrir el modal:
+  openNewPatientDialog() {
+    this.dialog.open(FormDialog, { // <--- CORREGIDO AQUÍ
+      width: '600px', 
+      data: { isEdit: false } 
+    });
+  }
+
+  // Modificación del método de edición para abrir el modal con datos:
+  editPatient(patient: Patient) {
+    this.dialog.open(FormDialog, { 
+      width: '600px',
+      data: { isEdit: true, patient: patient } 
+    });
+  }
+  
 }
