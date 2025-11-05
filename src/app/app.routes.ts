@@ -19,12 +19,8 @@ export const routes: Routes = [
 
 {
   path: 'citas',
-  component:CitasComponent,
+  component:CitasCalendarioComponent,
   title: 'Citas'
-},
-{ path: 'calendario',
-  component: CitasCalendarioComponent,
-  title: 'Calendario de Citas'
 },
 
 
