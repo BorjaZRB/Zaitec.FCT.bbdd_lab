@@ -1,0 +1,78 @@
+:host {
+  display: block;
+  width: 100%;
+  align-self: stretch;
+}
+
+.citas-calendario {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.calendario-main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.calendario-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.calendario-controls__nav,
+.calendario-controls__views {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.calendario-controls__title {
+  text-align: center;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.calendario-main__body {
+  width: 100%;
+}
+
+.calendario-main__body ::ng-deep mwl-calendar-month-view,
+.calendario-main__body ::ng-deep mwl-calendar-week-view,
+.calendario-main__body ::ng-deep mwl-calendar-day-view {
+  width: 100%;
+}
+
+.calendario-panel {
+  flex: 0 0 320px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.calendario-panel__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.calendario-panel__action {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .citas-calendario {
+    flex-direction: column;
+  }
+
+  .calendario-panel {
+    width: 100%;
+    max-width: none;
+  }
+}
