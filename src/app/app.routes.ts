@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login/login.component';
 import { CitasCalendarioComponent } from './features/citas/pages/calendario/citas-calendar/citas-calendario';
 import { CitasComponent } from './features/citas/pages/citas/citas.component';
+import { CitasListPage } from './features/citas/pages/list/citas-list.page';
 
 export const routes: Routes = [
 {
@@ -17,7 +18,7 @@ export const routes: Routes = [
 },
 {
   path: 'citas',
-  component: CitasComponent,
+  component: CitasListPage,
   title: 'Citas'
 },
 {

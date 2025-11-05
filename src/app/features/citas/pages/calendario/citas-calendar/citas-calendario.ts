@@ -17,6 +17,7 @@ import { CitasAdd } from '../../../components/citas-add/citas-add';
 import { CitasListPage } from '../../list/citas-list.page';
 import { Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { CdkOverlayOrigin } from "@angular/cdk/overlay";
 
 registerLocaleData(localeEs);
 
@@ -29,7 +30,8 @@ registerLocaleData(localeEs);
     FormsModule,
     CitasAdd,
     CitasListPage,
-  ],
+    // CdkOverlayOrigin
+],
   providers: [
     {
       provide: DateAdapter,
@@ -75,27 +77,11 @@ export class CitasCalendarioComponent {
     return new Date (y, m - 1, d, hh, mm)
   }
 
-  mostrarFormularioAdd: boolean = false
-
-  togleFormAdd(){
-    this.mostrarFormularioAdd = !this.mostrarFormularioAdd
-  }
-
    mostrarLista: boolean = false
 
   togleList(){
     this.mostrarLista = !this.mostrarLista
   }
-
-  onNuevaCita(cita: Cita) {
-    const id = crypto.randomUUID()
-    const completa: Cita = {...cita, id}
-
-    this.citaSrv.addCita(completa) //guardamos
-    console.log('Cita añadida: ', cita)
-
-  }
-
 
   setView(view: CalendarView) {
     this.view = view;
