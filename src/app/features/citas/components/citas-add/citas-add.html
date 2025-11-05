@@ -1,0 +1,44 @@
+<div>
+  <form action="">
+    <div>
+
+      <label for="paciente">Paciente: </label>
+      <input type="text" name="paciente" [value]="pacienteId()" (input)="pacienteId.set($any($event.target).value)" placeholder="Nombre del paciente" >
+
+    </div> <br>
+    <div>
+
+      <label for="fecha">Fecha de la cita: </label>
+      <input type="date" name="fecha" [value]="date()" (input)="date.set($any($event.target).value)">
+
+    </div> <br>
+
+    <div>
+
+      <label for="hora-inicio">Desde: </label>
+      <input type="time" name="hora-inicio" [value]="startTime()" (input)="startTime.set($any($event.target).value)">
+
+    </div> <br>
+
+    <div>
+
+      <label for="hora-fin">Hasta: </label>
+      <input type="time" name="hora-fin" [value]="endTime()" (input)="endTime.set($any($event.target).value)">
+
+    </div> <br>
+    <div>
+
+      <label for="profesional">Profesional: </label>
+      <input type="text" name="profesional" placeholder="ID del profesional" [value]="profesionalId()" (input)="profesionalId.set($any($event.target).value)">
+
+    </div> <br>
+    <div>
+
+      <label for="notas">Notas: </label>
+      <input type="text" name="notas" [value]="notes()" (input)="notes.set($any($event.target).value)" placeholder="Añade información sobre la cita.">
+
+    </div> <br>
+
+    <button (click)="addCita()">Crear cita</button>
+  </form>
+</div>

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/AuthService';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.html',
-  styleUrls: ['./login.css'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
 })
@@ -16,7 +17,11 @@ export class LoginComponent {
   message = '';
   showPassword = false; // propiedad para alternar visibilidad
 
-  constructor(private fb: FormBuilder, private supabase: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private supabase: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -42,5 +47,10 @@ export class LoginComponent {
 
     this.message = message;
     this.loading = false;
+
+    if (success) {
+      // Redirigir al calendario después de un login exitoso
+      this.router.navigate(['/calendario']);
+    }
   }
 }

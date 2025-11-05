@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './features/auth/login/login/login';
+import { LoginComponent } from './features/auth/login/login/login.component';
 import { CitasCalendarioComponent } from './features/citas/pages/calendario/citas-calendar/citas-calendario';
 import { CitasComponent } from './features/citas/pages/citas/citas.component';
 
@@ -15,14 +15,13 @@ export const routes: Routes = [
   component:LoginComponent,
   title:'Inicio'
 },
-
-
 {
   path: 'citas',
-  component:CitasComponent,
+  component: CitasComponent,
   title: 'Citas'
 },
-{ path: 'calendario',
+{
+  path: 'calendario',
   component: CitasCalendarioComponent,
   title: 'Calendario de Citas'
 },
