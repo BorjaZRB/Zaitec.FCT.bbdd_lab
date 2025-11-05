@@ -17,8 +17,13 @@ export const routes: Routes = [
 },
 {
   path: 'citas',
-  component:CitasCalendarioComponent,
+  component: CitasComponent,
   title: 'Citas'
+},
+{
+  path: 'calendario',
+  component: CitasCalendarioComponent,
+  title: 'Calendario de Citas'
 },
 
 

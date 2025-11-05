@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/services/AuthService';
 
@@ -11,8 +12,9 @@ import { AuthService } from '../../../../core/services/AuthService';
   styleUrls: ['./Navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Navbar implements OnInit {
+export class Navbar implements OnInit, OnDestroy {
   userName: string | null = null;
+  private authSub: Subscription | undefined;
 
   constructor(
     private authService: AuthService,
@@ -20,11 +22,34 @@ export class Navbar implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Obtener el usuario del localStorage
+    // Obtener el usuario del localStorage inicialmente
+    this.updateUserFromStorage();
+
+    // Suscribirse a cambios de autenticación para actualizar el nombre
+    this.authSub = this.authService.authState.subscribe((isAuth) => {
+      if (isAuth) {
+        this.updateUserFromStorage();
+      } else {
+        this.userName = null;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.authSub) this.authSub.unsubscribe();
+  }
+
+  private updateUserFromStorage() {
     const userStr = localStorage.getItem('usuario');
     if (userStr) {
-      const user = JSON.parse(userStr);
-      this.userName = user.nombre || user.email;
+      try {
+        const user = JSON.parse(userStr);
+        this.userName = user?.nombre || user?.email || null;
+      } catch {
+        this.userName = null;
+      }
+    } else {
+      this.userName = null;
     }
   }
 
