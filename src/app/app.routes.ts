@@ -17,13 +17,8 @@ export const routes: Routes = [
 },
 {
   path: 'citas',
-  loadChildren: () =>
-    import('./features/citas/routes').then(m => m.CITAS_ROUTES)
-},
-
-{ path: 'calendario',
-  component: CitasCalendarioComponent,
-  title: 'Calendario de Citas'
+  component:CitasCalendarioComponent,
+  title: 'Citas'
 },
 
 
