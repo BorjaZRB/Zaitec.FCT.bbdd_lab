@@ -2,7 +2,7 @@
   @for (c of citas; track c.id) {
     <li>
       <a [routerLink]="['/citas', c.id]">
-        {{ c.patientId }} | {{ c.date }} | {{ c.startTime }} - {{ c.endTime }} | {{ c.status }}
+        {{ c.pacienteId }} | {{ c.date }} | {{ c.startTime }} - {{ c.endTime }} | {{ c.status }}
       </a>
     </li>
   }

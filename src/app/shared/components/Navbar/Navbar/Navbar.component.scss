@@ -8,6 +8,9 @@
   align-items: center;
   padding-top: 20px;
   position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
   transition: width 0.3s ease;
   overflow: hidden;
 }

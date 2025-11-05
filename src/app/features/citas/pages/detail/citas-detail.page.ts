@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CitasService } from '../../data/citas.service';
-import { Appointment, Patient } from '../../types';
+import { Cita, Paciente } from '../../types';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,8 +11,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './citas-detail.page.html',
 })
 export class CitasDetailPage {
-  cita: Appointment | null = null; // la cita actual (una sola)
-  paciente: Patient | null = null;
+  cita: Cita | null = null; // la cita actual (una sola)
+  paciente: Paciente | null = null;
 
   constructor(
     private route: ActivatedRoute,  // 👈 para leer el id de la URL
@@ -23,7 +23,7 @@ export class CitasDetailPage {
 
     // buscamos esa cita en el servicio
     if (id) {
-      this.cita = this.citasSrv.getAppointment(id);
+      this.cita = this.citasSrv.getCitas(id);
     }
   }
 }

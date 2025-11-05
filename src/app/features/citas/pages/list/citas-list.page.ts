@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';   // 👈 para *ngFor / *ngIf
 import { RouterLink } from '@angular/router';
 import { CitasService } from '../../data/citas.service';
-import { Appointment } from '../../types';
+import { Cita } from '../../types';
 
 @Component({
   selector: 'app-citas-list',
@@ -11,9 +11,9 @@ import { Appointment } from '../../types';
   templateUrl: './citas-list.page.html',
 })
 export class CitasListPage {
-  citas: Appointment[] = [];
+  citas: Cita[] = [];
 
   constructor(private citasSrv: CitasService) {
-    this.citas = this.citasSrv.listAppointments(); // 👈 datos mock
+    this.citas = this.citasSrv.listCitas(); // 👈 datos mock
   }
 }
