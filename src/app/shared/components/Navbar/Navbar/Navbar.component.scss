@@ -1,0 +1,176 @@
+.sidebar {
+  background-color: #009CA6;
+  color: white;
+  width: 90px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-top: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.user-section {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.user-icon i {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.user-welcome {
+  margin-top: 10px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.welcome-text {
+  font-size: 0.9rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.user-name {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 5px 0 0 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  padding: 0 0 20px;
+  height: 100%;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  flex-grow: 0;
+}
+
+nav li {
+  width: 100%;
+}
+
+nav a {
+  color:white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 20px;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+}
+
+nav a i {
+  font-size: 1.2rem;
+}
+
+.sidebar:hover nav a {
+  justify-content: flex-start;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.logout-links {
+  margin-top: auto;
+  width: 100%;
+}
+
+
+.logout-link {
+  color: white !important;
+  &:hover {
+    background-color: rgba(255, 68, 68, 0.15) !important;
+  }
+}
+
+/* Expand sidebar on hover (desktop only) */
+@media (min-width: 769px) {
+  .sidebar:hover {
+    width: 220px;
+  }
+
+  .sidebar:hover span {
+    display: inline;
+  }
+
+  nav a span {
+    display: none;
+  }
+}
+
+/* 🔹 Mobile version (fixed bottom bar) */
+@media (max-width: 768px) {
+  .sidebar {
+    flex-direction: row;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    justify-content: space-around;
+    position: fixed;
+    padding-top: 0;
+  }
+
+  .user-section {
+    display: none;
+  }
+
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  nav a {
+    flex-direction: column;
+    font-size: 0.8rem;
+    padding: 5px 0;
+  }
+
+  nav a i {
+    font-size: 1.3rem;
+  }
+
+  nav a span {
+    display: block;
+  }
+}

@@ -55,6 +55,9 @@ body {
   background-color: $color-primary !important;
 }
 
+// 4. IMPORTACIÓN DE ESTILOS DE TERCEROS (Angular Calendar, etc.)
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
 /* ------------------------------------------------------------------ */
 /* --- FIN DE ESTILOS PERSONALIZADOS --- */
 /* ------------------------------------------------------------------ */
