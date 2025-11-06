@@ -8,6 +8,10 @@
       <i class="fa fa-calendar-alt"></i>
       <span>Calendario</span>
     </button>
+     <button class="dashboard-button calendar-btn" routerLink="/resultados-analisis">
+      <i class="fa fa-calendar-alt"></i>
+      <span>Resultados Analisis</span>
+    </button>
 
     <button class="dashboard-button appointments-btn" routerLink="/citas">
       <i class="fa fa-calendar"></i>
@@ -20,10 +24,7 @@
         <span>Perfil</span>
       </button>
 
-      <button class="dashboard-button logout-btn" (click)="onLogout()">
-        <i class="fa fa-sign-out-alt"></i>
-        <span>Cerrar sesión</span>
-      </button>
+      
     } @else {
       <button class="dashboard-button login-btn" routerLink="/Login">
         <i class="fa fa-sign-in-alt"></i>
