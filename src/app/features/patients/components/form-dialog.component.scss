@@ -1,0 +1,36 @@
+/* Estilos para el formulario modal de pacientes */
+
+.full-width {
+    width: 100%; /* Asegura que los campos 
+    Mat-Form-Field ocupen todo el ancho disponible */
+}
+
+.type-selector {
+    margin-bottom: 20px;
+    
+    label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    /* Estilo para espaciar los radio buttons */
+    mat-radio-button {
+        margin-right: 15px;
+    }
+}
+
+/* Espacio entre los campos y secciones */
+mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 500px; /* Ancho para el contenido 
+    del formulario (ajustado al 600px de apertura) */
+    max-width: 100%;
+}
+
+/* Espacio inferior entre el contenido y los botones de acción */
+mat-dialog-actions {
+    padding-top: 20px;
+}

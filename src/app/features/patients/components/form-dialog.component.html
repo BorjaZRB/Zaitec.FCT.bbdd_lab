@@ -6,15 +6,84 @@
   
   <mat-dialog-content class="mat-typography">
 
-    <section class="type-selector">
+    <section class="type-selector mb-4">
       <label>Tipo de Registro:</label>
       <mat-radio-group formControlName="isHuman" aria-label="Seleccionar tipo de paciente">
-        <mat-radio-button [value]="true">Humano</mat-radio-button> 
+        <mat-radio-button [value]="true">Humano</mat-radio-button>
         <mat-radio-button [value]="false" class="ml-4">Veterinario</mat-radio-button>
       </mat-radio-group>
     </section>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ patientForm.get('isHuman')?.value ? 'NUHSA' : 'Código de Ficha' }}</mat-label>
+      <input matInput formControlName="identificationCode" required>
+      <mat-error *ngIf="patientForm.get('identificationCode')?.hasError('required')">
+        Este campo es obligatorio.
+      </mat-error>
+    </mat-form-field>
 
-    </mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="patientForm.get('name')?.hasError('required')">
+        El nombre es obligatorio.
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha de Nacimiento/Registro</mat-label>
+      <input matInput type="date" formControlName="birthdate" required>
+    </mat-form-field>
+
+
+    <ng-container *ngIf="patientForm.get('isHuman')?.value">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Apellidos</mat-label>
+        <input matInput formControlName="surname" required>
+        <mat-error *ngIf="patientForm.get('surname')?.hasError('required')">
+          Los apellidos son obligatorios.
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+        <mat-error *ngIf="patientForm.get('email')?.hasError('email')">
+          Email no válido.
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone">
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="patientForm.get('isHuman')?.value === false">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Especie</mat-label>
+        <mat-select formControlName="species" required>
+          @for (species of speciesOptions; track species) {
+            <mat-option [value]="species">{{ species }}</mat-option>
+          }
+        </mat-select>
+        <mat-error *ngIf="patientForm.get('species')?.hasError('required')">
+          La especie es obligatoria.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Raza</mat-label>
+        <input matInput formControlName="breed">
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre del Dueño</mat-label>
+        <input matInput formControlName="ownerName">
+      </mat-form-field>
+    </ng-container>
+
+  </mat-dialog-content>
 
   <mat-dialog-actions align="end">
     <button mat-button (click)="onCancel()" type="button">Cancelar</button>
