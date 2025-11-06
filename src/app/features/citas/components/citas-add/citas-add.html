@@ -1,3 +1,6 @@
+    <div class="calendario-panel__section">
+      <button class="calendario-panel__action" (click)="togleFormAdd()">Añadir cita</button>
+      @if (mostrarFormularioAdd) {
 <div>
   <form action="">
     <div>
@@ -42,3 +45,8 @@
     <button (click)="addCita()">Crear cita</button>
   </form>
 </div>
+
+
+      }
+    </div>
+
