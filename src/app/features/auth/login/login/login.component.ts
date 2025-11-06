@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../core/services/AuthService';
+
+// --- IMPORTS DE MATERIAL ---
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'; // Necesario para el input en sí
 import { MatIconModule } from '@angular/material/icon'; // Necesario para el toggle
 import { MatButtonModule } from '@angular/material/button'; // Necesario para el botón de login
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../../core/services/AuthService';
+
 
 @Component({
   selector: 'app-login',
@@ -27,7 +31,11 @@ export class LoginComponent {
   message = '';
   showPassword = false; // propiedad para alternar visibilidad
 
-  constructor(private fb: FormBuilder, private supabase: AuthService) {
+  constructor(
+    private fb: FormBuilder, 
+    private supabase: AuthService,
+    private router: Router 
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -53,5 +61,9 @@ export class LoginComponent {
 
     this.message = message;
     this.loading = false;
+
+    if (success) {
+      this.router.navigate(['/calendario']);
+    }
   }
 }
