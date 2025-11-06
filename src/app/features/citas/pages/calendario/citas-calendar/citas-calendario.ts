@@ -1,4 +1,5 @@
-import { Component, LOCALE_ID } from '@angular/core';
+import { Component, LOCALE_ID,   ChangeDetectionStrategy,
+  ViewEncapsulation, } from '@angular/core';
 import {
   CalendarModule,
   CalendarEvent,
@@ -17,13 +18,17 @@ import { CitasAdd } from '../../../components/citas-add/citas-add';
 import { CitasListPage } from '../../list/citas-list.page';
 import { Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { isSameDay, isSameMonth } from 'date-fns';
 import { CdkOverlayOrigin } from "@angular/cdk/overlay";
+
+
 
 registerLocaleData(localeEs);
 
 @Component({
   selector: 'app-citas-calendario',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     CalendarModule,
@@ -32,6 +37,7 @@ registerLocaleData(localeEs);
     CitasListPage,
     // CdkOverlayOrigin
 ],
+  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: DateAdapter,
@@ -47,17 +53,21 @@ registerLocaleData(localeEs);
     },
   ],
   templateUrl: './citas-calendario.html',
-  styleUrls: ['./citas-calendario.scss'],
+  styleUrls: ['./citas-calendario.scss', '../../../../../../../node_modules/angular-calendar/css/angular-calendar.css'],
 })
 export class CitasCalendarioComponent {
   readonly CalendarView = CalendarView;
   viewDate = new Date();
-  view: CalendarView = CalendarView.Day;
+  view: CalendarView = CalendarView.Month;
   locale: string = 'es';
   weekStartsOn: number = 1;
 
-  events: CalendarEvent[] = [];
-  activeDayIsOpen: boolean = false;
+  events: CalendarEvent[] = [
+        {
+      start: new Date(),
+      title: 'An event',
+    },
+  ];
 
   refresh = new Subject<void>();
 
@@ -68,6 +78,16 @@ export class CitasCalendarioComponent {
       title: `Paciente ${c.pacienteId} · ${c.startTime} - ${c.endTime}`,
       start: this.combineDateTime(c.date, c.startTime),
       end: this.combineDateTime(c.date, c.endTime),
+      actions: [
+  {
+    label: '<i class="fas fa-pencil-alt"></i>',
+    onClick: ({ event }) => this.editEvent(event)
+  },
+  {
+    label: '<i class="fas fa-trash-alt"></i>',
+    onClick: ({ event }) => this.deleteEvent(event)
+  }
+]
     }));
   }
 
@@ -87,31 +107,24 @@ export class CitasCalendarioComponent {
     this.view = view;
   }
 
-  dayClicked({ day }: { day: { date: Date }; sourceEvent: MouseEvent | KeyboardEvent }): void {
-    this.activeDayIsOpen = !this.activeDayIsOpen;
-    if (!this.activeDayIsOpen) {
-      this.addEvent(day.date);
+ activeDayIsOpen: boolean = false;
+selectedDate: Date | null = null;
+
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+        this.viewDate = date;
+      }
     }
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-  }
-
-  addEvent(date: Date): void {
+ addEvent(date: Date): void {
     this.events = [
       ...this.events,
       {
