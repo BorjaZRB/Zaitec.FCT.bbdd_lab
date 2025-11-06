@@ -42,12 +42,7 @@
   </div>
 
   <aside class="calendario-panel">
-    <div class="calendario-panel__section">
-      <button class="calendario-panel__action" (click)="togleFormAdd()">Añadir cita</button>
-      @if (mostrarFormularioAdd) {
-        <app-citas-add (newCita)="onNuevaCita($event)"></app-citas-add>
-      }
-    </div>
+  <app-citas-add></app-citas-add>
 
     <div class="calendario-panel__section">
       <button class="calendario-panel__action" (click)="togleList()">Mostrar Citas</button>
