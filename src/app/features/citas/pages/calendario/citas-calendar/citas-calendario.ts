@@ -81,11 +81,11 @@ export class CitasCalendarioComponent {
       actions: [
   {
     label: '<i class="fas fa-pencil-alt"></i>',
-    onClick: ({ event }) => this.editEvent(event)
+    onClick: ({ event }) => this.editCita(event)
   },
   {
     label: '<i class="fas fa-trash-alt"></i>',
-    onClick: ({ event }) => this.deleteEvent(event)
+    onClick: ({ event }) => this.deleteCita(event)
   }
 ]
     }));
@@ -124,29 +124,45 @@ selectedDate: Date | null = null;
     }
   }
 
- addEvent(date: Date): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'Nueva Cita',
-        start: date,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
+ addCita(cita: Cita): void {
+const id = cita.id && cita.id.trim() ? cita.id : crypto.randomUUID();
+
+  const completa: Cita = { ...cita, id };
+
+  // 2) guardar en el servicio (fuente de verdad)
+  this.citaSrv.addCita(completa);
+
+  // 3) pintar en el calendario (añadimos 1 evento mapeado)
+  const nuevoEvento: CalendarEvent = {
+    id,
+    title: `Paciente ${completa.pacienteId} · ${completa.startTime} - ${completa.endTime}  ${completa.notes ? '| ' + completa.notes : ''} | ${completa.status}`,
+    start: this.combineDateTime(completa.date, completa.startTime),
+    end:   this.combineDateTime(completa.date, completa.endTime),
+    // (opcional) añade acciones si las usas en el resto:
+    actions: [
+      { label: '<i class="fas fa-pencil-alt"></i>', onClick: ({ event }) => this.editCita(event) },
+      { label: '<i class="fas fa-trash-alt"></i>',  onClick: ({ event }) => this.deleteCita(event) }
+    ]
+  };
+
+  this.events = [...this.events, nuevoEvento];
+
+   // 4) si estás en vista mensual, abrir el día y centrar la fecha
+  this.viewDate = nuevoEvento.start;
+  this.activeDayIsOpen = true;
+
+  // 5) notificar a angular-calendar (usas OnPush)
+  this.refresh.next();
+}
+
+  deleteCita(citaToDelete: CalendarEvent) {
+    this.events = this.events.filter((event) => event !== citaToDelete);
   }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
-
-  editEvent(event: CalendarEvent): void {
-    const index = this.events.indexOf(event);
+  editCita(cita: CalendarEvent): void {
+    const index = this.events.indexOf(cita);
     if (index !== -1) {
-      this.events[index] = { ...event };
+      this.events[index] = { ...cita };
       this.refresh.next();
     }
   }
