@@ -2,9 +2,9 @@
 (incluyendo los componentes de citas)*/
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login/login.component';
-import { CitasCalendarioComponent } from './features/citas/pages/calendario/citas-calendar/citas-calendario';
+//import { CitasCalendarioComponent } from './features/citas/pages/calendario/citas-calendar/citas-calendario';
 import { CitasListPage } from './features/citas/pages/list/citas-list.page';
-import { ResultadosAnalisis } from './features/resultados-analisis/resultados-analisis';
+//import { ResultadosAnalisis } from './features/resultados-analisis/resultados-analisis';
 
 export const routes: Routes = [
   // --- RUTAS PRINCIPALES (DE DEV) ---
@@ -25,7 +25,7 @@ export const routes: Routes = [
     component: CitasListPage,
     title: 'Citas'
   },
-  {
+  /*{
     path: 'calendario', // Calendario de DEV
     component: CitasCalendarioComponent,
     title: 'Calendario de Citas'
@@ -34,7 +34,7 @@ export const routes: Routes = [
     path: 'resultados-analisis', // Resultados de DEV
     component: ResultadosAnalisis ,
     title: 'Resultados de Análisis',
-  },
+  },*/
 
   // --- RUTAS DE FEATURE (EP-02) ---
   {
@@ -54,7 +54,7 @@ export const routes: Routes = [
       ),
   }, 
   {
-    path: 'pacientes', // Tu Gestión de Pacientes (Usamos Carga Perezosa)
+    path: 'pacientes', // Gestión de Pacientes (Usamos Carga Perezosa)
     loadComponent: () =>
       import('./features/patients/pages/list/list.component').then(
         (m) => m.ListComponent
