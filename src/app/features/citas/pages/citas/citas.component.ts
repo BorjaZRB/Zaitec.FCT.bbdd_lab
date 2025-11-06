@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CitasListPage } from "../list/citas-list.page";
+import { Cita } from '../../types';
 
 @Component({
   selector: 'app-citas',
@@ -8,5 +9,6 @@ import { CitasListPage } from "../list/citas-list.page";
   styleUrl: './citas.component.scss',
 })
 export class CitasComponent {
+
 
 }

@@ -1,19 +1,19 @@
-export interface Appointment {
-  id: string;
-  date: string;          // 'DD-MM-YYYY'
+export interface Cita {
+  id: string;            //cita-1
+  date: string;          // 'YYYY-MM-DD'
   startTime: string;     // 'HH:mm'
   endTime: string;       // 'HH:mm'
-  patientId: string;
-  professionalId: string;
+  pacienteId: string;
+  profesionalId: string;
   notes?: string;
   status: 'Programada' | 'Confirmada' | 'Cancelada' | 'Completada';
 }
 
-export interface Professional {
+export interface Profesional {
   id: string;
   name: string;
   specialty?: string; }
 
-export interface Patient {
+export interface Paciente {
   id: string;
   name: string; }
