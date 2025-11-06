@@ -1,7 +1,7 @@
 <div class="app-layout">
-  <app-navbar *ngIf="!isLoginPage"></app-navbar>
+  <app-navbar *ngIf="isLoggedIn"></app-navbar>
 
-  <main>
+  <main [class.with-navbar]="isLoggedIn">
     <router-outlet></router-outlet>
   </main>
 </div>
