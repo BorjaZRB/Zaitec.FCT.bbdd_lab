@@ -24,6 +24,8 @@
             [locale]="locale"
             [viewDate]="viewDate"
             [events]="events"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="dayClicked($event.day)"
           />
         }
         @case (CalendarView.Week) {
@@ -42,7 +44,7 @@
   </div>
 
   <aside class="calendario-panel">
-  <app-citas-add></app-citas-add>
+  <app-citas-add (newCita)="addCita($event)"></app-citas-add>
 
     <div class="calendario-panel__section">
       <button class="calendario-panel__action" (click)="togleList()">Mostrar Citas</button>
