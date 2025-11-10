@@ -3,7 +3,6 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/services/AuthService';
-
 @Component({
   selector: 'app-navbar',
   standalone: true,

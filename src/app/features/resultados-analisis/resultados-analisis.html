@@ -1,0 +1,170 @@
+<mat-card class="contenedor">
+  <h2>Resultados de Análisis</h2>
+
+  <!-- Formulario nuevos resultados -->
+  <mat-card class="formulario">
+    <form (ngSubmit)="agregarResultado()" #formulario="ngForm" aria-label="Formulario de resultados de análisis">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Paciente</mat-label>
+        <input
+          matInput
+          name="paciente"
+          [(ngModel)]="nuevoResultado.paciente"
+          required
+          placeholder="Nombre del paciente"
+          title="Introduce el nombre del paciente"
+          aria-label="Nombre del paciente"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de Análisis</mat-label>
+        <mat-select
+          [(ngModel)]="nuevoResultado.tipo"
+          name="tipo"
+          placeholder="Selecciona el tipo de análisis"
+          aria-label="Tipo de análisis"
+        >
+          <mat-option value="Clínico">Clínico</mat-option>
+          <mat-option value="Nutricional">Nutricional</mat-option>
+          <mat-option value="Radiografía">Radiografía</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha</mat-label>
+        <input
+          matInput
+          type="date"
+          name="fecha"
+          [(ngModel)]="nuevoResultado.fecha"
+          required
+          title="Selecciona la fecha del análisis"
+          aria-label="Fecha del análisis"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <textarea
+          matInput
+          name="descripcion"
+          [(ngModel)]="nuevoResultado.descripcion"
+          rows="3"
+          placeholder="Detalles del análisis"
+          title="Introduce una breve descripción del análisis"
+          aria-label="Descripción del análisis"
+        ></textarea>
+      </mat-form-field>
+
+      <div class="boton-container">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          aria-label="Agregar resultado de análisis"
+        >
+          Agregar Resultado
+        </button>
+      </div>
+    </form>
+  </mat-card>
+
+  <!-- Actuales / Archivados -->
+  <mat-tab-group>
+    <!-- Resultados actuales -->
+    <mat-tab label="Resultados Actuales">
+      <table
+        mat-table
+        [dataSource]="resultadosActivos"
+        class="mat-elevation-z2"
+        aria-label="Tabla de resultados actuales"
+      >
+        <ng-container matColumnDef="paciente">
+          <th mat-header-cell *matHeaderCellDef>Paciente</th>
+          <td mat-cell *matCellDef="let r">{{ r.paciente }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let r">{{ r.tipo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let r">{{ r.fecha }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef>Descripción</th>
+          <td mat-cell *matCellDef="let r">{{ r.descripcion }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let r">
+            <button
+              mat-button
+              color="warn"
+              (click)="archivarResultado(r)"
+              aria-label="Archivar resultado de {{ r.paciente }}"
+            >
+              Archivar
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-tab>
+
+    <!-- Resultados archivados -->
+    <mat-tab label="Resultados Archivados">
+      <table
+        mat-table
+        [dataSource]="resultadosArchivados"
+        class="mat-elevation-z2"
+        aria-label="Tabla de resultados archivados"
+      >
+        <ng-container matColumnDef="paciente">
+          <th mat-header-cell *matHeaderCellDef>Paciente</th>
+          <td mat-cell *matCellDef="let r">{{ r.paciente }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let r">{{ r.tipo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let r">{{ r.fecha }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef>Descripción</th>
+          <td mat-cell *matCellDef="let r">{{ r.descripcion }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let r">
+            <button
+              mat-button
+              color="primary"
+              (click)="reactivarResultado(r)"
+              aria-label="Reactivar resultado de {{ r.paciente }}"
+            >
+              Reactivar
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
