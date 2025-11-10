@@ -1,53 +1,84 @@
 <div class="login-container">
-  
-  <div class="login-card"> 
-    
-    <div class="login-left">
-      <div class="overlay">
-        <h2 style="color: white; font-size: 2rem; text-align: center;">Posible texto o imagen de la empresa</h2>
-      </div>
-    </div>
+  <!-- Lado Izquierdo -->
+  <div class="login-left">
+    <img src="/login-bg.png" alt="Imagen de inicio de sesión" />
+  </div>
 
-    <div class="login-right">
-      <div class="login-box">
-        
-        <h1>Inicio de sesión</h1>
+  <!-- Lado Derecho -->
+  <div class="login-right">
+    <div class="login-box">
+      <h2>Inicio de sesión</h2>
 
-        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-          
-          <mat-form-field appearance="outline" class="full-width-input">
-            <mat-label>Usuario</mat-label>
-            <input matInput type="email" id="email" formControlName="email" placeholder="Introduzca su usuario" />
-            <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-              Correo obligatorio y válido.
-            </mat-error>
-          </mat-form-field>
-          
-          <mat-form-field appearance="outline" class="full-width-input">
-            <mat-label>Contraseña</mat-label>
-            <input matInput [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Introduzca su contraseña" />
-            
-            <button mat-icon-button matSuffix (click)="togglePassword()" type="button" aria-label="Mostrar u ocultar contraseña">
-              <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-            
-            <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-              Contraseña obligatoria.
-            </mat-error>
-          </mat-form-field>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <label for="email">Usuario</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="Introduzca su usuario"
+          />
+          @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <div
 
-          <button type="submit" mat-flat-button color="primary" [disabled]="loading || loginForm.invalid">
-            {{ loading ? 'Iniciando sesión...' : 'Log in' }}
-          </button>
-
-          <div *ngIf="message" class="message" [ngClass]="{
-              success: message.includes('correcta'),
-              error: message.includes('incorrectos')
-            }">
-            {{ message }}
+            class="error"
+          >
+            Correo obligatorio y válido.
           </div>
-        </form>
-      </div>
+        }
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <div class="password-wrapper">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              formControlName="password"
+              placeholder="Introduzca su contraseña"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="togglePassword()"
+              aria-label="Mostrar u ocultar contraseña"
+            >
+              <i
+                class="material-icons"
+                [class.active]="showPassword"
+                >{{ showPassword ? 'visibility_off' : 'visibility' }}</i>
+            </button>
+          </div>
+
+         <div class="error">
+              @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+                    Contraseña obligatoria.
+                        }
+          </div>
+
+
+
+        </div>
+
+        <button type="submit" [disabled]="loading || loginForm.invalid">
+          {{ loading ? 'Iniciando sesión...' : 'Log in' }}
+        </button>
+
+
+        @if (message) {
+  <div
+    class="message"
+    [ngClass]="{
+      success: message.includes('correcta'),
+      error: message.includes('incorrectos')
+    }"
+  >
+    {{ message }}
+  </div>
+}
+
+      </form>
     </div>
-  </div> 
+  </div>
 </div>
+

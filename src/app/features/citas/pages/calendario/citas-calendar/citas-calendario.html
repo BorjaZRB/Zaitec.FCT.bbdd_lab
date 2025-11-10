@@ -1,0 +1,54 @@
+<div class="citas-calendario">
+  <div class="calendario-main">
+    <div class="calendario-controls">
+      <div class="calendario-controls__nav">
+        <button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">Anterior</button>
+        <button mwlCalendarToday [(viewDate)]="viewDate">Hoy</button>
+        <button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">Siguiente</button>
+      </div>
+      <h3 class="calendario-controls__title">
+        {{ viewDate | calendarDate: view + 'ViewTitle' : locale | titlecase }}
+      </h3>
+      <div class="calendario-controls__views">
+        <button (click)="setView(CalendarView.Day)">Día</button>
+        <button (click)="setView(CalendarView.Week)">Semana</button>
+        <button (click)="setView(CalendarView.Month)">Mes</button>
+      </div>
+    </div>
+
+    <div class="calendario-main__body">
+      @switch (view) {
+        @case (CalendarView.Month) {
+          <mwl-calendar-month-view
+            [weekStartsOn]="weekStartsOn"
+            [locale]="locale"
+            [viewDate]="viewDate"
+            [events]="events"
+          />
+        }
+        @case (CalendarView.Week) {
+          <mwl-calendar-week-view
+            [weekStartsOn]="weekStartsOn"
+            [locale]="locale"
+            [viewDate]="viewDate"
+            [events]="events"
+          />
+        }
+        @case (CalendarView.Day) {
+          <mwl-calendar-day-view [locale]="locale" [viewDate]="viewDate" [events]="events" />
+        }
+      }
+    </div>
+  </div>
+
+  <aside class="calendario-panel">
+  <app-citas-add></app-citas-add>
+
+    <div class="calendario-panel__section">
+      <button class="calendario-panel__action" (click)="togleList()">Mostrar Citas</button>
+      @if (mostrarLista) {
+        <app-citas-list></app-citas-list>
+      }
+    </div>
+  </aside>
+</div>

@@ -1,88 +1,56 @@
-/* =======================*/
-/* Archivo: de css a scss*/
-/* =====================*/
 
 :root {
-  /* --- PALETA CORPORATIVA --- */
-  --primary-color: #009CA6; 
+  --primary-color: #009CA6;
   --secondary-color: #007780;
   --background-color: #f5f8fa;
   --card-bg: #ffffff;
-  --text-color: #1E1E1E;
-  
-  /* --- DIMENSIONES DE FIGMA --- */
-  --border-radius: 30px; /* Borde principal de la tarjeta (Frame 2) */
-  --input-border-radius: 10px; /* Borde de los inputs/botón */
-  --input-height: 64px; /* Altura de los inputs y botón */
-  
-  /* --- SOMBRAS DE FIGMA --- */
-  --shadow-frame-2: 0px 4px 9.4px rgba(0, 0, 0, 0.25); /* Sombra de la tarjeta grande */
-  --shadow-frame-3: 0px 4px 4px -9px rgba(0, 0, 0, 0.25); 
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Variable original del compañero */
-  
-  /* --- COLORES DE ESTADO --- */
-  --error-color: #E63946;
-  --success-color: #3CB371;
+  --text-color: #333333;
+  --border-radius: 20px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --error-color: #d32f2f;
+  --success-color: #2e7d32;
 }
 
 .login-container {
-  /*DIMENSIONES Y CENTRADO DE LA TARJETA PRINCIPAL (Frame 2) */
-  width: 1192px; 
-  max-width: 95%; 
-  height: 671px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--background-color); 
+  height: 100vh;
+  background-color: #dce4e7; /* Fondo general */
   padding: 30px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
-/* ------------------------------------------- */
-/* CLASE REFACTORIZADA: login-card (EL FRAME 2) */
-/* ------------------------------------------- */
-.login-card {
-  /* CLASE INTRODUCIDA PARA UNIR AMBAS COLUMNAS BAJO UN SOLO ESTILO DE TARJETA */
-  display: flex;
-  width: 100%;
-  height: 100%;
-  /* Estilos de la tarjeta principal */
-  background: var(--card-bg); 
-  box-shadow: var(--shadow-frame-2); /* Aplicar la sombra principal aquí */
-  border-radius: var(--border-radius) !important; /* Aplicar el radio principal de 30px */
-  overflow: hidden !important; /* CRUCIAL para que los hijos no corten el radio */
-}
-
-/* -------------------*/
-/* COLUMNAS INTERNAS:*/
-/* -----------------*/
+/* Contenedor principal con borde redondeado */
 .login-left, .login-right {
-  height: 100%; /* Ocupan toda la altura del padre (671px) */
-  min-height: auto;
-  flex: 1; /* Para que cada uno ocupe la mitad del ancho total */
-  /* ASEGURAR que NO tengan bordes ni sombras individuales */
-  border-radius: 0 !important; 
-  box-shadow: none;
+  min-height: 500px;
 }
 
-/* Lado izquierdo: Frame 3 */
+/* Lado izquierdo: imagen de fondo o degradado */
 .login-left {
-  background: url(/login-bg.png) no-repeat center center; 
-  background-size: cover; 
-  box-shadow: var(--shadow-frame-3); /* Mantenemos la sombra interna del Frame 3 */
-  color: rgb(240, 232, 232);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
-  font-weight: 600;
-  text-align: center;
-  padding: 20px;
+  flex: 1;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  overflow: hidden; /* ← Evita que la imagen se salga del borde redondeado */
 }
 
-/* Lado derecho: Formulario */
+.login-left img {
+  width: 124.5%;
+  height: 50%;
+  object-fit: cover;
+  display: block;
+}
+/* Lado derecho: formulario tipo tarjeta */
 .login-right {
-  background: var(--card-bg);
-  display: flex; 
+  flex: 1;
+  background: #fff;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px 50px;
@@ -93,129 +61,77 @@
   max-width: 360px;
 }
 
-/* -----------------------------------------*/
-/* AJUSTES DE MATERIAL Y FORMULARIO (64px) */
-/* ---------------------------------------*/
+/* ====== Formulario ====== */
+.form-group {
+  margin-bottom: 20px;
 
-/* TÍTULO (Inicio de Sesión) */
-.login-box h1 { 
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 40px; 
-  line-height: 60px;
-  color: var(--text-color); 
-  text-align: center;
-  margin-bottom: 2rem;
 }
 
-/* INPUTS DE MATERIAL: Aplicamos altura de 64px */
-
-.login-box .mat-mdc-form-field {
-  margin-bottom: 25px; 
-  min-height: 80px; 
-}
-.login-box .mat-mdc-form-field-flex {
-    border-radius: var(--input-border-radius) !important; 
-    border: 3px solid #D9DDE0 !important; 
-    background: transparent !important;
-}
-.login-box .mat-mdc-text-field-wrapper {
-  /* Mantenemos la altura de 64px */
-  height: var(--input-height) !important; 
-  min-height: var(--input-height) !important;
-  /* REGLAS CRUCIALES PARA EL BORDE: */
-  border: none !important; 
-  border-radius: 0 !important;
-  box-shadow: none !important;
+label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  color: #555;
 }
 
-.login-box .mdc-notched-outline {
-    /* Aplicar el radio al contorno que dibuja Material */
-    border-radius: var(--input-border-radius) !important; /* 10px */
-}
-
-/*APLICAR BORDE GRUESO A CADA PIEZA DEL CONTORNO */
-/* Esto se hace apuntando a la clase más baja que dibuja el borde */
-.login-box .mat-mdc-notch-piece {
-    border-width: 3px !important; /* <-- FUERZA EL GROSOR DE 3PX DE FIGMA */
-    border-color: #D9DDE0 !important; /* <-- Color gris claro */
-}
-
-/* Corregir el color de FOCUS */
-.login-box .mdc-text-field--focused .mat-mdc-notch-piece {
-    border-color: var(--primary-color) !important; /* Cambia a azul corporativo al enfocar */
-    border-width: 3px !important; /* Mantiene el grosor al enfocar */
-}
-
-/* INPUTS PUROS (ESTILO DE CONTORNO DE 3PX) */
 input {
   width: 100%;
-  height: var(--input-height); 
-  padding: 0 12px;
-  /* Aplicar el contorno de 3px y fondo transparente */
-  border: none !important; 
-  border-radius: 0 !important; 
-  background: transparent; 
-  outline: none; 
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius:10px 10px 10px 10px;
+  font-size: 0.95rem;
+  outline: none;
   transition: 0.3s ease;
+
 }
 
 input:focus {
-  /* Cambiar el color del borde al primario al enfocar */
   border-color: var(--primary-color);
   box-shadow: 0 0 4px rgba(0, 151, 167, 0.3);
 }
 
-/* TOGGLE DE CONTRASEÑA */
+/* ====== Contraseña con ícono ====== */
 .password-wrapper {
   position: relative;
+
 }
+
 
 .toggle-password {
   position: absolute;
-  right: 10px;
-  top: 50%; /* Centrado vertical */
-  transform: translateY(-50%); 
-  z-index: 10;
-  background: none; 
+  right:-28px;
+  top: 8px;
+  background: transparent;
   border: none;
   cursor: pointer;
   color: #777;
 }
 
-/* BOTÓN DE MATERIAL (Log in): */
-.login-box button[mat-flat-button] { /* Usar este selector más específico */
+.toggle-password:hover {
+  color: var(--primary-color);
+}
+
+/* ====== Botón ====== */
+button[type='submit'] {
   width: 100%;
-  height: var(--input-height); 
-  line-height: var(--input-height); 
-  font-size: 20px; 
-  font-weight: 600;
-  border-radius: var(--input-border-radius);
-}
-.login-box .mat-primary.mat-mdc-button {
-  background-color: var(--primary-color);
-  color: var(--background-color);
-}
-.login-box button[mat-flat-button]:hover:not(:disabled) {
-  background-color: var(--secondary-color);
-}
-.login-box button[mat-flat-button]:disabled {
-  background-color: #b2ebf2;
-  cursor: not-allowed;
+  padding: 12px;
+  border: none;
+  border-radius:10px 10px 10px 10px;
+  background-color: #009CA6;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 5px;
 }
 
-/* ICONO DE CONTRASEÑA: */
-.mat-mdc-text-field-wrapper .mat-mdc-icon-button {
-  /* Aseguramos que el botón del icono no rompa el diseño */
-  height: var(--input-height);
-  width: var(--input-height);
+button[type='submit']:hover:not(:disabled) {
+  background-color: #007c91;
 }
 
-.mat-mdc-text-field-wrapper .mat-mdc-icon-button .mat-icon {
-  /* Posicionamos el icono dentro del espacio de 64px */
-  line-height: var(--input-height);
+button[type='submit']:hover {
+  background-color: #64d9e9;
 }
-
 
 /* ====== Mensajes ====== */
 .message {
@@ -224,41 +140,47 @@ input:focus {
   font-size: 0.9rem;
   font-weight: 500;
 }
+
 .message.success {
   color: var(--success-color);
 }
+
 .message.error {
   color: var(--error-color);
 }
 
-/* ====== Responsive ====== */
-@media (max-width: 1200px) {
-  /* Permitir que la tarjeta se haga más pequeña */
-  .login-card {
-    width: 100%;
-    height: auto;
-    min-height: 500px; 
-  }
+/* ====== Errores de validación ====== */
+.error {
+  color: var(--error-color);
+  font-size: 0.8rem;
+  margin-top: 4px;
 }
 
+/* ====== Responsive ====== */
 @media (max-width: 900px) {
   .login-container {
-    height: auto;
-  }
-  .login-card {
     flex-direction: column;
-    border-radius: var(--border-radius);
-    width: 100%;
     height: auto;
   }
+
+  .login-left,
+  .login-right {
+    flex: none;
+    width: 100%;
+    border-radius: var(--border-radius);
+  }
+
   .login-left {
     min-height: 200px;
     border-radius: var(--border-radius) var(--border-radius) 0 0;
   }
+
   .login-right {
-    padding: 30px 20px;
+    box-shadow: none;
     border-radius: 0 0 var(--border-radius) var(--border-radius);
+    padding: 30px 20px;
   }
+
   .login-box {
     max-width: 100%;
   }

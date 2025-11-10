@@ -1,0 +1,54 @@
+<div class="sidebar">
+  <div class="user-section">
+    <div class="user-icon">
+      <i class="fa fa-user-circle"></i>
+    </div>
+    <div class="user-welcome" *ngIf="userName">
+      <p class="welcome-text">Bienvenido:</p>
+      <p class="user-name">{{ userName }}</p>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="nav-links">
+      <li *ngIf="!userName">
+        <a routerLink="/Login" routerLinkActive="active">
+          <i class="fa fa-sign-in-alt"></i> <span>Login</span>
+        </a>
+      </li>
+       <li>
+        <a routerLink="/dashboard" routerLinkActive="active">
+          <i class="fa fa-chart-bar"></i> <span>Inicio</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/calendario" routerLinkActive="active">
+          <i class="fa fa-calendar-alt"></i> <span>Calendario</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/citas" routerLinkActive="active">
+          <i class="fa fa-calendar"></i> <span>Citas</span>
+        </a>
+      </li>
+
+
+      <li>
+        <a routerLink="/resultados-analisis" routerLinkActive="active">
+          <i class="fa fa-chart-bar"></i> <span>Resultados Análisis</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="logout-links">
+      <li *ngIf="userName">
+        <a href="#" (click)="onLogout($event)" class="logout-link">
+          <i class="fa fa-sign-out-alt"></i> <span>Cerrar sesión</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+

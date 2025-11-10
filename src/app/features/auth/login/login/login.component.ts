@@ -4,26 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/AuthService';
 
-// --- IMPORTS DE MATERIAL ---
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input'; // Necesario para el input en sí
-import { MatIconModule } from '@angular/material/icon'; // Necesario para el toggle
-import { MatButtonModule } from '@angular/material/button'; // Necesario para el botón de login
-
-
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html', 
+  templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -32,9 +18,9 @@ export class LoginComponent {
   showPassword = false; // propiedad para alternar visibilidad
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private supabase: AuthService,
-    private router: Router 
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -63,7 +49,8 @@ export class LoginComponent {
     this.loading = false;
 
     if (success) {
-      this.router.navigate(['/calendario']);
+      // Redirigir al dashboard después de un login exitoso
+      this.router.navigate(['/dashboard']);
     }
   }
 }

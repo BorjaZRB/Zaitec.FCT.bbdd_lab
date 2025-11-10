@@ -67,29 +67,40 @@ export class ListComponent {
       this.dataSource = this.allPatients; // Inicialmente, dataSource es la lista completa
     }
   
-  // --- MÉTODO DE FILTRADO ---
   applyFilter(): void {
-    let filteredList = this.allPatients;
-    const filterValue = this.filterType;
-    
-    if (filterValue !== 'todos') {
-      filteredList = this.allPatients.filter(patient => {
-        if (filterValue === 'humano') {
-          return patient.isHuman;
-        }
-        
-        // Filtro por especie específica (Canino, Felino...)
-        if (patient.species) {
-          return patient.species.toLowerCase() === filterValue;
-        }
-
-        // Filtro para otras especies o errores de clasificación
-        return false;
-      });
-    }
-
-    this.dataSource = filteredList; // Actualiza la tabla
+  let filteredList = this.allPatients;
+  const filterValue = this.filterType; // Este valor viene del selector (ngModel)
+  
+  if (filterValue !== 'todos') {
+    // Si la lista está vacía o el filtro no es 'todos', aplicamos la lógica
+    filteredList = this.allPatients.filter(patient => {
+      const patientSpecies = patient.species?.toLowerCase();
+      
+      switch (filterValue) {
+        case 'humano':
+          return patient.isHuman; // Solo devuelve humanos
+          
+        case 'canino':
+        case 'felino':
+          // Filtra por especie específica
+          return patientSpecies === filterValue;
+          
+        case 'otros':
+          // Filtra el resto de animales que no son humanos, caninos o felinos
+          if (!patient.isHuman) {
+            return patientSpecies && !['canino', 'felino'].includes(patientSpecies);
+          }
+          return false; // Los humanos no entran en 'otros'
+          
+        default:
+          return true; // Si hay algún valor inesperado, muestra todo (seguro)
+      }
+    });
   }
+
+  // Actualiza la tabla con el resultado del filtrado
+  this.dataSource = filteredList; 
+}
   
   // Método para abrir el modal:
   openNewPatientDialog() {
