@@ -1,13 +1,20 @@
 import { Component, input, output, signal } from '@angular/core';
 import { Cita } from '../../types';
+import { CitasService } from '../../data/citas.service';
 
 @Component({
   selector: 'app-citas-add',
   standalone: true,
   imports: [],
   templateUrl: './citas-add.html',
+  styleUrl:'./citas-add.scss'
 })
 export class CitasAdd {
+
+  constructor(private citaSrv: CitasService
+  ) {
+
+  }
 
 
   // Estado inicial del formulario
@@ -21,6 +28,21 @@ export class CitasAdd {
 
 // Avisar al padre cuando se pulse el botón de confirmar
   newCita = output<Cita>()
+
+  mostrarFormularioAdd: boolean = false
+
+  togleFormAdd(){
+    this.mostrarFormularioAdd = !this.mostrarFormularioAdd
+  }
+
+    onNuevaCita(cita: Cita) {
+    const id = crypto.randomUUID()
+    const completa: Cita = {...cita, id}
+
+    this.citaSrv.addCita(completa) //guardamos
+    console.log('Cita añadida: ', cita)
+
+  }
 
   addCita(){
 
@@ -42,6 +64,7 @@ export class CitasAdd {
     console.log('Correcto')
 
   }
+
 }
 }
 

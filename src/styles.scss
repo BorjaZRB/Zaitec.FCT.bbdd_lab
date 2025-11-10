@@ -1,4 +1,5 @@
 
+
 /// [CÓDIGO ORIGINAL DE ANGULAR MATERIAL - NO TOCAR]
 // ...
 @use '@angular/material' as mat;
@@ -58,6 +59,11 @@ body {
 // 4. IMPORTACIÓN DE ESTILOS DE TERCEROS (Angular Calendar, etc.)
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
+
+
 /* ------------------------------------------------------------------ */
 /* --- FIN DE ESTILOS PERSONALIZADOS --- */
 /* ------------------------------------------------------------------ */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
