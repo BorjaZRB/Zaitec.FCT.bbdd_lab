@@ -91,12 +91,15 @@ export class ListComponent {
             return patientSpecies && !['canino', 'felino'].includes(patientSpecies);
           }
           return false; // Los humanos no entran en 'otros'
-          
-        default:
-          return true; // Si hay algún valor inesperado, muestra todo (seguro)
       }
+      /* NOTA: ELIMINÉ EL BLOQUE 'default: return true;' DE ARRIBA
+      Si el switch no encontró el valor (filterValue) en los casos definidos,
+      devolvemos false, lo que excluye al paciente de la lista filtrada.*/
+      return false;
+      
     });
   }
+  
 
   // Actualiza la tabla con el resultado del filtrado
   this.dataSource = filteredList; 
