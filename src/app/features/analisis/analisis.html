@@ -1,0 +1,71 @@
+<mat-card class="contenedor">
+  <h2>Nuevo Análisis</h2>
+
+  <form (ngSubmit)="agregarResultado()" #formulario="ngForm" aria-label="Formulario de resultados de análisis">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Paciente</mat-label>
+      <input
+        matInput
+        name="paciente"
+        [(ngModel)]="nuevoResultado.paciente"
+        required
+        placeholder="Nombre del paciente"
+        title="Introduce el nombre del paciente"
+        aria-label="Nombre del paciente"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de Análisis</mat-label>
+      <mat-select
+        [(ngModel)]="nuevoResultado.tipo"
+        name="tipo"
+        placeholder="Selecciona el tipo de análisis"
+        aria-label="Tipo de análisis"
+      >
+        <mat-option value="Clínico">Clínico</mat-option>
+        <mat-option value="Nutricional">Nutricional</mat-option>
+        <mat-option value="Radiografía">Radiografía</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha</mat-label>
+      <input
+        matInput
+        type="date"
+        name="fecha"
+        [(ngModel)]="nuevoResultado.fecha"
+        required
+        title="Selecciona la fecha del análisis"
+        aria-label="Fecha del análisis"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descripción</mat-label>
+      <textarea
+        matInput
+        name="descripcion"
+        [(ngModel)]="nuevoResultado.descripcion"
+        rows="3"
+        placeholder="Detalles del análisis"
+        title="Introduce una breve descripción del análisis"
+        aria-label="Descripción del análisis"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="boton-container">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        aria-label="Agregar resultado de análisis"
+      >
+        Agregar Resultado
+      </button>
+    </div>
+  </form>
+</mat-card>
+

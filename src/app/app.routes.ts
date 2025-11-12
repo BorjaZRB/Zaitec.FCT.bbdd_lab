@@ -5,13 +5,16 @@ import { CitasComponent } from './features/citas/pages/citas/citas.component';
 import { CitasListPage } from './features/citas/pages/list/citas-list.page';
 import { DashboardComponent } from './features/dashboard/pages/Dashboard.component/Dashboard.component';
 import { ResultadosAnalisis } from './features/resultados-analisis/resultados-analisis';
+import { AnalisisComponent } from './features/analisis/analisis';
+
 
 export const routes: Routes = [
 {
   // Ruta para el componente de login
   path: '',
   component:LoginComponent,
-},{
+},
+{
 path: 'dashboard',
   component: DashboardComponent
 },
@@ -36,7 +39,11 @@ path: 'dashboard',
     component:ResultadosAnalisis,
     title: 'Resultados de Análisis',
   },
-
+{
+  path: 'analisis',
+  component: AnalisisComponent,
+  title: 'Nuevo Análisis'
+},
 
 
 

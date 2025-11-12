@@ -8,7 +8,13 @@
       <i class="fa fa-calendar-alt"></i>
       <span>Calendario</span>
     </button>
-     <button class="dashboard-button calendar-btn" routerLink="/resultados-analisis">
+    
+    <button class="dashboard-button calendar-btn" routerLink="/analisis">
+      <i class="fa fa-vials"></i>
+      <span>Nuevo Análisis</span>
+    </button>
+    
+    <button class="dashboard-button calendar-btn" routerLink="/resultados-analisis">
       <i class="fa fa-calendar-alt"></i>
       <span>Resultados Analisis</span>
     </button>
@@ -18,19 +24,18 @@
       <span>Citas</span>
     </button>
 
-    @if (userName) {
+    <ng-container *ngIf="userName; else loginBtn">
       <button class="dashboard-button profile-btn">
         <i class="fa fa-user"></i>
         <span>Perfil</span>
       </button>
+    </ng-container>
 
-      
-    } @else {
+    <ng-template #loginBtn>
       <button class="dashboard-button login-btn" routerLink="/Login">
         <i class="fa fa-sign-in-alt"></i>
         <span>Login</span>
       </button>
-    }
+    </ng-template>
   </div>
 </div>
-
