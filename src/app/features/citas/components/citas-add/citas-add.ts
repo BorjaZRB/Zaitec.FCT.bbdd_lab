@@ -1,6 +1,6 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { Cita } from '../../types';
-import { CitasService } from '../../data/citas.service';
+import { CitaService } from '../../../../core/services/CitasService.service';
 
 @Component({
   selector: 'app-citas-add',
@@ -11,20 +11,17 @@ import { CitasService } from '../../data/citas.service';
 })
 export class CitasAdd {
 
-  constructor(private citaSrv: CitasService
-  ) {
-
-  }
-
+    public citasSrv = inject(CitaService)  // 👈 para acceder a los datos
 
   // Estado inicial del formulario
-  date = signal('')
-  startTime = signal('')
-  endTime = signal('')
-  profesionalId = signal('')
-  notes = signal('')
-  pacienteId = signal('')
-  status= 'Programada'
+  id_cita = signal('')
+  fecha = signal('')
+  hora_inicio = signal('')
+  hora_final = signal('')
+  id_trabajador = signal('')
+  razon_cita = signal('')
+  id_paciente = signal('')
+  estado= signal('')
 
 // Avisar al padre cuando se pulse el botón de confirmar
   newCita = output<Cita>()
@@ -36,35 +33,43 @@ export class CitasAdd {
   }
 
     onNuevaCita(cita: Cita) {
-    const id = crypto.randomUUID()
-    const completa: Cita = {...cita, id}
 
-    this.citaSrv.addCita(completa) //guardamos
-    console.log('Cita añadida: ', cita)
+    const completa: Cita = {...cita, id_cita: this.citasSrv.citaState().citas.length + 1}
+    // this.citaSrv.addCita(completa) //guardamos
+    console.log('Cita añadida: ', cita)}
 
-  }
 
   addCita(){
 
-  if(!this.date() || !this.startTime() || !this.endTime() || !this.pacienteId() || !this.profesionalId()){
+  if(!this.fecha() || !this.hora_inicio() || !this.hora_final() || !this.id_paciente() || !this.id_trabajador()){
 
     return alert('Faltan datos para crear la cita')
   } else {
-    const newCita: Cita = {
-      id: 'temporal',
-      date: this.date(),
-      startTime: this.startTime(),
-      endTime: this.endTime(),
-      profesionalId: this.profesionalId(),
-      pacienteId: this.pacienteId(),
-      notes: this.notes(),
-      status: 'Programada'
-    }
-    this.newCita.emit(newCita)
-    console.log('Correcto')
+    this.citasSrv.insertCita({
+      id_cita: this.citasSrv.citaState().citas.length + 1,
+      fecha: this.fecha(),
+      hora_inicio: this.hora_inicio(),
+      hora_final: this.hora_final(),
+      id_trabajador: this.id_trabajador(),
+      id_paciente: this.id_paciente(),
+      razon_cita: this.razon_cita(),
+      estado: this.estado()
+    })
+
+    // const newCita: Cita = {
+    //   id_cita: this.id_cita(),
+    //   fecha: this.fecha(),
+    //   hora_inicio: this.hora_inicio(),
+    //   hora_final: this.hora_final(),
+    //   id_trabajador: this.id_trabajador(),
+    //   id_paciente: this.id_paciente(),
+    //   razon_cita: this.razon_cita(),
+    //   estado: this.estado()
+    // }
+    // this.newCita.emit(newCita)
+    // console.log('Correcto')
 
   }
 
 }
 }
-

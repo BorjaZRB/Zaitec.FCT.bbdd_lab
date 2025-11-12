@@ -12,7 +12,7 @@ import {
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { registerLocaleData, CommonModule } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-import { CitasService } from '../../../data/citas.service';
+import { CitasServicePrueba } from '../../../data/citas.service';
 import { Cita } from '../../../types';
 import { CitasAdd } from '../../../components/citas-add/citas-add';
 import { CitasListPage } from '../../list/citas-list.page';
@@ -71,13 +71,13 @@ export class CitasCalendarioComponent {
 
   refresh = new Subject<void>();
 
-  constructor(private citaSrv: CitasService) {
+  constructor(private citaSrv: CitasServicePrueba) {
     const citas = this.citaSrv.listCitas();
     this.events = citas.map((c) => ({
-      id: c.id,
-      title: `Paciente ${c.pacienteId} · ${c.startTime} - ${c.endTime}`,
-      start: this.combineDateTime(c.date, c.startTime),
-      end: this.combineDateTime(c.date, c.endTime),
+      id: c.id_cita,
+      title: `Paciente ${c.id_paciente} · ${c.hora_inicio} - ${c.hora_final}`,
+      start: this.combineDateTime(c.fecha, c.hora_inicio),
+      end: this.combineDateTime(c.fecha, c.hora_final),
       actions: [
   {
     label: '<i class="fas fa-pencil-alt"></i>',
@@ -125,19 +125,19 @@ selectedDate: Date | null = null;
   }
 
  addCita(cita: Cita): void {
-const id = cita.id && cita.id.trim() ? cita.id : crypto.randomUUID();
 
-  const completa: Cita = { ...cita, id };
+
+  const completa: Cita = { ...cita, id_cita: this.citaSrv.listCitas().length + 1 };
 
   // 2) guardar en el servicio (fuente de verdad)
   this.citaSrv.addCita(completa);
 
   // 3) pintar en el calendario (añadimos 1 evento mapeado)
   const nuevoEvento: CalendarEvent = {
-    id,
-    title: `Paciente ${completa.pacienteId} · ${completa.startTime} - ${completa.endTime}  ${completa.notes ? '| ' + completa.notes : ''} | ${completa.status}`,
-    start: this.combineDateTime(completa.date, completa.startTime),
-    end:   this.combineDateTime(completa.date, completa.endTime),
+    id: completa.id_cita,
+    title: `Paciente ${completa.id_paciente} · ${completa.hora_inicio} - ${completa.hora_final}  ${completa.razon_cita ? '| ' + completa.razon_cita : ''} | ${completa.estado}`,
+    start: this.combineDateTime(completa.fecha, completa.hora_inicio),
+    end:   this.combineDateTime(completa.fecha, completa.hora_final),
     // (opcional) añade acciones si las usas en el resto:
     actions: [
       { label: '<i class="fas fa-pencil-alt"></i>', onClick: ({ event }) => this.editCita(event) },

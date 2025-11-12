@@ -6,39 +6,46 @@
     <div>
 
       <label for="paciente">Paciente: </label>
-      <input type="text" name="paciente" [value]="pacienteId()" (input)="pacienteId.set($any($event.target).value)" placeholder="Nombre del paciente" >
+      <input type="text" name="paciente" [value]="id_paciente()" (input)="id_paciente.set($any($event.target).value)" placeholder="Nombre del paciente" >
 
     </div> <br>
     <div>
 
       <label for="fecha">Fecha de la cita: </label>
-      <input type="date" name="fecha" [value]="date()" (input)="date.set($any($event.target).value)">
+      <input type="date" name="fecha" [value]="fecha()" (input)="fecha.set($any($event.target).value)">
 
     </div> <br>
 
     <div>
 
       <label for="hora-inicio">Desde: </label>
-      <input type="time" name="hora-inicio" [value]="startTime()" (input)="startTime.set($any($event.target).value)">
+      <input type="time" name="hora-inicio" [value]="hora_inicio()" (input)="hora_inicio.set($any($event.target).value)">
 
     </div> <br>
 
     <div>
 
       <label for="hora-fin">Hasta: </label>
-      <input type="time" name="hora-fin" [value]="endTime()" (input)="endTime.set($any($event.target).value)">
+      <input type="time" name="hora-fin" [value]="hora_final()" (input)="hora_final.set($any($event.target).value)">
 
     </div> <br>
     <div>
 
       <label for="profesional">Profesional: </label>
-      <input type="text" name="profesional" placeholder="ID del profesional" [value]="profesionalId()" (input)="profesionalId.set($any($event.target).value)">
+      <input type="text" name="profesional" placeholder="ID del profesional" [value]="id_trabajador()" (input)="id_trabajador.set($any($event.target).value)">
 
     </div> <br>
     <div>
 
       <label for="notas">Notas: </label>
-      <input type="text" name="notas" [value]="notes()" (input)="notes.set($any($event.target).value)" placeholder="Añade información sobre la cita.">
+      <input type="text" name="notas" [value]="razon_cita()" (input)="razon_cita.set($any($event.target).value)" placeholder="Añade información sobre la cita.">
+
+    </div> <br>
+
+     <div>
+
+      <label for="estado">Estado: </label>
+      <input type="text" name="estado" placeholder="Estado de la cita" [value]="estado()" (input)="estado.set($any($event.target).value)">
 
     </div> <br>
 
