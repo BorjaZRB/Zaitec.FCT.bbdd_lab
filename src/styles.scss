@@ -33,7 +33,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* ------------------------------------------------------------------ */
 
 // 1. DEFINICIÓN DE VARIABLES SCSS
-// (Esto nos permite usar los nombres $color-primary, etc., en nuestros componentes)
 $color-primary: #009CA6;
 $color-secondary: #007780;
 $color-neutral-light: #F5F8FA;
@@ -41,7 +40,19 @@ $color-text-main: #1E1E1E;
 $color-success: #3CB371;
 $color-error: #E63946;
 
-// 2. ESTILOS GLOBALES (Sugerencia)
+// 2. DEFINICIÓN DE VARIABLES CSS NATIVAS (CSS Custom Properties)
+:root {
+  /* Fondo principal de la aplicación */
+  --background-color: #{$color-neutral-light}; 
+  /* Fondo del contenedor principal */
+  --main-bg: #{$color-neutral-light}; 
+  /* Fondo para la barra lateral (la hacemos oscura) */
+  --sidebar-bg: #1E1E1E; 
+  /* Variables para la tipografía */
+  --main-text-color: #{$color-text-main};
+}
+
+// 3. ESTILOS GLOBALES BASE
 body {
   // Sobrescribe el fondo por defecto de Material por el nuestro.
   background-color: $color-neutral-light;
@@ -49,9 +60,14 @@ body {
   color: $color-text-main;
 }
 
-// 3. REGLAS DE MATERIAL (Si queremos configurar Material para usar nuestros colores)
-// La forma más avanzada sería crear un tema custom para Material,
-// pero por ahora, usamos el color-primary definido ya:
+// 4. REGLA ESPECÍFICA DE LOGIN
+:host-context(app-login) {
+  .app-layout, main {
+    background-color: $color-primary !important;
+  }
+}
+
+// 5. REGLAS DE MATERIAL
 .mat-toolbar.mat-primary {
   background-color: $color-primary !important;
 }

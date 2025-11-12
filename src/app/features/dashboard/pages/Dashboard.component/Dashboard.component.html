@@ -1,41 +1,30 @@
 <div class="dashboard-container">
-  <div class="search-section">
-    <app-search-bar (search)="onSearch($event)"></app-search-bar>
-  </div>
+    <div class="search-section">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    </div>
 
-  <div class="buttons-grid">
-    <button class="dashboard-button calendar-btn" routerLink="/calendario">
-      <i class="fa fa-calendar-alt"></i>
-      <span>Calendario</span>
-    </button>
-    
-    <button class="dashboard-button calendar-btn" routerLink="/analisis">
-      <i class="fa fa-vials"></i>
-      <span>Nuevo Análisis</span>
-    </button>
-    
-    <button class="dashboard-button calendar-btn" routerLink="/resultados-analisis">
-      <i class="fa fa-calendar-alt"></i>
-      <span>Resultados Analisis</span>
-    </button>
-
-    <button class="dashboard-button appointments-btn" routerLink="/citas">
-      <i class="fa fa-calendar"></i>
-      <span>Citas</span>
-    </button>
-
-    <ng-container *ngIf="userName; else loginBtn">
-      <button class="dashboard-button profile-btn">
-        <i class="fa fa-user"></i>
-        <span>Perfil</span>
-      </button>
-    </ng-container>
-
-    <ng-template #loginBtn>
-      <button class="dashboard-button login-btn" routerLink="/Login">
-        <i class="fa fa-sign-in-alt"></i>
-        <span>Login</span>
-      </button>
-    </ng-template>
-  </div>
+    <div class="buttons-grid">
+        
+        @for (card of cards; track card.title) {
+            @if (showCard(card)) {
+                
+                <button class="dashboard-button" [routerLink]="card.routerLink">
+                    <i class="material-icons">{{ card.icon }}</i> 
+                    <span>{{ card.title }}</span>
+                </button>
+            }
+        }
+        
+        @if (userName) {
+            <button class="dashboard-button profile-btn" (click)="onLogout()">
+                <i class="fa fa-user"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        } @else {
+            <button class="dashboard-button login-btn" routerLink="/Login">
+                <i class="fa fa-sign-in-alt"></i>
+                <span>Login</span>
+            </button>
+        }
+    </div>
 </div>

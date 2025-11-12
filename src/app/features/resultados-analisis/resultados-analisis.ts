@@ -1,20 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatButtonModule } from '@angular/material/button';
-import { SupabaseService, Paciente, Centro } from '../../core/services/supabase.service';
 
 interface ResultadoAnalisis {
-  id?: number;
   tipo: 'Clínico' | 'Nutricional' | 'Radiografía';
-  id_paciente: number;
-  id_centro: number;
-  paciente?: string;
-  centro?: string;
+  paciente: string;
   fecha: string;
   descripcion: string;
   activo: boolean;
@@ -27,82 +23,56 @@ interface ResultadoAnalisis {
     CommonModule,
     FormsModule,
     MatCardModule,
+    MatInputModule,
+    MatButtonModule,
     MatSelectModule,
     MatTableModule,
     MatTabsModule,
-    MatButtonModule
   ],
   templateUrl: './resultados-analisis.html',
-  styleUrls: ['./resultados-analisis.scss']
+  styleUrls: ['./resultados-analisis.scss'],
 })
-export class ResultadosAnalisis implements OnInit {
+export class ResultadosAnalisis {
   resultados: ResultadoAnalisis[] = [];
-  pacientes: Paciente[] = [];
-  centros: Centro[] = [];
-  filtroTipo: string = '';
-  displayedColumns: string[] = ['paciente', 'centro', 'tipo', 'fecha', 'descripcion', 'acciones'];
+  nuevoResultado: ResultadoAnalisis = {
+    tipo: 'Clínico',
+    paciente: '',
+    fecha: '',
+    descripcion: '',
+    activo: true,
+  };
 
-  constructor(private supabaseService: SupabaseService) {}
+  displayedColumns: string[] = ['paciente', 'tipo', 'fecha', 'descripcion', 'acciones'];
 
-  async ngOnInit() {
-    try {
-      // Primero cargamos pacientes y centros
-      this.pacientes = await this.supabaseService.obtenerPacientes();
-      this.centros = await this.supabaseService.obtenerCentros();
-
-      // Después cargamos resultados y asignamos nombres
-      await this.cargarResultados();
-    } catch (error) {
-      console.error('Error inicializando datos:', error);
+  agregarResultado() {
+    if (!this.nuevoResultado.paciente || !this.nuevoResultado.fecha) {
+      alert('Por favor completa los campos obligatorios.');
+      return;
     }
+
+    this.resultados.push({ ...this.nuevoResultado });
+    this.nuevoResultado = {
+      tipo: 'Clínico',
+      paciente: '',
+      fecha: '',
+      descripcion: '',
+      activo: true,
+    };
   }
 
-  async cargarResultados() {
-    try {
-      const datos = await this.supabaseService.obtenerAnalisis() as ResultadoAnalisis[];
-
-      this.resultados = datos.map(r => ({
-        ...r,
-        paciente: this.pacientes.find(p => p.id_paciente === r.id_paciente)
-                     ? `${this.pacientes.find(p => p.id_paciente === r.id_paciente)?.nombre} ${this.pacientes.find(p => p.id_paciente === r.id_paciente)?.apellidos}`
-                     : 'Sin nombre',
-        centro: this.centros.find(c => c.id_centro === r.id_centro)?.nombre || 'Sin centro'
-      }));
-    } catch (error) {
-      console.error('Error al cargar resultados desde Supabase:', error);
-    }
+  archivarResultado(r: ResultadoAnalisis) {
+    r.activo = false;
   }
 
-  async archivarResultado(r: ResultadoAnalisis) {
-    if (!r.id) return;
-    try {
-      await this.supabaseService.actualizarAnalisis(r.id, { activo: false });
-      r.activo = false;
-    } catch (error) {
-      console.error('Error al archivar resultado:', error);
-    }
-  }
-
-  async reactivarResultado(r: ResultadoAnalisis) {
-    if (!r.id) return;
-    try {
-      await this.supabaseService.actualizarAnalisis(r.id, { activo: true });
-      r.activo = true;
-    } catch (error) {
-      console.error('Error al reactivar resultado:', error);
-    }
+  reactivarResultado(r: ResultadoAnalisis) {
+    r.activo = true;
   }
 
   get resultadosActivos() {
-    return this.resultados
-      .filter(r => r.activo)
-      .filter(r => this.filtroTipo === '' || r.tipo === this.filtroTipo);
+    return this.resultados.filter(r => r.activo);
   }
 
   get resultadosArchivados() {
-    return this.resultados
-      .filter(r => !r.activo)
-      .filter(r => this.filtroTipo === '' || r.tipo === this.filtroTipo);
+    return this.resultados.filter(r => !r.activo);
   }
 }
-

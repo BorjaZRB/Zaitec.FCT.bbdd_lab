@@ -1,29 +1,33 @@
+/* Importaciones combinadas de DEV y EP-02 */
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login/login.component';
 import { CitasCalendarioComponent } from './features/citas/pages/calendario/citas-calendar/citas-calendario';
-import { CitasComponent } from './features/citas/pages/citas/citas.component';
+// NOTA: Se elimina la importación de CitasComponent, no se usa en las rutas
 import { CitasListPage } from './features/citas/pages/list/citas-list.page';
 import { DashboardComponent } from './features/dashboard/pages/Dashboard.component/Dashboard.component';
 import { ResultadosAnalisis } from './features/resultados-analisis/resultados-analisis';
-import { AnalisisComponent } from './features/analisis/analisis';
-
 
 export const routes: Routes = [
 {
-  // Ruta para el componente de login
+  // 1. RUTA PRINCIPAL (RAÍZ): el Login. 
   path: '',
   component:LoginComponent,
+  pathMatch: 'full'
 },
 {
-path: 'dashboard',
-  component: DashboardComponent
+  // 2. RUTA DASHBOARD
+  path: 'dashboard',
+  component: DashboardComponent,
+  title: 'Dashboard'
 },
 {
-
+  // 3. RUTA EXPLÍCITA DE LOGIN 
   path: 'Login',
   component:LoginComponent,
   title:'Inicio'
 },
+
+// --- RUTAS DE DEV ---
 {
   path: 'citas',
   component: CitasListPage,
@@ -34,17 +38,22 @@ path: 'dashboard',
   component: CitasCalendarioComponent,
   title: 'Calendario de Citas'
 },
- {
-    path: 'resultados-analisis',
-    component:ResultadosAnalisis,
-    title: 'Resultados de Análisis',
-  },
 {
-  path: 'analisis',
-  component: AnalisisComponent,
-  title: 'Nuevo Análisis'
+  path: 'resultados-analisis',
+  component:ResultadosAnalisis,
+  title: 'Resultados de Análisis',
 },
 
+// --- RUTA CORREGIDA DE PACIENTES ---
+{
+  //Usamos la carga perezosa (loadComponent).
+  path: 'pacientes',
+  loadComponent: () =>
+    import('./features/patients/pages/list/list.component').then(
+      (m) => m.ListComponent
+    ),
+},
 
-
+// --- RUTA DE FALLBACK ---
+{ path: '**', redirectTo: '', pathMatch: 'full' },
 ];
