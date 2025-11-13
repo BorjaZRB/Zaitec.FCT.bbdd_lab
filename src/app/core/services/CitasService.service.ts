@@ -62,8 +62,14 @@ export class CitaService{
     await this.getCitas(); // recarga lista tras insertar
   }
 
-   async deleteCita(cita: Cita): Promise<void> {
-    const {error} = await this.supabase.from('cita').delete()
+    async deleteCita(cita: Cita): Promise<void> {
+    const { error } = await this.supabase.from('cita').delete().eq('id_cita', cita.id_cita)
+    if (error) {
+      console.error('Error eliminando cita', error);
+      this.citaState.update(s => ({ ...s, error: true }));
+      return;
+    }
+    await this.getCitas(); // recarga lista tras insertar
   }
 
 
