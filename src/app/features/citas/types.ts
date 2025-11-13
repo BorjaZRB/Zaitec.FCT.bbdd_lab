@@ -1,12 +1,12 @@
 export interface Cita {
-  id: string;            //cita-1
-  date: string;          // 'YYYY-MM-DD'
-  startTime: string;     // 'HH:mm'
-  endTime: string;       // 'HH:mm'
-  pacienteId: string;
-  profesionalId: string;
-  notes?: string;
-  status: 'Programada' | 'Confirmada' | 'Cancelada' | 'Completada';
+  id_cita: number;            //cita-1
+  fecha: string;          // 'YYYY-MM-DD'
+  hora_inicio: string;     // 'HH:mm'
+  hora_final: string;       // 'HH:mm'
+  id_paciente: string;
+  id_trabajador: string;
+  razon_cita?: string;
+  estado: string;
 }
 
 export interface Profesional {
