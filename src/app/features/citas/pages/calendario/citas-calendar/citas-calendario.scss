@@ -3,20 +3,19 @@
   width: 100%;
   align-self: stretch;
 }
+// .citas-calendario {
+//   display: flex;
+//   gap: 1.5rem;
+//   align-items: flex-start;
+//   width: 100%;
+// }
 
-.citas-calendario {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.calendario-main {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+// .calendario-main {
+//   flex: 1 1 auto;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1.5rem;
+// }
 
 .calendario-controls {
   display: flex;
@@ -24,6 +23,8 @@
   gap: 1rem;
   width: 100%;
 }
+
+
 
 .calendario-controls__nav,
 .calendario-controls__views {

@@ -4,13 +4,14 @@ import { Navbar } from "./shared/components/Navbar/Navbar/Navbar.component";
 import { CommonModule } from '@angular/common';
 import { AuthService } from './core/services/AuthService';
 import { Subscription } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
   standalone: true,
-  imports: [Navbar, RouterOutlet, CommonModule],
+  imports: [Navbar, RouterOutlet, CommonModule, FormsModule],
 })
 export class AppComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
