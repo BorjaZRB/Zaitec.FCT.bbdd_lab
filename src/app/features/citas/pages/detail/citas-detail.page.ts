@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CitasService } from '../../data/citas.service';
+import { CitasServicePrueba } from '../../data/citas.service';
 import { Cita, Paciente } from '../../types';
 import { CommonModule } from '@angular/common';
+import { CitaService } from '../../../../core/services/CitasService.service';
 
 @Component({
   selector: 'app-citas-detail',
@@ -14,16 +15,12 @@ export class CitasDetailPage {
   cita: Cita | null = null; // la cita actual (una sola)
   paciente: Paciente | null = null;
 
-  constructor(
-    private route: ActivatedRoute,  // 👈 para leer el id de la URL
-    private citasSrv: CitasService  // 👈 para acceder a los datos
-  ) {
-    // leemos el id de la ruta, ejemplo "apt-1"
-    const id = this.route.snapshot.paramMap.get('id');
 
-    // buscamos esa cita en el servicio
-    if (id) {
-      this.cita = this.citasSrv.getCitas(id);
-    }
+    private route = inject(ActivatedRoute) // 👈 para leer el id de la URL
+    private citasSrv = inject(CitaService)  // 👈 para acceder a los datos
+
+
+    ngAfterViewInit() { // se ejecuta al cargar la página
+      this.citasSrv.getCitas()
   }
 }

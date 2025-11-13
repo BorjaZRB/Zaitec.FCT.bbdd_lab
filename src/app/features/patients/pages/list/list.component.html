@@ -1,0 +1,82 @@
+<mat-card class="patients-card">
+  <mat-card-header>
+    <mat-card-title>Gestión de Pacientes</mat-card-title>
+    <mat-card-subtitle>Listado de pacientes (Humanos y Veterinarios)</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <section class="filter-bar mb-4">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filtrar por Tipo</mat-label>
+        <mat-select
+          [(ngModel)]="filterType" 
+          (selectionChange)="applyFilter()">
+          @for (option of filterOptions; track option.value) {
+            <mat-option [value]="option.value">{{ option.viewValue }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>  
+      
+      <button 
+            mat-flat-button 
+            color="primary" 
+            class="add-button"
+            (click)="openNewPatientDialog()">
+            <mat-icon>add</mat-icon>
+            Nuevo Paciente
+        </button>
+    </section>
+    
+    <table mat-table [dataSource]="dataSource" class="full-width-table">
+      
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let patient"> {{ patient.id }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="identificationCode">
+        <th mat-header-cell *matHeaderCellDef> ID/NUHSA </th>
+        <td mat-cell *matCellDef="let patient"> {{ patient.identificationCode }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Tipo </th>
+        <td mat-cell *matCellDef="let patient"> 
+          {{ patient.isHuman ? 'Humano' : patient.species }} 
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let patient"> 
+          {{ patient.name }} {{ patient.isHuman ? patient.surname : '' }} 
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="birthdate">
+        <th mat-header-cell *matHeaderCellDef> Nacimiento </th>
+        <td mat-cell *matCellDef="let patient"> {{ patient.birthdate }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let patient">
+          <button mat-icon-button color="accent" (click)="editPatient(patient)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="6">No se encontraron pacientes para el filtro aplicado.</td>
+      </tr>
+
+    </table>
+    </mat-card-content>
+</mat-card>

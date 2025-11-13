@@ -1,0 +1,102 @@
+:root {
+  --primary-color: #009CA6;
+  --secondary-color: #007780;
+  --background-color: #f5f8fa;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --border-radius: 20px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --error-color: #d32f2f;
+  --success-color: #2e7d32;
+}
+
+
+// ====== Dashboard buttons layout ======
+
+.dashboard-container {
+  background: var(--background-color);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .search-section {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 1.5rem;
+
+  display: flex;
+  justify-content: flex-end; //Esto la mueve a la derecha
+}
+
+  .buttons-grid {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    align-items: center;
+    justify-items: center;
+
+  }
+.dashboard-button {
+    background:#009CA6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 120px;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    color:white ;
+    box-shadow: var(--shadow);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.12s ease;
+    text-decoration: none; /* for routerLink buttons */
+  }
+
+
+  .dashboard-button i {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255,255,255,0.95);
+
+  }
+
+  .dashboard-button span {
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+
+  }
+
+  .dashboard-button:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    filter: brightness(0.96);
+
+  }
+
+
+  .calendar-btn,
+  .appointments-btn,
+  .profile-btn,
+  .logout-btn,
+  .login-btn {
+    background: #009CA6;
+    color: #ffffff;
+    border-radius: 12px;
+  }
+
+
+  @media (max-width: 992px) {
+    .buttons-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    .buttons-grid { grid-template-columns: 1fr; }
+    .dashboard-button { min-height: 100px; }
+  }
+}

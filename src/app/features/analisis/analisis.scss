@@ -1,0 +1,35 @@
+.contenedor {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #006c74;
+  margin-bottom: 1.5rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+button[mat-raised-button] {
+  margin-top: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  background-color: #009ca6 !important;
+  color: white !important;
+  transition: 0.3s ease-in-out;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #007780 !important;
+  transform: translateY(-1px);
+}
