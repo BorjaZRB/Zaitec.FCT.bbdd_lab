@@ -1,7 +1,6 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../../enviroments/environment';
-import { single } from 'rxjs';
 import { Cita } from '../../features/citas/types';
 import { AuthService } from './AuthService';
 
@@ -12,33 +11,26 @@ interface CitaState {
 }
 
 @Injectable({providedIn: 'root'})
-
 export class CitaService{
-private supabase: SupabaseClient;
+  private supabase: SupabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey);
+  private auth = inject(AuthService);
 
-private authService = AuthService;
-
-
-  constructor() {
-    // URL Y API KEY DE SUPABASE IMPORTADAS DE ENVIRONMENT
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-  }
-
-   citaState = signal<CitaState>({
+  // Estado inicial de las citas
+  citaState = signal<CitaState>({
     citas: [],
     loading: false,
     error: false
   });
 
 
+  // Selectores para acceder a partes del estado.
+  // Computed hace que se actualicen automáticamente al cambiar el estado.
+  citas = computed(() => this.citaState().citas);
+  loading = computed(() => this.citaState().loading);
+  error = computed(() => this.citaState().error);
 
-  async getCitas (){
-    try {
-      this.citaState.update((state) => ({
-        ...state,
-        loading:true,
-      }));
-      // const {data:session} = await this
+  async getCitas (): Promise<void>{
+    this.citaState.update((state) => ({...state, loading:true, error:false}));
       const{data, error} = await this.supabase
         .from('cita')
         .select('*')
@@ -46,65 +38,36 @@ private authService = AuthService;
 
         console.log(data)
 
-        if(data){
+        if (error) {
+          console.error(error)
+          this.citaState.update((state) => ({...state, loading:false, error:true}));
+          return;
+        }
+
           this.citaState.update((state) => ({
             ...state,
-            citas: data
+            citas: data ?? [],
+            loading: false,
+            error: false
           }))
-        }
-    } catch (error) {
-      console.error('Error al obtener las citas:', error);
     }
 
-  }
-
- async insertCita(cita: {id_cita:number, fecha: string, hora_inicio: string, hora_final: string, razon_cita: string, estado: string, id_trabajador: string, id_paciente: string}){
-  try{
-  const response = await this.supabase.from('cita').insert({
-            id_cita: cita.id_cita + 1,
-            fecha: cita.fecha,
-            hora_inicio: cita.hora_inicio,
-            hora_final: cita.hora_final,
-            id_trabajador: cita.id_trabajador,
-            id_paciente: cita.id_paciente,
-            razon_cita: cita.razon_cita,
-            estado: cita.estado
-    })
-
-    console.log(response)
-  }
- catch (error) {
-  console.error('Error al insertar la cita:', error);
-}
-}
-
-
-  //Método para añadir cliente (añadir Cita)
-  async addCita(id_cita:string, fecha: Date, hora_inicio: Date, hora_final: Date, razon_cita: string, estado: string, id_trabajador: string, id_paciente: string ) { //pacienteId y id ??
-    try {
-
-      const { data, error } = await this.supabase
-        .from('cita')
-        .insert([
-          {
-            id_cita: id_cita,
-            fecha: fecha,
-            hora_inicio: hora_inicio,
-            hora_final: hora_final,
-            id_trabajador: id_trabajador,
-            id_paciente: id_paciente,
-            razon_cita: razon_cita,
-            estado: estado
-          }
-        ]);
-      return { error, data };
-    } catch (error) {
-      return { error, data: null };
+  async addCita(cita: Cita): Promise<void> {
+    const { error } = await this.supabase.from('cita').insert([cita]);
+    if (error) {
+      console.error('Error insertando cita', error);
+      this.citaState.update(s => ({ ...s, error: true }));
+      return;
     }
+    await this.getCitas(); // recarga lista tras insertar
   }
 
-}
-function returns<T>() {
-  throw new Error('Function not implemented.');
-}
+   async deleteCita(cita: Cita): Promise<void> {
+    const {error} = await this.supabase.from('cita').delete()
+  }
+
+
+  }
+
+
 
