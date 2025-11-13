@@ -12,6 +12,17 @@ export class SecurityService {
   
   constructor(private router: Router) { }
 
+  // CAMBIO TEMPORAL SOLO PARA DEBUGGING
+  private getRoleFromLocalStorage(): UserRole {
+    const userStr = localStorage.getItem('usuario');
+    // Si el usuario está en localStorage, asumiremos temporalmente que es ADMINISTRADOR
+    if (userStr) {
+      return 'administrador'; // <--- CAMBIO TEMPORAL
+    }
+    return 'invitado'; 
+  }
+
+  /* LOGICA ORIGINAL PARA CUANDO SE TERMINEN LAS PRUEBAS:
   private getRoleFromLocalStorage(): UserRole {
     const userStr = localStorage.getItem('usuario');
     if (userStr) {
@@ -28,7 +39,7 @@ export class SecurityService {
       }
     }
     return 'invitado'; // Si no hay datos, el rol es 'invitado'
-  }
+  }*/
 
   public isLoggedIn(): boolean {
     return this.getRoleFromLocalStorage() !== 'invitado';
