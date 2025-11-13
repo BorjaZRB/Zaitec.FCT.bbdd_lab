@@ -1,5 +1,7 @@
 import { Component, LOCALE_ID,   ChangeDetectionStrategy,
-  ViewEncapsulation, } from '@angular/core';
+  ViewEncapsulation,
+  inject,
+  effect, } from '@angular/core';
 import {
   CalendarModule,
   CalendarEvent,
@@ -7,89 +9,69 @@ import {
   DateAdapter,
   CalendarDateFormatter,
   CalendarNativeDateFormatter,
-  CalendarEventTimesChangedEvent,
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { registerLocaleData, CommonModule } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-import { CitasService } from '../../../data/citas.service';
+import { CitasServicePrueba } from '../../../data/citas.service';
 import { Cita } from '../../../types';
 import { CitasAdd } from '../../../components/citas-add/citas-add';
 import { CitasListPage } from '../../list/citas-list.page';
 import { Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { CdkOverlayOrigin } from "@angular/cdk/overlay";
-
-
+import { CitaService } from '../../../../../core/services/CitasService.service';
 
 registerLocaleData(localeEs);
-
 @Component({
   selector: 'app-citas-calendario',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    CalendarModule,
-    FormsModule,
-    CitasAdd,
-    CitasListPage,
-    // CdkOverlayOrigin
-],
+  imports: [ CommonModule, CalendarModule, FormsModule, CitasAdd, CitasListPage],
   encapsulation: ViewEncapsulation.None,
   providers: [
-    {
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    },
-    {
-      provide: CalendarDateFormatter,
-      useClass: CalendarNativeDateFormatter,
-    },
-    {
-      provide: LOCALE_ID,
-      useValue: 'es'
-    },
+    { provide: DateAdapter, useFactory: adapterFactory,},
+    { provide: CalendarDateFormatter, useClass: CalendarNativeDateFormatter},
+    { provide: LOCALE_ID, useValue: 'es' },
   ],
   templateUrl: './citas-calendario.html',
   styleUrls: ['./citas-calendario.scss', '../../../../../../../node_modules/angular-calendar/css/angular-calendar.css'],
 })
+
 export class CitasCalendarioComponent {
   readonly CalendarView = CalendarView;
   viewDate = new Date();
   view: CalendarView = CalendarView.Month;
-  locale: string = 'es';
-  weekStartsOn: number = 1;
+  locale = 'es';
+  weekStartsOn = 1;
 
   events: CalendarEvent[] = [
-        {
-      start: new Date(),
-      title: 'An event',
-    },
-  ];
+    // los eventos se cargan desde el servicio
+];
 
   refresh = new Subject<void>();
 
-  constructor(private citaSrv: CitasService) {
-    const citas = this.citaSrv.listCitas();
-    this.events = citas.map((c) => ({
-      id: c.id,
-      title: `Paciente ${c.pacienteId} · ${c.startTime} - ${c.endTime}`,
-      start: this.combineDateTime(c.date, c.startTime),
-      end: this.combineDateTime(c.date, c.endTime),
-      actions: [
-  {
-    label: '<i class="fas fa-pencil-alt"></i>',
-    onClick: ({ event }) => this.editCita(event)
-  },
-  {
-    label: '<i class="fas fa-trash-alt"></i>',
-    onClick: ({ event }) => this.deleteCita(event)
+  private citaService = inject(CitaService)
+
+  constructor() {
+    this.citaService.getCitas(); //Cargamos las citas
+
+    effect(() => {
+      const citas = this.citaService.citas(); // <------- Signal computed del servicio
+      this.events = citas.map(c => ({
+        id: c.id_cita,
+        title: `Paciente ${c.id_paciente} · ${c.hora_inicio} - ${c.hora_final}${c.razon_cita ? ' · ' + c.razon_cita : ''}`,
+        start: this.combineDateTime(c.fecha, c.hora_inicio),
+        end: this.combineDateTime(c.fecha, c.hora_final),
+        actions: [
+          { label: '<i class="fas fa-pencil-alt"></i>', onClick: ({ event }) => this.editCita(event) },
+          { label: '<i class="fas fa-trash-alt"></i>',  onClick: ({ event }) => this.deleteCita(event) }
+        ]
+      }));
+      this.refresh.next(); //Que hace esto?
+    })
   }
-]
-    }));
-  }
+
 
   private combineDateTime(fechaISO: string, horaHHmm: string): Date {
     const [y , m , d] = fechaISO.split('-').map(Number)
@@ -107,8 +89,8 @@ export class CitasCalendarioComponent {
     this.view = view;
   }
 
- activeDayIsOpen: boolean = false;
-selectedDate: Date | null = null;
+  activeDayIsOpen: boolean = false;
+  selectedDate: Date | null = null;
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -124,39 +106,24 @@ selectedDate: Date | null = null;
     }
   }
 
- addCita(cita: Cita): void {
-const id = cita.id && cita.id.trim() ? cita.id : crypto.randomUUID();
-
-  const completa: Cita = { ...cita, id };
+    // Crear cita desde el formulario hijo
+  async onNuevaCita(cita: Cita) {
+    await this.citaService.addCita(cita);
+    // no hace falta push manual a events: el effect ya lo hará al refrescar getCitas()
+    this.viewDate = this.combineDateTime(cita.fecha, cita.hora_inicio);
+    this.refresh.next();
+  }
+  // const completa: Cita = { ...cita,  };
 
   // 2) guardar en el servicio (fuente de verdad)
-  this.citaSrv.addCita(completa);
+  // this.citaSrv.addCita(completa);
 
   // 3) pintar en el calendario (añadimos 1 evento mapeado)
-  const nuevoEvento: CalendarEvent = {
-    id,
-    title: `Paciente ${completa.pacienteId} · ${completa.startTime} - ${completa.endTime}  ${completa.notes ? '| ' + completa.notes : ''} | ${completa.status}`,
-    start: this.combineDateTime(completa.date, completa.startTime),
-    end:   this.combineDateTime(completa.date, completa.endTime),
-    // (opcional) añade acciones si las usas en el resto:
-    actions: [
-      { label: '<i class="fas fa-pencil-alt"></i>', onClick: ({ event }) => this.editCita(event) },
-      { label: '<i class="fas fa-trash-alt"></i>',  onClick: ({ event }) => this.deleteCita(event) }
-    ]
-  };
 
-  this.events = [...this.events, nuevoEvento];
-
-   // 4) si estás en vista mensual, abrir el día y centrar la fecha
-  this.viewDate = nuevoEvento.start;
-  this.activeDayIsOpen = true;
-
-  // 5) notificar a angular-calendar (usas OnPush)
-  this.refresh.next();
-}
 
   deleteCita(citaToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== citaToDelete);
+    this.refresh.next();
   }
 
   editCita(cita: CalendarEvent): void {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Cita, Paciente, Profesional } from '../types';
 
 @Injectable({ providedIn: 'root' })
-export class CitasService {
+export class CitasServicePrueba {
   // profesionales de ejemplo
   private profesionales: Profesional[] = [
     { id: 'pro-1', name: 'Dra. García', specialty: 'Radiología' },
@@ -17,32 +17,32 @@ export class CitasService {
 
   // citas de ejemplo
   private citas: Cita[] = [
-    {
-      id: 'apt-1',
-      date: '2025-11-04',
-      startTime: '10:00',
-      endTime: '10:30',
-      pacienteId: 'pac-1',
-      profesionalId: 'pro-1',
-      status: 'Confirmada',
-      notes: 'Ayunas',
-    },
-    {
-      id: 'apt-2',
-      date: '2025-11-04',
-      startTime: '11:00',
-      endTime: '11:30',
-      pacienteId: 'pat-2',
-      profesionalId: 'pro-2',
-      status: 'Programada',
-    },
+    // {
+    //   id: 'apt-1',
+    //   fecha: '2025-11-04',
+    //   hora_inicio: '10:00',
+    //   hora_final: '10:30',
+    //   id_paciente: 'pac-1',
+    //   id_trabajador: 'pro-1',
+    //   estado: 'Confirmada',
+    //   razon_cita: 'Ayunas',
+    // },
+    // {
+    //   id: 'apt-2',
+    //   fecha: '2025-11-04',
+    //   hora_inicio: '11:00',
+    //   hora_final: '11:30',
+    //   id_paciente: 'pat-2',
+    //   id_trabajador: 'pro-2',
+    //   estado: 'Programada',
+    // },
   ];
 
   // métodos para leer datos
   listCitas() { return this.citas; }
 
   // obtener cita por su id
-  getCitas(id: string) { return this.citas.find(a => a.id === id) || null; }
+  getCitas(id: number) { return this.citas.find(a => a.id_cita === id) || null; }
 
   // obtener profesionales
   listProfesionales(): Profesional[] {
@@ -56,7 +56,7 @@ export class CitasService {
 
   // obtener cita por fecha
   appointmentByDate(dateISO: string): Cita[] {
-    return this.citas.filter(a => a.date === dateISO);
+    return this.citas.filter(a => a.fecha);
   }
 
   //añadir nueva cita
@@ -66,12 +66,12 @@ export class CitasService {
 
   // actualizar cita
   updateCita(cita: Cita): void {
-    this.citas = this.citas.map(x => x.id ? cita : x)
+    this.citas = this.citas.map(x => x.id_cita ? cita : x)
   }
 
   // borrar cita
-  deleteCita(id: string): void {
-    this.citas = this.citas.filter( citas => citas.id !== id)
+  deleteCita(id: number): void {
+    this.citas = this.citas.filter( citas => citas.id_cita !== id);
   }
 
 }
