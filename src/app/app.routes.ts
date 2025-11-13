@@ -9,7 +9,7 @@ import { ResultadosAnalisis } from './features/resultados-analisis/resultados-an
 
 export const routes: Routes = [
 {
-  // 1. RUTA PRINCIPAL (RAÍZ): el Login. 
+  // 1. RUTA PRINCIPAL (RAÍZ): el Login.
   path: '',
   component:LoginComponent,
   pathMatch: 'full'
@@ -21,7 +21,7 @@ export const routes: Routes = [
   title: 'Dashboard'
 },
 {
-  // 3. RUTA EXPLÍCITA DE LOGIN 
+  // 3. RUTA EXPLÍCITA DE LOGIN
   path: 'Login',
   component:LoginComponent,
   title:'Inicio'
@@ -42,6 +42,13 @@ export const routes: Routes = [
   path: 'resultados-analisis',
   component:ResultadosAnalisis,
   title: 'Resultados de Análisis',
+},
+
+{
+  // Ruta para el registro de empleados
+  path: 'registro-empleado',
+  loadComponent: () => import('./features/registroEmpleados/registroEmpleado.component').then(m => m.RegistroEmpleado),
+  title: 'Registro Empleado'
 },
 
 // --- RUTA CORREGIDA DE PACIENTES ---
