@@ -62,6 +62,29 @@ export class CitaService{
     await this.getCitas(); // recarga lista tras insertar
   }
 
+  async updateCita(cita: Cita): Promise<void> {
+    const { error } = await this.supabase
+      .from('cita')
+      .update({
+        fecha: cita.fecha,
+        hora_inicio: cita.hora_inicio,
+        hora_final: cita.hora_final,
+        id_trabajador: cita.id_trabajador,
+        id_paciente: cita.id_paciente,
+        razon_cita: cita.razon_cita,
+        estado: cita.estado,
+      })
+      .eq('id_cita', cita.id_cita);
+    if (error) {
+    console.error('Error actualizando cita', error);
+    this.citaState.update(s => ({ ...s, error: true }));
+    return;
+  }
+
+  await this.getCitas();
+
+  }
+
     async deleteCita(cita: Cita): Promise<void> {
     const { error } = await this.supabase.from('cita').delete().eq('id_cita', cita.id_cita)
     if (error) {

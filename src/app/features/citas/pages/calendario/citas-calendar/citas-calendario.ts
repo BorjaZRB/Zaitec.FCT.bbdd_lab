@@ -44,6 +44,7 @@ export class CitasCalendarioComponent {
   view: CalendarView = CalendarView.Month;
   locale = 'es';
   weekStartsOn = 1;
+  citaEnEdicion: Cita | null = null;
 
   events: CalendarEvent[] = [
     // los eventos se cargan desde el servicio
@@ -64,7 +65,7 @@ export class CitasCalendarioComponent {
         start: this.combineDateTime(c.fecha, c.hora_inicio),
         end: this.combineDateTime(c.fecha, c.hora_final),
         actions: [
-          { label: '<i class="fas fa-pencil-alt"></i>', onClick: ({ event }) => this.editCita(event) },
+          { label: '<i class="fas fa-pencil-alt"></i>', onClick: ({ event }) =>  this.editCita(event)},
           { label: '<i class="fas fa-trash-alt"></i>',  onClick: ({ event }) => this.citaService.deleteCita(c) }
         ]
       }));
@@ -113,24 +114,46 @@ export class CitasCalendarioComponent {
     this.viewDate = this.combineDateTime(cita.fecha, cita.hora_inicio);
     this.refresh.next();
   }
-  // const completa: Cita = { ...cita,  };
 
-  // 2) guardar en el servicio (fuente de verdad)
-  // this.citaSrv.addCita(completa);
+  mostrarFormEdit: boolean = false
 
-  // 3) pintar en el calendario (añadimos 1 evento mapeado)
+  toggleFormEdit(){
+    this.mostrarFormEdit = !this.mostrarFormEdit
+  }
 
+  editCita(event: CalendarEvent): void {
 
-  // deleteCita(citaToDelete: CalendarEvent) {
-  //   this.events = this.events.filter((event) => event !== citaToDelete);
-  //   this.refresh.next();
-  // }
+    this.toggleFormEdit();
 
-  editCita(cita: CalendarEvent): void {
-    const index = this.events.indexOf(cita);
-    if (index !== -1) {
-      this.events[index] = { ...cita };
-      this.refresh.next();
+    const id = event.id;
+    const todas = this.citaService.citas();
+    const cita = todas.find( c => c.id_cita === id);
+
+    this.citaEnEdicion = cita ?? null
+
+    console.log('Cita en edicion: ', this.citaEnEdicion)
+
+  }
+  async guardarEdicion() {
+    // Si no hay cita en edición, no hacemos nada
+    if (!this.citaEnEdicion) {
+      return;
     }
+
+    // Llamamos al servicio para actualizar en Supabase
+    await this.citaService.updateCita(this.citaEnEdicion);
+
+    // Opcional: mover la vista del calendario al día de la cita editada
+    this.viewDate = this.combineDateTime(
+      this.citaEnEdicion.fecha,
+      this.citaEnEdicion.hora_inicio
+    );
+
+    // Cerramos el formulario de edición y limpiamos la referencia
+    this.mostrarFormEdit = false;
+    this.citaEnEdicion = null;
+
+    // Notificamos al calendario (aunque el effect ya hace refresh, esto ayuda a asegurarlo)
+    this.refresh.next();
   }
 }
