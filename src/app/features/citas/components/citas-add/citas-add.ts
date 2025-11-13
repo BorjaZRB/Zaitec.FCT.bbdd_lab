@@ -45,7 +45,7 @@ export class CitasAdd {
 
     return alert('Faltan datos para crear la cita')
   } else {
-    this.citasSrv.insertCita({
+    this.citasSrv.addCita({
       id_cita: this.citasSrv.citaState().citas.length + 1,
       fecha: this.fecha(),
       hora_inicio: this.hora_inicio(),
