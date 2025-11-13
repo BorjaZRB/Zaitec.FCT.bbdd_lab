@@ -1,7 +1,7 @@
 <mat-card class="patients-card">
   <mat-card-header>
-    <mat-card-title>Gestión de Pacientes</mat-card-title>
-    <mat-card-subtitle>Listado de pacientes (Humanos y Veterinarios)</mat-card-subtitle>
+    <mat-card-title>Gestión de Usuarios</mat-card-title>
+    <mat-card-subtitle>Listado de usuarios (Humanos y Veterinarios)</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
@@ -23,7 +23,7 @@
             class="add-button"
             (click)="openNewPatientDialog()">
             <mat-icon>add</mat-icon>
-            Nuevo Paciente
+            Nuevo Usuario
         </button>
     </section>
     
@@ -74,7 +74,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="6">No se encontraron pacientes para el filtro aplicado.</td>
+        <td class="mat-cell" colspan="6">No se encontraron usuarios para el filtro aplicado.</td>
       </tr>
 
     </table>
