@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
     { title: 'Citas Pendientes', content: '12', icon: 'event', routerLink: '/calendario' , roles: ['coordinador', 'administrador'] },
     { title: 'Resultados Listos', content: '5', icon: 'check_circle', routerLink: '/resultados-analisis', roles: ['paciente', 'administrador'] },
     { title: 'Nuevo Análisis', content: 'Crear', icon: 'add_circle', routerLink: '/pacientes', roles: ['trabajador', 'administrador'] },
+    { title: 'Registro Empleado', content: 'Nuevo', icon: 'person_add', routerLink: '/registro-empleado', roles: ['administrador'] },
   ];
   // ---------------------------------------------------------
   
