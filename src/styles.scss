@@ -26,6 +26,40 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Global fallback styles for Registro Empleado form (in case component styles don't load) */
+.Form-Container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #f5f8fa;
+  min-height: calc(100vh - 80px);
+}
+
+.Form-Container .header {
+  width: 100%;
+  max-width: 720px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 28px;
+}
+
+.Form-Container .header h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.4rem;
+  color: #333333;
+}
+
+.Form-Container .form-group { margin-bottom: 16px; }
+.Form-Container label { display:block; margin-bottom:6px; color:#555; }
+.Form-Container input, .Form-Container select {
+  width:100%; padding:10px 12px; border:1px solid #d1d5d9; border-radius:8px; background:#fff;
+}
+.Form-Container input:focus, .Form-Container select:focus { border-color: #009CA6; box-shadow:0 0 6px rgba(0,156,166,0.12); }
+.Form-Container button[type='submit'] { width:100%; padding:12px; border-radius:10px; background:#009CA6; color:#fff; border:none; cursor:pointer; }
+.Form-Container .success { color:#2e7d32; margin-bottom:10px; }
+.Form-Container .error { color:#d32f2f; font-size:0.9rem; margin-top:6px; }
 // [FIN DEL CÓDIGO ORIGINAL DE ANGULAR MATERIAL]
 
 /* ------------------------------------------------------------------ */
@@ -43,11 +77,11 @@ $color-error: #E63946;
 // 2. DEFINICIÓN DE VARIABLES CSS NATIVAS (CSS Custom Properties)
 :root {
   /* Fondo principal de la aplicación */
-  --background-color: #{$color-neutral-light}; 
+  --background-color: #{$color-neutral-light};
   /* Fondo del contenedor principal */
-  --main-bg: #{$color-neutral-light}; 
+  --main-bg: #{$color-neutral-light};
   /* Fondo para la barra lateral (la hacemos oscura) */
-  --sidebar-bg: #1E1E1E; 
+  --sidebar-bg: #1E1E1E;
   /* Variables para la tipografía */
   --main-text-color: #{$color-text-main};
 }

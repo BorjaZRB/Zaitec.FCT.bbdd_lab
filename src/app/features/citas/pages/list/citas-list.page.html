@@ -33,7 +33,7 @@
     </thead>
     <tbody>
 
-  @for (c of citasSrv.citaState().citas; track c.id_paciente) {
+  @for (c of citasSrv.citaState().citas; track c.id_cita) {
       <tr>
     <th scope="row">{{c.id_cita}}</th>
     <td> {{ c.id_paciente }} </td>
