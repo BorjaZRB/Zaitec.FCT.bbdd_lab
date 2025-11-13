@@ -65,10 +65,10 @@ export class CitasCalendarioComponent {
         end: this.combineDateTime(c.fecha, c.hora_final),
         actions: [
           { label: '<i class="fas fa-pencil-alt"></i>', onClick: ({ event }) => this.editCita(event) },
-          { label: '<i class="fas fa-trash-alt"></i>',  onClick: ({ event }) => this.deleteCita(event) }
+          { label: '<i class="fas fa-trash-alt"></i>',  onClick: ({ event }) => this.citaService.deleteCita(c) }
         ]
       }));
-      this.refresh.next(); //Que hace esto?
+      this.refresh.next();
     })
   }
 
@@ -121,10 +121,10 @@ export class CitasCalendarioComponent {
   // 3) pintar en el calendario (añadimos 1 evento mapeado)
 
 
-  deleteCita(citaToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== citaToDelete);
-    this.refresh.next();
-  }
+  // deleteCita(citaToDelete: CalendarEvent) {
+  //   this.events = this.events.filter((event) => event !== citaToDelete);
+  //   this.refresh.next();
+  // }
 
   editCita(cita: CalendarEvent): void {
     const index = this.events.indexOf(cita);
