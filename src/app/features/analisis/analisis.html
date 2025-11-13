@@ -1,0 +1,98 @@
+<mat-card class="contenedor">
+  <h2>Nuevo Análisis</h2>
+
+  <form (ngSubmit)="agregarResultado()" #formulario="ngForm" aria-label="Formulario de resultados de análisis">
+
+    <!-- Select de Paciente -->
+    <mat-form-field appearance="outline">
+      <mat-label>Paciente</mat-label>
+      <mat-select
+        [(ngModel)]="nuevoResultado.id_paciente"
+        name="id_paciente"
+        required
+        aria-label="Seleccione un paciente"
+        title="Seleccione un paciente"
+      >
+        <mat-option *ngFor="let p of pacientes" [value]="p.id_paciente">
+          {{ p.nombre }} {{ p.apellidos }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Select de Centro -->
+    <mat-form-field appearance="outline">
+      <mat-label>Centro</mat-label>
+      <mat-select
+        [(ngModel)]="nuevoResultado.id_centro"
+        name="id_centro"
+        required
+        aria-label="Seleccione un centro"
+        title="Seleccione un centro"
+      >
+        <mat-option *ngFor="let c of centros" [value]="c.id_centro">
+          {{ c.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Tipo de Análisis -->
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de Análisis</mat-label>
+      <mat-select
+        [(ngModel)]="nuevoResultado.tipo"
+        name="tipo"
+        required
+        aria-label="Seleccione el tipo de análisis"
+        title="Seleccione el tipo de análisis"
+      >
+        <mat-option value="Clínico">Clínico</mat-option>
+        <mat-option value="Nutricional">Nutricional</mat-option>
+        <mat-option value="Radiografía">Radiografía</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Fecha -->
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha</mat-label>
+      <input
+        matInput
+        type="date"
+        name="fecha"
+        [(ngModel)]="nuevoResultado.fecha"
+        required
+        aria-label="Seleccione la fecha del análisis"
+        title="Seleccione la fecha del análisis"
+        placeholder="Seleccione la fecha"
+      />
+    </mat-form-field>
+
+    <!-- Descripción -->
+    <mat-form-field appearance="outline">
+      <mat-label>Descripción</mat-label>
+      <textarea
+        matInput
+        name="descripcion"
+        [(ngModel)]="nuevoResultado.descripcion"
+        rows="3"
+        aria-label="Descripción del análisis"
+        title="Introduce una breve descripción del análisis"
+        placeholder="Detalles del análisis"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="boton-container">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        aria-label="Agregar resultado de análisis"
+        title="Agregar resultado de análisis"
+      >
+        Agregar Resultado
+      </button>
+    </div>
+
+  </form>
+</mat-card>
+
+

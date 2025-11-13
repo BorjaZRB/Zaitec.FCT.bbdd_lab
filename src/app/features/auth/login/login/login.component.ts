@@ -49,8 +49,8 @@ export class LoginComponent {
     this.loading = false;
 
     if (success) {
-      // Redirigir al calendario después de un login exitoso
-      this.router.navigate(['/calendario']);
+      // Redirigir al dashboard después de un login exitoso
+      this.router.navigate(['/dashboard']);
     }
   }
 }

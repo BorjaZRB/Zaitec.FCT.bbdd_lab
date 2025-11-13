@@ -1,0 +1,55 @@
+/* Estilos para el formulario modal de pacientes */
+
+// 1. Estilo para el contenedor principal del modal
+mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaciado entre los campos */
+    
+    // Ancho fijo para mejorar la lectura (ajustado para la apertura de 600px)
+    width: 500px; 
+    max-width: 100%;
+    
+    // Si se usa padding en el contenedor, esto lo anula un poco:
+    padding: 24px; 
+}
+
+// 2. FORZAR VISIBILIDAD DE MAT-LABELS Y BORDES (para solucionar un fallo de rendering)
+// Apuntamos al contenedor de Material cuando tiene la apariencia 'outline'
+.mat-mdc-form-field-appearance-outline {
+    
+    // Corregir la capa principal para que tenga bordes visibles
+    .mat-mdc-text-field-wrapper {
+        border-color: #D9DDE0; 
+        border-width: 1px;
+        border-style: solid;
+        border-radius: var(--input-border-radius, 10px); /* Asegura el radio de 10px */
+    }
+}
+
+
+// 3. Estilos del Selector de Tipo (Radio Buttons)
+.type-selector {
+    margin-bottom: 5px; 
+    
+    label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    mat-radio-group {
+        display: inline-flex; // Asegura que los botones estén en línea
+        gap: 20px;
+    }
+}
+
+// 4. Estilos para los botones de acción
+mat-dialog-actions {
+    padding-top: 20px;
+}
+
+// 5. Ajuste general de ancho
+.full-width {
+    width: 100%; 
+}
