@@ -48,7 +48,7 @@ export class ListComponent {
   // PROPIEDADES PARA EL FILTRADO
   public filterType: string = 'todos'; // Valor inicial del filtro
   public readonly filterOptions = [ // Opciones para el selector
-    { value: 'todos', viewValue: 'Todos los Pacientes' },
+    { value: 'todos', viewValue: 'Todos los Usuarios' },
     { value: 'humano', viewValue: 'Humanos (NUHSA)' },
     { value: 'canino', viewValue: 'Caninos' },
     { value: 'felino', viewValue: 'Felinos' },

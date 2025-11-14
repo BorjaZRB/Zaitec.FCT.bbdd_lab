@@ -52,7 +52,7 @@ export class CitaService{
           }))
     }
 
-  async addCita(cita: Cita): Promise<void> {
+  async addCita(cita: Omit<Cita, "id_cita">): Promise<void> {
     const { error } = await this.supabase.from('cita').insert([cita]);
     if (error) {
       console.error('Error insertando cita', error);

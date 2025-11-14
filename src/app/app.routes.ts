@@ -6,6 +6,7 @@ import { CitasCalendarioComponent } from './features/citas/pages/calendario/cita
 import { CitasListPage } from './features/citas/pages/list/citas-list.page';
 import { DashboardComponent } from './features/dashboard/pages/Dashboard.component/Dashboard.component';
 import { ResultadosAnalisis } from './features/resultados-analisis/resultados-analisis';
+import { roleGuard } from './core/guards/role-guard'; // <-- Importar el guard
 
 export const routes: Routes = [
 {
@@ -18,7 +19,9 @@ export const routes: Routes = [
   // 2. RUTA DASHBOARD
   path: 'dashboard',
   component: DashboardComponent,
-  title: 'Dashboard'
+  title: 'Dashboard',
+  canActivate: [roleGuard], 
+  data: { roles: ['administrador', 'coordinador', 'trabajador'] }
 },
 {
   // 3. RUTA EXPLÍCITA DE LOGIN
@@ -42,6 +45,8 @@ export const routes: Routes = [
   path: 'resultados-analisis',
   component:ResultadosAnalisis,
   title: 'Resultados de Análisis',
+  canActivate: [roleGuard], 
+    data: { roles: ['administrador', 'coordinador', 'trabajador', 'cliente'] }
 },
 
 {
@@ -55,6 +60,8 @@ export const routes: Routes = [
 {
   //Usamos la carga perezosa (loadComponent).
   path: 'pacientes',
+  canActivate: [roleGuard], 
+  data: { roles: ['administrador', 'coordinador', 'trabajador'] },
   loadComponent: () =>
     import('./features/patients/pages/list/list.component').then(
       (m) => m.ListComponent
