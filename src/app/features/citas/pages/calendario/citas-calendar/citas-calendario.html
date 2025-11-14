@@ -26,6 +26,7 @@
             [events]="events"
             [activeDayIsOpen]="activeDayIsOpen"
             (dayClicked)="dayClicked($event.day)"
+            [refresh]="refresh"
           />
         }
         @case (CalendarView.Week) {
@@ -44,7 +45,7 @@
   </div>
 
   <aside class="calendario-panel">
-  <app-citas-add (newCita)="addCita($event)"></app-citas-add>
+  <app-citas-add (newCita)="onNuevaCita($event)"></app-citas-add>
 
     <div class="calendario-panel__section">
       <button class="calendario-panel__action" (click)="togleList()">Mostrar Citas</button>
@@ -54,3 +55,61 @@
     </div>
   </aside>
 </div>
+
+      @if (mostrarFormEdit && citaEnEdicion; as cita) {
+<div>
+  <form action="">
+    <div>
+
+      <label for="paciente">ID Paciente: </label>
+      <input type="text" name="paciente" placeholder="Id del paciente" [(ngModel)]="citaEnEdicion.id_paciente">
+
+    </div> <br>
+    <div>
+
+      <label for="fecha">Fecha de la cita: </label>
+      <input type="date" name="fecha" [(ngModel)]="citaEnEdicion.fecha">
+
+    </div> <br>
+
+    <div>
+
+      <label for="hora-inicio">Desde: </label>
+      <input type="time" name="hora-inicio" [(ngModel)]="citaEnEdicion.hora_inicio">
+
+    </div> <br>
+
+    <div>
+
+      <label for="hora-fin">Hasta: </label>
+      <input type="time" name="hora-fin" [(ngModel)]="citaEnEdicion.hora_final">
+
+    </div> <br>
+    <div>
+
+      <label for="profesional">Profesional: </label>
+      <input type="text" name="profesional" placeholder="ID del profesional" [(ngModel)]="citaEnEdicion.id_trabajador">
+
+    </div> <br>
+    <div>
+
+      <label for="razon_cita">Razón de cita: </label>
+      <input type="text" name="razon_cita" [(ngModel)]="citaEnEdicion.razon_cita" >
+
+    </div> <br>
+
+     <div>
+
+      <label for="estado">Estado: </label>
+      <input type="text" name="estado" placeholder="Estado de la cita" [(ngModel)]="citaEnEdicion.estado">
+
+    </div> <br>
+
+    <button type="button" (click)="guardarEdicion()">Guardar</button>
+  </form>
+</div>
+
+
+      }
+
+

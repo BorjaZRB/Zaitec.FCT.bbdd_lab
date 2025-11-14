@@ -6,8 +6,10 @@ import { Cita } from '../../types';
   selector: 'app-citas',
   imports: [CitasListPage],
   templateUrl: './citas.component.html',
-  styleUrl: './citas.component.scss',
+  styleUrl: './citas.component.scss'
 })
+
+// 3. CLASE
 export class CitasComponent {
 
 
