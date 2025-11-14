@@ -1,0 +1,144 @@
+<div class="Form-Container">
+
+  <div class="header">
+    <h2>Registro de Empleados</h2>
+    @if (successMessage) {
+      <div class="success">{{ successMessage }}</div>
+    }
+    @if (errorMessage) {
+      <div class="error">{{ errorMessage }}</div>
+    }
+    <form [formGroup]="registroForm" (ngSubmit)="onRegister()">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          formControlName="nombre"
+          placeholder="Introduzca el nombre"
+        />
+        @if (registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched) {
+          <div class="error">Nombre es obligatorio.</div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="apellidos">Apellidos:</label>
+        <input
+          type="text"
+          id="apellidos"
+          formControlName="apellidos"
+          placeholder="Introduzca los apellidos"
+        />
+        @if (registroForm.get('apellidos')?.invalid && registroForm.get('apellidos')?.touched) {
+          <div class="error">Apellido es obligatorio.</div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="dni">DNI:</label>
+        <input
+          type="text"
+          id="dni"
+          formControlName="dni"
+          placeholder="Introduzca el DNI"
+        />
+        @if (registroForm.get('dni')?.invalid && registroForm.get('dni')?.touched) {
+          <div class="error">DNI es obligatorio.</div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Introduzca el email"
+        />
+        @if (registroForm.get('email')?.invalid && registroForm.get('email')?.touched) {
+          <div class="error">Email obligatorio y válido.</div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="telefono">Telefono:</label>
+        <input
+          type="text"
+          id="telefono"
+          formControlName="telefono"
+          placeholder="Introduzca el telefono"
+        />
+        @if (registroForm.get('telefono')?.invalid && registroForm.get('telefono')?.touched) {
+          <div class="error">Telefono es obligatorio.</div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="establecerContraseña">Establecer contraseña:</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Introduzca la contraseña"
+        />
+        @if (registroForm.get('password')?.invalid && registroForm.get('password')?.touched) {
+          <div class="error">Contraseña obligatoria (mínimo 6 caracteres).</div>
+        }
+      </div>
+      <div class="form-group">
+       <label for="ConfirmarContraseña">Confirmar Contraseña:</label>
+        <input
+          type="password"
+          id="confirmarPassword"
+          formControlName="confirmarPassword"
+          placeholder="Confirme la contraseña"
+        />
+        @if ((registroForm.get('confirmarPassword')?.invalid && registroForm.get('confirmarPassword')?.touched) || (registroForm.hasError('mismatch') && registroForm.get('confirmarPassword')?.touched)) {
+          <div class="error">Las contraseñas deben coincidir.</div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="rol">Rol:</label>
+        <select id="rol" formControlName="rol">
+          <option value="" disabled>Seleccione un rol</option>
+          <option value="admin">Administrador</option>
+          <option value="empleado">Empleado</option>
+        </select>
+        @if (registroForm.get('rol')?.invalid && registroForm.get('rol')?.touched) {
+          <div class="error">Rol es obligatorio.</div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="centroAsignado">Centro Asignado:</label>
+        <input
+          type="text"
+          id="centroAsignado"
+          formControlName="centroAsignado"
+          placeholder="Introduzca el centro"
+        />
+        @if (registroForm.get('centroAsignado')?.invalid && registroForm.get('centroAsignado')?.touched) {
+          <div class="error">Departamento es obligatorio.</div>
+        }
+
+      </div>
+
+
+
+      <button type="submit" [disabled]="registroForm.invalid || loading">
+        {{ loading ? 'Registrando...' : 'Dar de alta' }}
+      </button>
+
+
+
+      </form>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+</div>
