@@ -55,20 +55,7 @@ export class CitasAdd {
       razon_cita: this.razon_cita(),
       estado: this.estado()
     })
-
-    // const newCita: Cita = {
-    //   id_cita: this.id_cita(),
-    //   fecha: this.fecha(),
-    //   hora_inicio: this.hora_inicio(),
-    //   hora_final: this.hora_final(),
-    //   id_trabajador: this.id_trabajador(),
-    //   id_paciente: this.id_paciente(),
-    //   razon_cita: this.razon_cita(),
-    //   estado: this.estado()
-    // }
-    // this.newCita.emit(newCita)
-    // console.log('Correcto')
-
+    this.togleFormAdd();
   }
 
 }
