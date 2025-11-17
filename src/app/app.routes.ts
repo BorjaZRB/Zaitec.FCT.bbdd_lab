@@ -33,11 +33,6 @@ export const routes: Routes = [
 
 // --- RUTAS DE DEV ---
 {
-  path: 'calendario',
-  component: CitasCalendarioComponent,
-  title: 'Calendario de Citas'
-},
-{
   path: 'resultados-analisis',
   component:ResultadosAnalisis,
   title: 'Resultados de Análisis',
