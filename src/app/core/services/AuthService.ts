@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient, Session, User } from '@supabase/supabase-js';
+import { SupabaseClient, Session, User } from '@supabase/supabase-js';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from '../../../enviroments/environment';
+import { supabase } from './supabase.client';
 
 
 
@@ -10,8 +10,8 @@ import { environment } from '../../../enviroments/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-//crea la instancia de Supabase con URL y clave pública.
-private supabase: SupabaseClient;
+// Reuse shared Supabase client singleton
+private supabase: SupabaseClient = supabase;
 
 //almacena la sesión actual y permite que componentes se suscriban para reaccionar a cambios de sesión.
 private session$ = new BehaviorSubject<Session | null>(null);
@@ -25,14 +25,11 @@ get authState(): Observable<boolean> {
 
 
 constructor() {
-  this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-
   // Comprobar si hay un usuario en localStorage al iniciar
   const userStr = localStorage.getItem('usuario');
   if (userStr) {
     this.isAuthenticated$.next(true);
   }
-
   // Recuperar sesión de Supabase
   this.supabase.auth.getSession().then(({ data }) => {
     this.session$.next(data.session ?? null);
