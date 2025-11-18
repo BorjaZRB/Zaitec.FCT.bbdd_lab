@@ -44,7 +44,7 @@ horasOcupadas = computed(() => {
   if(!fecha) return new Set<string>(); //Si no hay fecha no desactivamos nada
 
   const citasDelDia = this.citasSrv.citas().filter(c => c.fecha === fecha);
-  const horas = citasDelDia.map(c => c.hora_inicio); //Explicame esto
+  const horas = citasDelDia.map(c => c.hora_inicio);
 
   return new Set(horas)
 })

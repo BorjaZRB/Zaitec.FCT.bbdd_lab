@@ -6,7 +6,6 @@
     <table class="table citas-list__table">
       <thead>
         <tr>
-          <th scope="col">ID</th>
           <th scope="col">Paciente</th>
           <th scope="col">Razón Cita</th>
           <th scope="col">Fecha</th>
@@ -18,7 +17,6 @@
       <tbody>
         @for (c of citasSrv.citaState().citas; track c.id_cita) {
           <tr>
-            <th scope="row">{{ c.id_cita }}</th>
             <td>{{ c.id_paciente }}</td>
             <td>{{ c.razon_cita }}</td>
             <td>{{ c.fecha }}</td>
