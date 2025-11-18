@@ -108,7 +108,7 @@ export class CitasCalendarioComponent {
   }
 
     // Crear cita desde el formulario hijo
-  async onNuevaCita(cita: Cita) {
+  async onNuevaCita(cita: Omit<Cita, 'id_cita'>) {
     await this.citaService.addCita(cita);
     // no hace falta push manual a events: el effect ya lo hará al refrescar getCitas()
     this.viewDate = this.combineDateTime(cita.fecha, cita.hora_inicio);
