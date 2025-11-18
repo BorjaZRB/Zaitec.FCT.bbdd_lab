@@ -1,47 +1,35 @@
 
-
-<div>
+<div class="citas-list">
   <h2>Listado de citas</h2>
 
-  <table class="table">
-    <colgroup>
-      <col width="5%">
-      <col width="*">
-      <col width="35%">
-      <col width="15%">
-    </colgroup>
-
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Paciente</th>
-        <th scope="col">Razon Cita</th>
-        <th scope="col">Fecha</th>
-        <th scope="col">Hora de inicio</th>
-        <th scope="col">Hora de finalización</th>
-        <th scope="col">Estado</th>
-
-
-      </tr>
-    </thead>
-    <tbody>
-
-  @for (c of citasSrv.citaState().citas; track c.id_cita) {
-      <tr>
-    <th scope="row">{{c.id_cita}}</th>
-    <td> {{ c.id_paciente }} </td>
-    <td> {{ c.razon_cita }} </td>
-    <td> {{ c.fecha }} </td>
-    <td> {{ c.hora_inicio }} </td>
-    <td> {{ c.hora_final }} </td>
-    <td> {{ c.estado }} </td>
-      <!-- <a [routerLink]="['/citas', c.id]"> -->
-      <!-- </a> -->
-</tr>
-
-  }
-    </tbody>
-  </table>
+  <div class="table-responsive citas-list__table-wrapper">
+    <table class="table citas-list__table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Paciente</th>
+          <th scope="col">Razón Cita</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Hora de inicio</th>
+          <th scope="col">Hora de finalización</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (c of citasSrv.citaState().citas; track c.id_cita) {
+          <tr>
+            <th scope="row">{{ c.id_cita }}</th>
+            <td>{{ c.id_paciente }}</td>
+            <td>{{ c.razon_cita }}</td>
+            <td>{{ c.fecha }}</td>
+            <td>{{ c.hora_inicio }}</td>
+            <td>{{ c.hora_final }}</td>
+            <td>{{ c.estado }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 
   <ng-template #noResults>
     <p>No results found for .</p>

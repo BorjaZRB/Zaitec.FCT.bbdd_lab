@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+ import { computed, inject, Injectable, signal } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../../enviroments/environment';
 import { Cita } from '../../features/citas/types';
