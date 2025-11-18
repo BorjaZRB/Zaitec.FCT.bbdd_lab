@@ -7,6 +7,7 @@ import { CitasListPage } from './features/citas/pages/list/citas-list.page';
 import { DashboardComponent } from './features/dashboard/pages/Dashboard.component/Dashboard.component';
 import { ResultadosAnalisis } from './features/resultados-analisis/resultados-analisis';
 import { roleGuard } from './core/guards/role-guard'; // <-- Importar el guard
+import { CitasComponent } from './features/citas/pages/citas/citas.component';
 
 export const routes: Routes = [
 {
@@ -20,7 +21,7 @@ export const routes: Routes = [
   path: 'dashboard',
   component: DashboardComponent,
   title: 'Dashboard',
-  canActivate: [roleGuard], 
+  canActivate: [roleGuard],
   data: { roles: ['administrador', 'coordinador', 'trabajador'] }
 },
 {
@@ -32,20 +33,17 @@ export const routes: Routes = [
 
 // --- RUTAS DE DEV ---
 {
-  path: 'citas',
-  component: CitasListPage,
-  title: 'Citas'
-},
-{
-  path: 'calendario',
-  component: CitasCalendarioComponent,
-  title: 'Calendario de Citas'
-},
-{
   path: 'resultados-analisis',
   component:ResultadosAnalisis,
   title: 'Resultados de Análisis',
-  canActivate: [roleGuard], 
+  canActivate: [roleGuard],
+    data: { roles: ['administrador', 'coordinador', 'trabajador', 'cliente'] }
+},
+{
+  path: 'citas',
+  component:CitasComponent,
+  title: 'Citas Prueba',
+  canActivate: [roleGuard],
     data: { roles: ['administrador', 'coordinador', 'trabajador', 'cliente'] }
 },
 
@@ -60,7 +58,7 @@ export const routes: Routes = [
 {
   //Usamos la carga perezosa (loadComponent).
   path: 'pacientes',
-  canActivate: [roleGuard], 
+  canActivate: [roleGuard],
   data: { roles: ['administrador', 'coordinador', 'trabajador'] },
   loadComponent: () =>
     import('./features/patients/pages/list/list.component').then(
