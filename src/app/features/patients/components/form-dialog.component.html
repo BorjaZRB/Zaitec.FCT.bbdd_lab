@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-  {{ isEditMode ? 'Editar Paciente' : 'Nuevo Paciente' }}
+  {{ isEditMode ? 'Editar Usuario' : 'Nuevo Usuario' }}
 </h2>
 
 <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
@@ -8,7 +8,7 @@
 
     <section class="type-selector mb-4">
       <label>Tipo de Registro:</label>
-      <mat-radio-group formControlName="isHuman" aria-label="Seleccionar tipo de paciente">
+      <mat-radio-group formControlName="isHuman" aria-label="Seleccionar tipo de usuario">
         <mat-radio-button [value]="true">Humano</mat-radio-button>
         <mat-radio-button [value]="false" class="ml-4">Veterinario</mat-radio-button>
       </mat-radio-group>
