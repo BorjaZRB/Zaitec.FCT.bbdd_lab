@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../enviroments/environment';
+import { SupabaseClient } from '@supabase/supabase-js';
+import { supabase } from './supabase.client';
 
 export interface Trabajador {
   id?: number;
+  id_centro?: number | null;
+  id_coordinador?: number | null;
   nombre: string;
   apellidos: string;
-  email: string;
   telefono?: string;
-  rol?: string;
-  centroAsignado?: string;
+  puesto_trabajo?: string;
+  email: string;
+  dni: string;
+  id_trabajador?: number | null;
+  contraseña: string;
   created_at?: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class TrabajadoresService {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient = supabase;
 
-  constructor() {
-    // Conexión a Supabase
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-  }
+  // No constructor needed — we reuse the shared supabase client
 
   // Obtener todos los trabajadores
   async getAll(): Promise<{ data: Trabajador[] | null; error: any }> {
