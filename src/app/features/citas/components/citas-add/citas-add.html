@@ -22,7 +22,8 @@
       @for (slot of timeSlots; track slot ) {
           <option
               [value]="slot"
-              [disabled]="isSlotDisabled(slot)">
+              [disabled]="isSlotDisabled(slot)"
+              >
               {{slot}}
 
             </option>
@@ -36,14 +37,6 @@
 
         }
       </label>
-    <!-- </div> <br>
-
-    <div>
-
-      <label for="hora-fin">Hasta: {{$event.hora-final}}
-              <input type="time" name="hora-fin" [value]="hora_final()" (input)="hora_final.set($any($event.target).value)"> -->
-
-<!-- </label> -->
     </div> <br>
     <div>
 
@@ -61,7 +54,12 @@
      <div>
 
       <label for="estado">Estado:
-      <input type="text" name="estado" placeholder="Estado de la cita" [value]="estado()" (input)="estado.set($any($event.target).value)">
+        <select name="estado" [value]="estado()" (change)="estado.set($any($event.target).value)">
+          <option value="Programada">Programada</option>
+          <option value="Confirmada">Confirmada</option>
+          <option value="Cancelada">Cancelada</option>
+          <option value="Completada">Completada</option>
+        </select>
 </label>
     </div> <br>
 
