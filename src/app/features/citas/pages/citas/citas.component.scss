@@ -1,0 +1,14 @@
+.citas-body {
+  padding: 1.5rem 0;
+  background-color: #f5f8fa;
+}
+
+.citas-body .row > div {
+  display: flex;
+}
+
+.citas-body app-citas-list,
+.citas-body app-citas-calendario,
+.citas-body app-citas-add {
+  flex: 1 1 auto;
+}
