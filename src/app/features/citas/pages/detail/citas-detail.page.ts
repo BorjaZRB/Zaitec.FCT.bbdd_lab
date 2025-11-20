@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CitasServicePrueba } from '../../data/citas.service';
 import { Cita, Paciente } from '../../types';
 import { CommonModule } from '@angular/common';
 import { CitaService } from '../../../../core/services/CitasService.service';
