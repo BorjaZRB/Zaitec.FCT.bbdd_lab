@@ -3,7 +3,7 @@
     <app-search-bar (search)="onSearch($event)"></app-search-bar>
   </div>
 
-  <div class="buttons-grid">
+    <div class="buttons-grid">
     <button class="dashboard-button calendar-btn" routerLink="/calendario">
       <i class="fa fa-calendar-alt"></i>
       <span>Calendario</span>
@@ -19,7 +19,7 @@
     </button>
 
     @if (userName) {
-      <button class="dashboard-button profile-btn">
+      <button class="dashboard-button profile-btn" routerLink="/profile">
         <i class="fa fa-user"></i>
         <span>Perfil</span>
       </button>
