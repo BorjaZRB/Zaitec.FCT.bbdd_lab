@@ -43,13 +43,13 @@ export class TrabajadoresService {
 
   // Actualizar un trabajador existente
   async update(id: number | string, patch: Partial<Trabajador>): Promise<{ data: Trabajador | null; error: any }> {
-  const { data, error } = await this.supabase.from('trabajadores').update(patch).eq('id', id).select().single();
+  const { data, error } = await this.supabase.from('trabajadores').update(patch).eq('id_trabajador', id).select().single();
     return { data, error };
   }
 
   // Eliminar un trabajador
   async remove(id: number | string): Promise<{ data: any; error: any }> {
-    const { data, error } = await this.supabase.from('trabajadores').delete().eq('id', id);
+    const { data, error } = await this.supabase.from('trabajadores').delete().eq('id_trabajador', id);
     return { data, error };
   }
 }
