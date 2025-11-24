@@ -18,7 +18,14 @@ export class RegistroEmpleado {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private trabajadoresService: TrabajadoresService, private router: Router) {
+  trabajadores: any[] = [];   // ⬅️ lista para tabla
+  editMode: boolean = false;  // ⬅️ para saber si estamos editando
+  trabajadorEditandoId: number | null = null;
+
+  constructor(private fb: FormBuilder,
+    private trabajadoresService: TrabajadoresService,
+    private router: Router)
+    {
     this.registroForm = this.fb.group(
       {
         nombre: ['', Validators.required],
@@ -34,6 +41,83 @@ export class RegistroEmpleado {
       { validators: this.passwordsMatch }
     );
   }
+    ngOnInit() {
+    this.loadTrabajadores();  // ⬅️ al abrir, cargamos la tabla
+  }
+
+  async loadTrabajadores() {
+    const { data, error } = await this.trabajadoresService.getAll();
+    if (!error && data) {
+      this.trabajadores = data;
+    }
+  }
+  editarTrabajador(trabajador: any) {
+  this.editMode = true;
+  this.trabajadorEditandoId = trabajador.id_trabajador;
+
+  this.registroForm.patchValue({
+    nombre: trabajador.nombre,
+    apellidos: trabajador.apellidos,
+    dni: trabajador.dni,
+    email: trabajador.email,
+    telefono: trabajador.telefono,
+    contraseña: trabajador.contraseña,
+    confirmarPassword: trabajador.contraseña,
+    puesto_trabajo: trabajador.puesto_trabajo,
+    centroAsignado: trabajador.id_centro
+  });
+}
+
+
+async onUpdate() {
+  if (this.registroForm.invalid) {
+    this.registroForm.markAllAsTouched();
+    return;
+  }
+
+  const fv = this.registroForm.value;
+
+  const patch = {
+    nombre: fv.nombre,
+    apellidos: fv.apellidos,
+    dni: fv.dni,
+    email: fv.email,
+    telefono: fv.telefono,
+    puesto_trabajo: fv.puesto_trabajo,
+    id_centro: Number(fv.centroAsignado),
+    contraseña: fv.contraseña
+  };
+
+  const { error } = await this.trabajadoresService.update(
+    this.trabajadorEditandoId!,
+    patch
+  );
+
+  if (error) {
+    this.errorMessage = "Error actualizando trabajador";
+    return;
+  }
+
+  this.successMessage = "Trabajador actualizado correctamente";
+  this.editMode = false;
+  this.trabajadorEditandoId = null;
+  this.registroForm.reset();
+  this.loadTrabajadores(); // refrescar tabla
+}
+
+
+
+
+
+
+
+async eliminarTrabajador(id: number) {
+  const { error } = await this.trabajadoresService.remove(id);
+
+  if (!error) {
+    this.loadTrabajadores();
+  }
+}
 
   passwordsMatch(group: FormGroup) {
     const pw = group.get('contraseña')?.value;
@@ -42,10 +126,18 @@ export class RegistroEmpleado {
   }
 
   async onRegister() {
-    if (this.registroForm.invalid) {
-      this.registroForm.markAllAsTouched();
-      return;
-    }
+
+     // ⬅️ SI ESTAMOS EN MODO EDICIÓN → ACTUALIZAR
+  if (this.editMode && this.trabajadorEditandoId) {
+    return this.onUpdate();
+  }
+
+  // ⬅️ SI NO → REGISTRAR NUEVO EMPLEADO
+  if (this.registroForm.invalid) {
+    this.registroForm.markAllAsTouched();
+    return;
+  }
+
 
     this.loading = true;
     // Map form values to the 'trabajadores' table columns

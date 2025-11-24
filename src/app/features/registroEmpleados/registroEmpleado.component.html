@@ -138,6 +138,51 @@
 
 
 
+    <div class="tabla-container">
+      <h2 style="text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #006c74; /* tono azul verdoso */
+  margin-bottom: 1rem;
+
+.form-group {
+	margin-bottom: 16px;}">Lista de empleados</h2>
+
+<table class="tabla-trabajadores">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>DNI</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>Rol</th>
+      <th>Centro</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let t of trabajadores">
+      <td>{{ t.nombre }}</td>
+      <td>{{ t.apellidos }}</td>
+      <td>{{ t.dni }}</td>
+      <td>{{ t.email }}</td>
+      <td>{{ t.telefono }}</td>
+      <td>{{ t.puesto_trabajo }}</td>
+      <td>{{ t.id_centro }}</td>
+
+      <td>
+        <button class="btn-edit" (click)="editarTrabajador(t)">Editar</button>
+        <button class="btn-delete" (click)="eliminarTrabajador(t.id_trabajador)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+
+
 
 
 
