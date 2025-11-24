@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../enviroments/environment';
+import { SupabaseClient } from '@supabase/supabase-js';
+import { supabase } from './supabase.client';
 
 export interface Paciente {
   id_paciente: number;
@@ -16,11 +16,9 @@ export interface Centro {
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient = supabase;
 
-  constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-  }
+  // Reuses shared supabase client (singleton)
 
   // Insertar análisis
   async agregarAnalisis(resultado: any) {

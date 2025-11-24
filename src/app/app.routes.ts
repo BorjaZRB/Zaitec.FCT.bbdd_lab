@@ -9,6 +9,7 @@ import { DashboardComponent } from './features/dashboard/pages/Dashboard.compone
 import { ResultadosAnalisis } from './features/resultados-analisis/resultados-analisis';
 import { ProfileComponent } from './features/profile/profile.component';
 import { roleGuard } from './core/guards/role-guard'; // <-- Importar el guard
+import { CitasComponent } from './features/citas/pages/citas/citas.component';
 
 export const routes: Routes = [
   // 1. RUTA PRINCIPAL (RAÍZ): el Login.

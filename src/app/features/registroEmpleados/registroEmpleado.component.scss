@@ -10,6 +10,55 @@
 	--error-color: #d32f2f;
 	--success-color: #2e7d32;
 }
+.tabla-container{
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.tabla-trabajadores {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+
+  th {
+    background: #009CA6;
+    color: white;
+    padding: 12px;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  tr:hover {
+    background: #f2fafb;
+  }
+}
+
+.btn-edit {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007780;
+  color: white;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #d32f2f;
+  color: white;
+  cursor: pointer;
+}
 
 .Form-Container {
 	display: flex;
