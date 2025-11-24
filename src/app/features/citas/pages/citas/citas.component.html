@@ -1,3 +1,17 @@
-<h1>Citas</h1>
+<div class="citas-body">
+  <div class="container-fluid px-4">
+    <div class="row g-4 align-items-start">
+      <div class="col-12 col-lg-3">
+        <app-citas-list></app-citas-list>
+      </div>
 
-<app-citas-list></app-citas-list>
+      <div class="col-12 col-lg-6">
+        <app-citas-calendario></app-citas-calendario>
+      </div>
+
+      <div class="col-12 col-lg-3">
+        <app-citas-add (newCita)="onNuevaCita($event)"></app-citas-add>
+      </div>
+    </div>
+  </div>
+</div>

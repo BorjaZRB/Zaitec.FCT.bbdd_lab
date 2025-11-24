@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../enviroments/environment';
+import { SupabaseClient } from '@supabase/supabase-js';
+import { supabase } from './supabase.client';
 import { Cita } from '../../features/citas/types';
 import { AuthService } from './AuthService';
 
@@ -12,7 +12,7 @@ interface CitaState {
 
 @Injectable({providedIn: 'root'})
 export class CitaService{
-  private supabase: SupabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey);
+  private supabase: SupabaseClient = supabase;
   private auth = inject(AuthService);
 
   // Estado inicial de las citas

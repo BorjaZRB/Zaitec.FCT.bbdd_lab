@@ -13,10 +13,7 @@ import {
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { registerLocaleData, CommonModule } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-import { CitasServicePrueba } from '../../../data/citas.service';
 import { Cita } from '../../../types';
-import { CitasAdd } from '../../../components/citas-add/citas-add';
-import { CitasListPage } from '../../list/citas-list.page';
 import { Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { isSameDay, isSameMonth } from 'date-fns';
@@ -27,7 +24,7 @@ registerLocaleData(localeEs);
   selector: 'app-citas-calendario',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ CommonModule, CalendarModule, FormsModule, CitasAdd, CitasListPage],
+  imports: [ CommonModule, CalendarModule, FormsModule],
   encapsulation: ViewEncapsulation.None,
   providers: [
     { provide: DateAdapter, useFactory: adapterFactory,},
@@ -46,9 +43,7 @@ export class CitasCalendarioComponent {
   weekStartsOn = 1;
   citaEnEdicion: Cita | null = null;
 
-  events: CalendarEvent[] = [
-    // los eventos se cargan desde el servicio
-];
+  events: CalendarEvent[] = [];
 
   refresh = new Subject<void>();
 
@@ -74,16 +69,10 @@ export class CitasCalendarioComponent {
   }
 
 
-  private combineDateTime(fechaISO: string, horaHHmm: string): Date {
+  combineDateTime(fechaISO: string, horaHHmm: string): Date {
     const [y , m , d] = fechaISO.split('-').map(Number)
     const [ hh , mm ] = horaHHmm.split(':').map(Number)
     return new Date (y, m - 1, d, hh, mm)
-  }
-
-   mostrarLista: boolean = false
-
-  togleList(){
-    this.mostrarLista = !this.mostrarLista
   }
 
   setView(view: CalendarView) {
@@ -107,13 +96,7 @@ export class CitasCalendarioComponent {
     }
   }
 
-    // Crear cita desde el formulario hijo
-  async onNuevaCita(cita: Omit<Cita, 'id_cita'>) {
-    await this.citaService.addCita(cita);
-    // no hace falta push manual a events: el effect ya lo hará al refrescar getCitas()
-    this.viewDate = this.combineDateTime(cita.fecha, cita.hora_inicio);
-    this.refresh.next();
-  }
+
 
   mostrarFormEdit: boolean = false
 

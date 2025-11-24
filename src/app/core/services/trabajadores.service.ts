@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../enviroments/environment';
+import { SupabaseClient } from '@supabase/supabase-js';
+import { supabase } from './supabase.client';
 
 export interface Trabajador {
   id?: number;
+  id_centro?: number | null;
+  id_coordinador?: number | null;
   nombre: string;
   apellidos: string;
-  email: string;
   telefono?: string;
-  rol?: string;
-  centroAsignado?: string;
+  puesto_trabajo?: string;
+  email: string;
+  dni: string;
+  id_trabajador?: number | null;
+  contraseña: string;
   created_at?: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class TrabajadoresService {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient = supabase;
 
-  constructor() {
-    // Conexión a Supabase
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-  }
+  // No constructor needed — we reuse the shared supabase client
 
   // Obtener todos los trabajadores
   async getAll(): Promise<{ data: Trabajador[] | null; error: any }> {
@@ -42,13 +43,13 @@ export class TrabajadoresService {
 
   // Actualizar un trabajador existente
   async update(id: number | string, patch: Partial<Trabajador>): Promise<{ data: Trabajador | null; error: any }> {
-  const { data, error } = await this.supabase.from('trabajadores').update(patch).eq('id', id).select().single();
+  const { data, error } = await this.supabase.from('trabajadores').update(patch).eq('id_trabajador', id).select().single();
     return { data, error };
   }
 
   // Eliminar un trabajador
   async remove(id: number | string): Promise<{ data: any; error: any }> {
-    const { data, error } = await this.supabase.from('trabajadores').delete().eq('id', id);
+    const { data, error } = await this.supabase.from('trabajadores').delete().eq('id_trabajador', id);
     return { data, error };
   }
 }
