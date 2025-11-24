@@ -156,4 +156,91 @@ async logout() {
   }
 }
 
+/**
+ * Simula una petición de recuperación de contraseña.
+ * Busca si existe un usuario con el email y devuelve un resultado genérico.
+ * En producción se debería enviar un email con token/ enlace real.
+ */
+async requestPasswordReset(email: string) {
+  try {
+    // Preferir la funcionalidad de Supabase Auth si está disponible
+    const authAny: any = (this.supabase as any).auth;
+    if (authAny && typeof authAny.resetPasswordForEmail === 'function') {
+      try {
+        // redirectTo puede configurarse para apuntar a una página de reset en tu app
+        await authAny.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/reset' });
+      } catch (e) {
+        // ignorar errores para no filtrar existencia de cuenta
+        console.warn('Supabase resetPasswordForEmail error (ignored):', e);
+      }
+
+      return {
+        success: true,
+        message:
+          'Si existe una cuenta con ese correo, recibirás instrucciones para recuperar la contraseña.'
+      };
+    }
+
+    // Fallback: consulta la tabla (no revelar existencia)
+    await this.supabase.from('usuario_prueba').select('email').eq('email', email).single();
+    return {
+      success: true,
+      message:
+        'Si existe una cuenta con ese correo, recibirás instrucciones para recuperar la contraseña.'
+    };
+  } catch (err) {
+    console.error('Error en requestPasswordReset', err);
+    return {
+      success: false,
+      message: 'Error inesperado al solicitar recuperación de contraseña.'
+    };
+  }
+}
+
+  /**
+   * Confirma el cambio de contraseña cuando el usuario llega con sesión (token).
+   * Intenta actualizar la contraseña del usuario autenticado mediante Supabase.
+   */
+  async confirmPasswordReset(newPassword: string) {
+    try {
+      const authAny: any = (this.supabase as any).auth;
+      if (authAny && typeof authAny.updateUser === 'function') {
+        const { data, error } = await authAny.updateUser({ password: newPassword });
+        if (error) {
+          return { success: false, message: 'No fue posible actualizar la contraseña.' };
+        }
+        return { success: true, message: 'Contraseña actualizada correctamente.' };
+      }
+
+      // Si no está disponible la API, devolvemos mensaje de fallo genérico
+      return { success: false, message: 'Funcionalidad no disponible en este entorno.' };
+    } catch (err) {
+      console.error('Error en confirmPasswordReset', err);
+      return { success: false, message: 'Error inesperado al actualizar la contraseña.' };
+    }
+  }
+
+  /**
+   * Establece la sesión en el cliente Supabase a partir de tokens (cuando el enlace de recuperación los incluye).
+   */
+  async setSessionFromTokens(accessToken?: string | null, refreshToken?: string | null) {
+    try {
+      const authAny: any = (this.supabase as any).auth;
+      if (authAny && typeof authAny.setSession === 'function' && accessToken) {
+        const { data, error } = await authAny.setSession({ access_token: accessToken, refresh_token: refreshToken });
+        if (error) {
+          console.warn('setSession returned error', error);
+          return { success: false, message: 'No se pudo restaurar la sesión.' };
+        }
+        this.session$.next(data.session ?? null);
+        this.isAuthenticated$.next(!!data.session);
+        return { success: true };
+      }
+      return { success: false, message: 'Funcionalidad no soportada.' };
+    } catch (err) {
+      console.error('Error en setSessionFromTokens', err);
+      return { success: false, message: 'Error inesperado al restaurar la sesión.' };
+    }
+  }
+
 }

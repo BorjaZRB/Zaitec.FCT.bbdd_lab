@@ -1,0 +1,33 @@
+<div class="profile-page">
+  <div class="profile-inner">
+    <div class="profile-card">
+      <div class="avatar"><i class="fa fa-user-circle"></i></div>
+      <h2>{{ usuario?.nombre || 'Usuario' }} {{ usuario?.apellidos || '' }}</h2>
+      <div class="fields">
+        <div class="field"><label>Nombre</label><div>{{ usuario?.nombre || '-' }}</div></div>
+        <div class="field"><label>Apellidos</label><div>{{ usuario?.apellidos || '-' }}</div></div>
+        <div class="field"><label>Fecha de nacimiento</label><div>{{ usuario?.fechaNacimiento || usuario?.fecha_nacimiento || '-' }}</div></div>
+        <div class="field"><label>Teléfono</label><div>{{ usuario?.telefono || usuario?.phone || '-' }}</div></div>
+        <div class="field"><label>Email</label><div>{{ usuario?.email || '-' }}</div></div>
+        <div class="field"><label>Contraseña</label>
+          <!-- Mostrarla oculta siempre -->
+          <div class="password">{{ usuario?.password ? '••••••••' : '-' }}</div>
+        </div>
+        <div class="field"><label>Centro</label><div>{{ usuario?.centro || '-' }}</div></div>
+        <div class="field"><label>Especialidad</label><div>{{ usuario?.especialidad || '-' }}</div></div>
+      </div>
+
+      <div class="actions">
+        <button class="dashboard-button logout-btn" (click)="onLogout()">
+          <i class="fa fa-sign-out-alt"></i>
+          <span>Cerrar sesión</span>
+        </button>
+
+        <button class="dashboard-button edit-btn" routerLink="/dashboard">
+          <i class="fa fa-arrow-left"></i>
+          <span>Volver</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

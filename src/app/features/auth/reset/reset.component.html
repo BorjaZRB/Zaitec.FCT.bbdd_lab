@@ -1,0 +1,19 @@
+<div class="reset-container">
+  <div class="reset-box">
+    <h3>Restablecer contraseña</h3>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label for="password">Nueva contraseña</label>
+      <input id="password" type="password" formControlName="password" placeholder="Mínimo 8 caracteres" />
+
+      <label for="confirm">Confirmar contraseña</label>
+      <input id="confirm" type="password" formControlName="confirm" placeholder="Repita la contraseña" />
+
+      <div class="actions">
+        <button type="submit" [disabled]="loading || form.invalid || !canReset">{{ loading ? 'Guardando...' : 'Guardar contraseña' }}</button>
+      </div>
+    </form>
+
+    <div class="message" *ngIf="message">{{ message }}</div>
+  </div>
+</div>
