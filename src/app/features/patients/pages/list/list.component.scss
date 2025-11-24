@@ -1,0 +1,24 @@
+.patients-card {
+    padding: 20px;
+}
+
+.filter-bar {
+    display: flex;             /* Alinea los elementos en una fila (como se ve en Figma) */
+    align-items: flex-end;     /* Alinea verticalmente los elementos al fondo */
+    gap: 16px;                 /* Espaciado entre los campos */
+    margin-bottom: 20px;
+}
+
+.filter-field {
+    min-width: 250px;          /* Da un ancho mínimo al selector */
+}
+
+/* Ajuste para que el botón quede centrado con los campos de Material */
+.add-button {
+    margin-bottom: 1px; 
+}
+
+/* Estilo para la tabla */
+.full-width-table {
+    width: 100%;
+}

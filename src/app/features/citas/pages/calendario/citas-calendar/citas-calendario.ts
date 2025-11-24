@@ -1,4 +1,7 @@
-import { Component, LOCALE_ID } from '@angular/core';
+import { Component, LOCALE_ID,   ChangeDetectionStrategy,
+  ViewEncapsulation,
+  inject,
+  effect, } from '@angular/core';
 import {
   CalendarModule,
   CalendarEvent,
@@ -6,70 +9,70 @@ import {
   DateAdapter,
   CalendarDateFormatter,
   CalendarNativeDateFormatter,
-  CalendarEventTimesChangedEvent,
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { registerLocaleData, CommonModule } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-import { CitasService } from '../../../data/citas.service';
+import { CitasServicePrueba } from '../../../data/citas.service';
 import { Cita } from '../../../types';
 import { CitasAdd } from '../../../components/citas-add/citas-add';
 import { CitasListPage } from '../../list/citas-list.page';
 import { Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { CdkOverlayOrigin } from "@angular/cdk/overlay";
+import { isSameDay, isSameMonth } from 'date-fns';
+import { CitaService } from '../../../../../core/services/CitasService.service';
 
 registerLocaleData(localeEs);
-
 @Component({
   selector: 'app-citas-calendario',
   standalone: true,
-  imports: [
-    CommonModule,
-    CalendarModule,
-    FormsModule,
-    CitasAdd,
-    CitasListPage,
-    // CdkOverlayOrigin
-],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ CommonModule, CalendarModule, FormsModule, CitasAdd, CitasListPage],
+  encapsulation: ViewEncapsulation.None,
   providers: [
-    {
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    },
-    {
-      provide: CalendarDateFormatter,
-      useClass: CalendarNativeDateFormatter,
-    },
-    {
-      provide: LOCALE_ID,
-      useValue: 'es'
-    },
+    { provide: DateAdapter, useFactory: adapterFactory,},
+    { provide: CalendarDateFormatter, useClass: CalendarNativeDateFormatter},
+    { provide: LOCALE_ID, useValue: 'es' },
   ],
   templateUrl: './citas-calendario.html',
-  styleUrls: ['./citas-calendario.scss'],
+  styleUrls: ['./citas-calendario.scss', '../../../../../../../node_modules/angular-calendar/css/angular-calendar.css'],
 })
+
 export class CitasCalendarioComponent {
   readonly CalendarView = CalendarView;
   viewDate = new Date();
-  view: CalendarView = CalendarView.Day;
-  locale: string = 'es';
-  weekStartsOn: number = 1;
+  view: CalendarView = CalendarView.Month;
+  locale = 'es';
+  weekStartsOn = 1;
+  citaEnEdicion: Cita | null = null;
 
-  events: CalendarEvent[] = [];
-  activeDayIsOpen: boolean = false;
+  events: CalendarEvent[] = [
+    // los eventos se cargan desde el servicio
+];
 
   refresh = new Subject<void>();
 
-  constructor(private citaSrv: CitasService) {
-    const citas = this.citaSrv.listCitas();
-    this.events = citas.map((c) => ({
-      id: c.id,
-      title: `Paciente ${c.pacienteId} · ${c.startTime} - ${c.endTime}`,
-      start: this.combineDateTime(c.date, c.startTime),
-      end: this.combineDateTime(c.date, c.endTime),
-    }));
+  private citaService = inject(CitaService)
+
+  constructor() {
+    this.citaService.getCitas(); //Cargamos las citas
+
+    effect(() => {
+      const citas = this.citaService.citas(); // <------- Signal computed del servicio
+      this.events = citas.map(c => ({
+        id: c.id_cita,
+        title: `Paciente ${c.id_paciente} · ${c.hora_inicio} - ${c.hora_final}${c.razon_cita ? ' · ' + c.razon_cita : ''}`,
+        start: this.combineDateTime(c.fecha, c.hora_inicio),
+        end: this.combineDateTime(c.fecha, c.hora_final),
+        actions: [
+          { label: '<i class="fas fa-pencil-alt"></i>', onClick: ({ event }) =>  this.editCita(event)},
+          { label: '<i class="fas fa-trash-alt"></i>',  onClick: ({ event }) => this.citaService.deleteCita(c) }
+        ]
+      }));
+      this.refresh.next();
+    })
   }
+
 
   private combineDateTime(fechaISO: string, horaHHmm: string): Date {
     const [y , m , d] = fechaISO.split('-').map(Number)
@@ -87,54 +90,70 @@ export class CitasCalendarioComponent {
     this.view = view;
   }
 
-  dayClicked({ day }: { day: { date: Date }; sourceEvent: MouseEvent | KeyboardEvent }): void {
-    this.activeDayIsOpen = !this.activeDayIsOpen;
-    if (!this.activeDayIsOpen) {
-      this.addEvent(day.date);
-    }
-  }
+  activeDayIsOpen: boolean = false;
+  selectedDate: Date | null = null;
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+        this.viewDate = date;
       }
-      return iEvent;
-    });
-  }
-
-  addEvent(date: Date): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'Nueva Cita',
-        start: date,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
-
-  editEvent(event: CalendarEvent): void {
-    const index = this.events.indexOf(event);
-    if (index !== -1) {
-      this.events[index] = { ...event };
-      this.refresh.next();
     }
+  }
+
+    // Crear cita desde el formulario hijo
+  async onNuevaCita(cita: Omit<Cita, 'id_cita'>) {
+    await this.citaService.addCita(cita);
+    // no hace falta push manual a events: el effect ya lo hará al refrescar getCitas()
+    this.viewDate = this.combineDateTime(cita.fecha, cita.hora_inicio);
+    this.refresh.next();
+  }
+
+  mostrarFormEdit: boolean = false
+
+  toggleFormEdit(){
+    this.mostrarFormEdit = !this.mostrarFormEdit
+  }
+
+  editCita(event: CalendarEvent): void {
+
+    this.toggleFormEdit();
+
+    const id = event.id;
+    const todas = this.citaService.citas();
+    const cita = todas.find( c => c.id_cita === id);
+
+    this.citaEnEdicion = cita ?? null
+
+    console.log('Cita en edicion: ', this.citaEnEdicion)
+
+  }
+  async guardarEdicion() {
+    // Si no hay cita en edición, no hacemos nada
+    if (!this.citaEnEdicion) {
+      return;
+    }
+
+    // Llamamos al servicio para actualizar en Supabase
+    await this.citaService.updateCita(this.citaEnEdicion);
+
+    // Opcional: mover la vista del calendario al día de la cita editada
+    this.viewDate = this.combineDateTime(
+      this.citaEnEdicion.fecha,
+      this.citaEnEdicion.hora_inicio
+    );
+
+    // Cerramos el formulario de edición y limpiamos la referencia
+    this.mostrarFormEdit = false;
+    this.citaEnEdicion = null;
+
+    // Notificamos al calendario (aunque el effect ya hace refresh, esto ayuda a asegurarlo)
+    this.refresh.next();
   }
 }
