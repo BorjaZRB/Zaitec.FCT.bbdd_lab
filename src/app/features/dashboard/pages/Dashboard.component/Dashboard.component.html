@@ -1,36 +1,33 @@
 <div class="dashboard-container">
-  <div class="search-section">
-    <app-search-bar (search)="onSearch($event)"></app-search-bar>
-  </div>
+    <div class="search-section">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    </div>
 
     <div class="buttons-grid">
-    <button class="dashboard-button calendar-btn" routerLink="/calendario">
-      <i class="fa fa-calendar-alt"></i>
-      <span>Calendario</span>
-    </button>
-     <button class="dashboard-button calendar-btn" routerLink="/resultados-analisis">
-      <i class="fa fa-calendar-alt"></i>
-      <span>Resultados Analisis</span>
-    </button>
+    <!-- Render available dashboard cards (role filtered) -->
+    <ng-container *ngFor="let card of cards">
+      <button class="dashboard-button" *ngIf="showCard(card)" [routerLink]="card.routerLink">
+        <i class="material-icons">{{ card.icon }}</i>
+        <span>{{ card.title }}</span>
+      </button>
+    </ng-container>
 
-    <button class="dashboard-button appointments-btn" routerLink="/citas">
-      <i class="fa fa-calendar"></i>
-      <span>Citas</span>
-    </button>
-
-    @if (userName) {
+    <!-- User actions: profile and logout when logged in, otherwise Login -->
+    <ng-container *ngIf="userName; else notLogged">
       <button class="dashboard-button profile-btn" routerLink="/profile">
         <i class="fa fa-user"></i>
         <span>Perfil</span>
       </button>
-
-      
-    } @else {
+      <button class="dashboard-button logout-btn" (click)="onLogout()">
+        <i class="fa fa-sign-out-alt"></i>
+        <span>Cerrar sesión</span>
+      </button>
+    </ng-container>
+    <ng-template #notLogged>
       <button class="dashboard-button login-btn" routerLink="/Login">
         <i class="fa fa-sign-in-alt"></i>
         <span>Login</span>
       </button>
-    }
+    </ng-template>
   </div>
 </div>
-

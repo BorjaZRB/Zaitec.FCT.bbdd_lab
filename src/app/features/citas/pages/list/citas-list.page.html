@@ -22,6 +22,7 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Paciente</th>
+        <th scope="col">Razon Cita</th>
         <th scope="col">Fecha</th>
         <th scope="col">Hora de inicio</th>
         <th scope="col">Hora de finalización</th>
@@ -32,14 +33,15 @@
     </thead>
     <tbody>
 
-  @for (c of citas; track c.id) {
+  @for (c of citasSrv.citaState().citas; track c.id_cita) {
       <tr>
-    <th scope="row">{{c.id}}</th>
-    <td> {{ c.pacienteId }} </td>
-    <td> {{ c.date }} </td>
-    <td> {{ c.startTime }} </td>
-    <td> {{ c.endTime }} </td>
-    <td> {{ c.status }} </td>
+    <th scope="row">{{c.id_cita}}</th>
+    <td> {{ c.id_paciente }} </td>
+    <td> {{ c.razon_cita }} </td>
+    <td> {{ c.fecha }} </td>
+    <td> {{ c.hora_inicio }} </td>
+    <td> {{ c.hora_final }} </td>
+    <td> {{ c.estado }} </td>
       <!-- <a [routerLink]="['/citas', c.id]"> -->
       <!-- </a> -->
 </tr>

@@ -53,6 +53,7 @@ constructor() {
       email,
       password
     });
+    console.log(error)
 
     if (error || !data.user) {
       return { success: false, message: 'Correo o contraseña incorrectos' };
@@ -97,22 +98,23 @@ constructor() {
 
 async loginCliente(email: string, password: string) {
   try {
-    // Buscar el usuario con email y password coincidentes
+    // Buscar el usuario directamente en la tabla usuario_prueba
     const { data, error } = await this.supabase
       .from('usuario_prueba')
       .select('*')
       .eq('email', email)
       .eq('password', password)
-      .single(); // Garantiza un solo resultado
+      .single();
 
     if (error || !data) {
+      console.error('Error de autenticación:', error);
       return {
         success: false,
         message: 'Correo o contraseña incorrectos'
       };
     }
 
-    // Guardar usuario en LocalStorage
+    // Guardar usuario en localStorage
     localStorage.setItem('usuario', JSON.stringify(data));
 
     // Actualizar el estado de autenticación
