@@ -1,0 +1,19 @@
+<div class="recover-container">
+  <div class="recover-box">
+    <h3>Recuperar contraseña</h3>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" placeholder="Introduce tu correo" />
+
+      <div class="actions">
+        <button type="submit" [disabled]="loading || form.invalid">
+          {{ loading ? 'Enviando...' : 'Enviar instrucciones' }}
+        </button>
+        <button type="button" class="btn-secondary" (click)="goBack()">Volver</button>
+      </div>
+    </form>
+
+    <div class="message" *ngIf="message">{{ message }}</div>
+  </div>
+</div>
