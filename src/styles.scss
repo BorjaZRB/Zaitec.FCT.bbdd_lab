@@ -4,6 +4,10 @@
 // ...
 @use '@angular/material' as mat;
 
+//Añadido en EP-02
+@use "bootstrap/scss/bootstrap";
+//
+
 html {
   @include mat.theme((
     color: (
@@ -15,7 +19,6 @@ html {
   ));
 }
 
-@use "bootstrap/scss/bootstrap";
 
 body {
   color-scheme: light;
