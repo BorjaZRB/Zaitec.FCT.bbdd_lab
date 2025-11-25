@@ -1,0 +1,68 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Gestión de Centros de Análisis</mat-card-title>
+    <mat-card-subtitle>Listado de centros y asignación de coordinadores.</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    
+    <button 
+      mat-flat-button 
+      color="primary" 
+      class="mb-4"
+      (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+      Nuevo Centro
+    </button>
+    
+    <div class="table-container" *ngIf="dataSource$ | async as centers">
+        
+        <table mat-table [dataSource]="centers" class="full-width-table mat-elevation-z2">
+          
+          <ng-container matColumnDef="id_centro">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let center"> {{ center.id_centro }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let center"> {{ center.nombre }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="direccion">
+            <th mat-header-cell *matHeaderCellDef> Dirección </th>
+            <td mat-cell *matCellDef="let center"> {{ center.direccion }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="telefono">
+            <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+            <td mat-cell *matCellDef="let center"> {{ center.telefono }} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let center">
+              <button mat-icon-button color="accent" (click)="editCenter(center)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="5">No se encontraron centros registrados.</td>
+          </tr>
+        </table>
+
+    </div>
+    <div *ngIf="!(dataSource$ | async)?.length">
+        <p>Cargando datos o no hay centros disponibles.</p>
+    </div>
+    
+  </mat-card-content>
+</mat-card>
