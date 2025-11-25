@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? 'Editar Centro' : 'Nuevo Centro' }}
+</h2>
+
+<form [formGroup]="centerForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="mat-typography">
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre del Centro</mat-label>
+      <input matInput formControlName="nombre" required>
+      <mat-error *ngIf="centerForm.get('nombre')?.invalid && centerForm.get('nombre')?.touched">
+        El nombre es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="direccion" required>
+      <mat-error *ngIf="centerForm.get('direccion')?.invalid && centerForm.get('direccion')?.touched">
+        La dirección es obligatoria.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Teléfono</mat-label>
+      <input matInput formControlName="telefono" required>
+      <mat-error *ngIf="centerForm.get('telefono')?.invalid && centerForm.get('telefono')?.touched">
+        El teléfono es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Coordinador Asignado</mat-label>
+      <mat-select formControlName="coordinadorId" required>
+        @for (trabajador of coordinators; track trabajador.id) { <mat-option [value]="trabajador.id">{{ trabajador.nombre }} {{ trabajador.apellidos }}</mat-option>
+    }
+</mat-select>
+      <mat-error *ngIf="centerForm.get('coordinadorId')?.invalid && centerForm.get('coordinadorId')?.touched">
+        Debe asignar un coordinador.
+      </mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()" type="button">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="centerForm.invalid">
+      {{ isEditMode ? 'Guardar Cambios' : 'Crear Centro' }}
+    </button>
+  </mat-dialog-actions>
+</form>
