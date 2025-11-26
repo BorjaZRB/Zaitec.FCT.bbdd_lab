@@ -4,48 +4,63 @@
   <form action="">
     <div>
 
-      <label for="paciente">Paciente: </label>
-      <input type="text" name="paciente" [value]="id_paciente()" (input)="id_paciente.set($any($event.target).value)" placeholder="Nombre del paciente" >
+      <label for="paciente">Paciente: <input type="text" name="paciente" [value]="id_paciente()" (input)="id_paciente.set($any($event.target).value)" placeholder="Nombre del paciente" ></label>
 
     </div> <br>
     <div>
 
-      <label for="fecha">Fecha de la cita: </label>
+      <label for="fecha">Fecha de la cita:
       <input type="date" name="fecha" [value]="fecha()" (input)="fecha.set($any($event.target).value)">
-
+</label>
     </div> <br>
 
     <div>
 
-      <label for="hora-inicio">Desde: </label>
-      <input type="time" name="hora-inicio" [value]="hora_inicio()" (input)="hora_inicio.set($any($event.target).value)">
+      <label for="hora-inicio">Hora:
+        <select name="hora-inicio" [value]="hora_inicio()" (change)="onHoraInicioChange($any($event.target).value)">
+          <option value="">Selecciona hora</option>
+      @for (slot of timeSlots; track slot ) {
+          <option
+              [value]="slot"
+              [disabled]="isSlotDisabled(slot)"
+              >
+              {{slot}}
 
+            </option>
+
+            }
+
+
+        </select>
+        @if (hora_final()) {
+          <span> - {{hora_final()}}</span>
+
+        }
+      </label>
     </div> <br>
-
     <div>
 
-      <label for="hora-fin">Hasta: </label>
-      <input type="time" name="hora-fin" [value]="hora_final()" (input)="hora_final.set($any($event.target).value)">
-
-    </div> <br>
-    <div>
-
-      <label for="profesional">Profesional: </label>
+      <label for="profesional">Profesional:
       <input type="text" name="profesional" placeholder="ID del profesional" [value]="id_trabajador()" (input)="id_trabajador.set($any($event.target).value)">
-
+</label>
     </div> <br>
     <div>
 
-      <label for="notas">Notas: </label>
+      <label for="notas">Notas:
       <input type="text" name="notas" [value]="razon_cita()" (input)="razon_cita.set($any($event.target).value)" placeholder="Añade información sobre la cita.">
-
+</label>
     </div> <br>
 
      <div>
 
-      <label for="estado">Estado: </label>
-      <input type="text" name="estado" placeholder="Estado de la cita" [value]="estado()" (input)="estado.set($any($event.target).value)">
-
+      <label for="estado">Estado:
+        <select name="estado" [value]="estado()" (change)="estado.set($any($event.target).value)">
+          <option value="Programada">Programada</option>
+          <option value="Confirmada">Confirmada</option>
+          <option value="Cancelada">Cancelada</option>
+          <option value="Completada">Completada</option>
+        </select>
+</label>
     </div> <br>
 
     <button type="button" (click)="addCita()">Crear cita</button>
