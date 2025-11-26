@@ -4,27 +4,30 @@
     </div>
 
     <div class="buttons-grid">
-        
-        @for (card of cards; track card.title) {
-            @if (showCard(card)) {
-                
-                <button class="dashboard-button" [routerLink]="card.routerLink">
-                    <i class="material-icons">{{ card.icon }}</i> 
-                    <span>{{ card.title }}</span>
-                </button>
-            }
-        }
-        
-        @if (userName) {
-            <button class="dashboard-button profile-btn" (click)="onLogout()">
-                <i class="fa fa-user"></i>
-                <span>Cerrar Sesión</span>
-            </button>
-        } @else {
-            <button class="dashboard-button login-btn" routerLink="/Login">
-                <i class="fa fa-sign-in-alt"></i>
-                <span>Login</span>
-            </button>
-        }
-    </div>
+    <!-- Render available dashboard cards (role filtered) -->
+    <ng-container *ngFor="let card of cards">
+      <button class="dashboard-button" *ngIf="showCard(card)" [routerLink]="card.routerLink">
+        <i class="material-icons">{{ card.icon }}</i>
+        <span>{{ card.title }}</span>
+      </button>
+    </ng-container>
+
+    <!-- User actions: profile and logout when logged in, otherwise Login -->
+    <ng-container *ngIf="userName; else notLogged">
+      <button class="dashboard-button profile-btn" routerLink="/profile">
+        <i class="fa fa-user"></i>
+        <span>Perfil</span>
+      </button>
+      <button class="dashboard-button logout-btn" (click)="onLogout()">
+        <i class="fa fa-sign-out-alt"></i>
+        <span>Cerrar sesión</span>
+      </button>
+    </ng-container>
+    <ng-template #notLogged>
+      <button class="dashboard-button login-btn" routerLink="/Login">
+        <i class="fa fa-sign-in-alt"></i>
+        <span>Login</span>
+      </button>
+    </ng-template>
+  </div>
 </div>

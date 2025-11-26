@@ -1,0 +1,60 @@
+.profile-page {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(180deg, rgba(0,156,166,0.12), rgba(0,156,166,0.06));
+
+  .profile-inner {
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .profile-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem 2.25rem;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    text-align: left;
+
+    .avatar i {
+      font-size: 3.2rem;
+      color: #009CA6;
+      margin-bottom: 0.25rem;
+    }
+
+    h2 { margin: 0 0 0.25rem; color: #1f2933; }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem 1.25rem;
+      margin-top: 0.75rem;
+
+      .field {
+        label {
+          display: block;
+          font-size: 0.8rem;
+          color: rgba(0,0,0,0.6);
+          margin-bottom: 0.25rem;
+        }
+        div { font-weight: 600; color: #0f1720; }
+      }
+    }
+
+    .password { font-weight: 700; letter-spacing: 2px; }
+
+    .actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      margin-top: 1.25rem;
+
+      .dashboard-button { min-width: 140px; }
+    }
+  }
+}
