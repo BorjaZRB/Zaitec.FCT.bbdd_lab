@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { SupabaseService } from '../../core/services/supabase.service';
 
 interface ResultadoAnalisis {
   tipo: 'Clínico' | 'Nutricional' | 'Radiografía';
@@ -41,6 +42,7 @@ export class ResultadosAnalisis {
     descripcion: '',
     activo: true,
   };
+   public supabaseSrv = inject(SupabaseService) 
 
   displayedColumns: string[] = ['paciente', 'tipo', 'fecha', 'descripcion', 'acciones'];
 
@@ -75,4 +77,11 @@ export class ResultadosAnalisis {
   get resultadosArchivados() {
     return this.resultados.filter(r => !r.activo);
   }
+
+  uploadImpage(){
+    this.supabaseSrv.uploadImage(
+      
+    )
+  }
+  
 }

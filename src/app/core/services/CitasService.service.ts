@@ -1,6 +1,6 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { SupabaseClient } from '@supabase/supabase-js';
-import { supabase } from './supabase.client';
+ import { computed, inject, Injectable, signal } from '@angular/core';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { environment } from '../../../enviroments/environment';
 import { Cita } from '../../features/citas/types';
 import { AuthService } from './AuthService';
 
@@ -31,25 +31,23 @@ export class CitaService{
 
   async getCitas (): Promise<void>{
     this.citaState.update((state) => ({...state, loading:true, error:false}));
-      const{data, error} = await this.supabase
-        .from('cita')
-        .select('*')
-        .returns<Cita[]>(); // Sin punto??
+      const { data, error } = await this.supabase
+  .from('cita')
+  .select('*');
 
-        console.log(data)
+if (!error && data) {
+  const citasNormalizadas = data.map((row) => ({
+    ...row,
+    hora_inicio: row.hora_inicio.slice(0, 5), // '08:00:00' -> '08:00'
+    hora_final: row.hora_final.slice(0, 5),   // '08:30:00' -> '08:30'
+  }));
 
-        if (error) {
-          console.error(error)
-          this.citaState.update((state) => ({...state, loading:false, error:true}));
-          return;
-        }
-
-          this.citaState.update((state) => ({
-            ...state,
-            citas: data ?? [],
-            loading: false,
-            error: false
-          }))
+  this.citaState.set({
+    citas: citasNormalizadas,
+    loading: false,
+    error: false,
+  });
+}
     }
 
   async addCita(cita: Omit<Cita, "id_cita">): Promise<void> {

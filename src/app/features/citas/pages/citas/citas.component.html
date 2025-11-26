@@ -1,15 +1,15 @@
 <div class="citas-body">
-  <div class="container-fluid px-4">
-    <div class="row g-4 align-items-start">
-      <div class="col-12 col-lg-3">
+  <div class="container-fluid px-4 h-100">
+    <div class="row g-4 h-100">
+      <div class="col-12 col-lg-5 card full-height-card shadow-sm p-3 mb-4 ">
         <app-citas-list></app-citas-list>
       </div>
 
-      <div class="col-12 col-lg-6">
+      <div class="col-12 col-lg-5 card full-height-card shadow-sm p-3 mb-4">
         <app-citas-calendario></app-citas-calendario>
       </div>
 
-      <div class="col-12 col-lg-3">
+      <div class="col-12 col-lg-2 card full-height-card shadow-sm p-3 mb-4">
         <app-citas-add (newCita)="onNuevaCita($event)"></app-citas-add>
       </div>
     </div>
