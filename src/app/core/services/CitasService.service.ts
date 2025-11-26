@@ -12,7 +12,7 @@ interface CitaState {
 
 @Injectable({providedIn: 'root'})
 export class CitaService{
-  private supabase: SupabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey);
+  private supabase: SupabaseClient = supabase;
   private auth = inject(AuthService);
 
   // Estado inicial de las citas
