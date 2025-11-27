@@ -62,6 +62,25 @@ export class SupabaseAnalisisService {
     if (error) throw error;
   }
 
+  async uploadImage(event: any) {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const fileExt = file.name.split('.').pop();
+    const filename = `analisis/${Date.now()}.${fileExt}`;
+
+    const { data, error } = await this.supabase
+      .storage
+      .from('Analiticas')
+      .upload(filename, file)
+    if (error) {
+      console.error('Error al subir la imagen:', error);
+      return;
+    }
+    console.log('Imagen subida con éxito:', data);
+  }
+
   // Obtener todos los pacientes
   async obtenerPacientes(): Promise<Paciente[]> {
     const { data, error } = await this.supabase
