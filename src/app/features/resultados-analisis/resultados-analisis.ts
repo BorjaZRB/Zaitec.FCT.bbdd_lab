@@ -78,10 +78,5 @@ export class ResultadosAnalisis {
     return this.resultados.filter(r => !r.activo);
   }
 
-  uploadImpage(){
-    this.supabaseSrv.uploadImage(
-      
-    )
-  }
   
 }

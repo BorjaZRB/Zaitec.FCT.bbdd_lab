@@ -72,12 +72,5 @@ export class SupabaseService {
     return data;
   }
 
-  async uploadImage(filename:any, file:any) {
-    const {data, error} = await this.supabase
-    .storage
-    .from('Analiticas')
-    .upload(filename, file);
-    if (error) throw error;
-  }
 }
 
