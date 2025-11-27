@@ -87,6 +87,19 @@
       <mat-label>Descripción</mat-label>
       <input matInput [(ngModel)]="nuevoResultado.descripcion" aria-label="Descripción del análisis" placeholder="Descripción del análisis" />
     </mat-form-field>
+    <div class="boton-container">
+  <button (click)="fileInput.click()">
+      Subir Imagen
+      <input 
+        type="file"
+        #fileInput
+        style="display: none"
+        (change)="uploadImage($event)"
+        aria-label="Subir imagen del análisis"
+        title="Subir imagen del análisis"
+        />
+    </button>
+  </div>
 
     <button mat-raised-button color="primary" (click)="agregarResultado()">Agregar</button>
   </div>

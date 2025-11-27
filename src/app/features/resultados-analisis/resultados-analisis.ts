@@ -37,7 +37,7 @@ export class ResultadosAnalisis implements OnInit {
 
   displayedColumns: string[] = ['paciente', 'tipo', 'fecha', 'descripcion'];
 
-  constructor(private analisisService: SupabaseAnalisisService) {}
+  constructor(private analisisService: SupabaseAnalisisService) { }
 
   async ngOnInit() {
     await this.cargarPacientes();
@@ -82,6 +82,10 @@ export class ResultadosAnalisis implements OnInit {
     } catch (error) {
       console.error('Error agregando resultado:', error);
     }
+  }
+
+  async uploadImage(event: any) {
+    await this.analisisService.uploadImage(event);
   }
 
   get resultadosFiltrados() {
